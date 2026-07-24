@@ -3,20 +3,541 @@
     "badge": "✨ 12+ Years Executive Growth Architect & PR Leader",
     "greeting": "Greetings, I'm",
     "name": "Yash Agarwal",
-    "heroBio": "Head of Marketing at DR Choksey FinServ, former Head of Digital Marketing at Avant Garde Industries, and Founder of FMK Agency. I help ambitious founders & enterprise leaders scale multi-crore digital revenue engines and build unassailable brand authority.",
-    "announcement": "🔥 NEW: Read Yash's Latest Essay on Tier-1 PR Newsjacking • Join the Waitlist for 'No Godfather'",
+    "subtitles": [
+      "Head of Marketing",
+      "Growth Architect",
+      "Brand Strategist",
+      "PR Consultant",
+      "AI Marketing Consultant"
+    ],
+    "bio": "Former Head of Marketing & PR at DRChoksey FinServ & Avant Garde Industries, and Founder of FMK Marketing & PR Agency.",
     "imageSrc": "yashdp.png",
+    "btnBookText": "Book Advisory Call",
+    "btnAuditText": "Free Growth Audit",
+    "btnWorkText": "Explore Case Studies",
     "expYears": "12+",
-    "monthlyRevenue": "₹3Cr+",
-    "campaignsCount": "500+",
+    "campaignsCount": "100+",
     "brandsCount": "300+",
     "countriesCount": "15+"
   },
+  "seo": {
+    "metaTitle": "Yash Agarwal (MeAgarwalYash) — Executive Growth Architect & Author",
+    "metaDescription": "Official personal branding platform of Yash Agarwal. 12+ Years Experience, Head of Marketing at DR Choksey FinServ, Former Head of Digital Marketing at Avant Garde Industries, Author of 'No Godfather'.",
+    "metaKeywords": "Yash Agarwal, MeAgarwalYash, Head of Marketing, DR Choksey FinServ, Avant Garde Industries, Growth Architect, PR Consultant, No Godfather Book",
+    "ogTitle": "Yash Agarwal — Executive Growth Architect & Author",
+    "ogDescription": "Scaling multi-crore digital revenue engines and building enterprise brand authority.",
+    "ogImage": "yashdp.png",
+    "canonicalUrl": "https://meagarwalyash.com",
+    "robotsIndexing": "index, follow",
+    "googleAnalyticsId": "G-MAY1234567"
+  },
+  "blogs": [
+    {
+      "id": "blog-1",
+      "heading": "The Zero-Budget PR Framework: Winning Tier-1 Media Without $50k Retainers",
+      "slug": "zero-budget-pr-framework",
+      "category": "PR STRATEGY",
+      "date": "July 2024",
+      "readTime": "6 min read",
+      "status": "published",
+      "coverImg": "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80",
+      "coverImgAlt": "PR Strategy Media Conference",
+      "snippet": "Most founders assume getting into Forbes or Business Standard requires astronomical monthly agency retainers. Here is the exact newsjacking & narrative framework I used to secure 500+ top-tier press features.",
+      "content": "In traditional corporate marketing, public relations is often treated as a luxury line item reserved for companies with $50,000/month retainers. However, after 12+ years of running FMK Marketing & PR Agency and leading corporate growth in Mumbai, I have proved that Tier-1 media authority is a function of narrative positioning rather than raw dollar spend.\n\n1. The Newsjacking Triangle\nJournalists at major publications like Forbes, Business Standard, and Hindustan Times are not looking for your sales pitches; they are looking for original commentary on macro industry shifts. Align your brand data with active macroeconomic trends.\n\n![Press Conference & Media Strategy](https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80)\n*Figure 1: Executing high-stakes press conferences and media briefings with key industry leaders.*\n\n2. Original Data as Currency\nIf you own proprietary benchmarks, customer acquisition insights, or sector growth figures, publish them as micro-reports. Media outlets crave unique data points to cite.\n\n3. High-Leverage Executive Pitching\nDirect, concise pitches to section editors focusing on a controversial or non-intuitive industry insight outperform generic agency blurb distributions by 10x.",
+      "focusKeyword": "Zero-Budget PR Framework",
+      "metaTitle": "The Zero-Budget PR Framework | Yash Agarwal",
+      "metaDesc": "Learn how to land Forbes and Business Standard press features without $50k agency retainers."
+    },
+    {
+      "id": "blog-2",
+      "heading": "Scaling Performance Funnels Past $10M: Lessons from 12+ Years in Media Buying",
+      "slug": "scaling-performance-funnels-past-10m",
+      "category": "PERFORMANCE",
+      "date": "May 2024",
+      "readTime": "8 min read",
+      "status": "published",
+      "coverImg": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      "coverImgAlt": "Performance Marketing Dashboard",
+      "snippet": "When scaling paid acquisition from ₹30L to ₹3Cr per month, the bottleneck is rarely media bidding—it is creative fatigue, post-click conversion architecture, and attribution lag.",
+      "content": "Scaling digital ad spend from five figures a month to multi-crore budgets breaks 90% of standard marketing strategies. At Avant Garde Industries, scaling monthly digital revenue from ₹25–40 Lakhs to ₹2–3 Crore required a complete overhaul of our performance stack.\n\n1. Creative Velocity Beats Bid Hacking\nAt scale, ad platforms like Meta and Google act as content distribution engines. High-performing video hooks and native UGC variations scale ROAS faster than micro-targeting tweaks.\n\n![Performance Scale Analytics](https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80)\n*Figure 2: Real-time multi-channel attribution and ROAS analytics tracking dashboard.*\n\n2. CAC vs. Payback Velocity\nStop optimizing for Day-1 ROAS alone. High-growth enterprises optimize for 30-day LTV expansion and 60-day cash payback periods, enabling them to outbid competitors safely.",
+      "focusKeyword": "Scaling Performance Funnels",
+      "metaTitle": "Scaling Performance Funnels Past $10M | Yash Agarwal",
+      "metaDesc": "How to scale ad spend from ₹30L to ₹3Cr/mo with sustainable 60-day cash payback ROAS."
+    },
+    {
+      "id": "blog-3",
+      "heading": "Why Fractional CMOs are the Secret Weapon for Series A-C Startup Scaleups",
+      "slug": "why-fractional-cmos-are-the-secret-weapon",
+      "category": "LEADERSHIP",
+      "date": "March 2024",
+      "readTime": "5 min read",
+      "status": "draft",
+      "coverImg": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+      "coverImgAlt": "Executive Fractional CMO Meeting",
+      "snippet": "Hiring a full-time $350k CMO before product-market fit or unit economics stabilization is a common mistake. Fractional executive leadership provides high-level architecture without fixed burn.",
+      "content": "Early-stage and Series A-C companies often struggle with a critical dilemma: junior marketers lack the P&L experience to build enterprise systems, while full-time veteran CMOs require $300k+ compensation packages plus equity.\n\nFractional CMO leadership bridges this gap by bringing 10+ years of battle-tested marketing architecture on an outcome-driven retainer basis.",
+      "focusKeyword": "Fractional CMO Leadership",
+      "metaTitle": "Why Fractional CMOs Scale Startups Faster | Yash Agarwal",
+      "metaDesc": "Discover how fractional CMO leadership delivers executive P&L scale without fixed overhead."
+    }
+  ],
+  "news": [
+    {
+      "id": "news-1",
+      "publisher": "Business Standard",
+      "title": "Scaling Digital Ecosystems: How Yash Agarwal Built Avant Garde’s ₹3Cr/Month Engine",
+      "date": "June 2024",
+      "summary": "An inside look at how Yash Agarwal took Avant Garde Industries from ~₹25–40 Lakhs/month to ₹2–3 Crore/month through performance optimization in Mumbai."
+    },
+    {
+      "id": "news-2",
+      "publisher": "Forbes India",
+      "title": "The Non-Conformist Playbook: Building Brand Equity Without Corporate Patronage",
+      "date": "April 2024",
+      "summary": "Yash Agarwal discusses personal branding, high-ticket advisory positioning, and how self-made marketing leaders build long-term enterprise authority."
+    },
+    {
+      "id": "news-3",
+      "publisher": "Hindustan Times",
+      "title": "Executive Personal Branding: Transforming Leaders into Recognized Media Entities",
+      "date": "January 2024",
+      "summary": "Insights from marketing architect Yash Agarwal on why C-suite executives must treat personal authority as scalable digital infrastructure."
+    }
+  ],
   "book": {
     "title": "No Godfather",
     "subtitle": "FORTHCOMING DEBUT MASTERWORK",
     "coverImg": "no godfather cover.png",
     "description": "A definitive guide to building an empire and a personal brand from scratch — written from 12 years of first-hand experience across agency life, corporate marketing leadership, and scaling P&Ls without corporate patronage.",
     "excerpt": "\"True leverage is built when your reputation precedes your entry into any room. In the modern digital economy, you do not need permission or corporate patronage; you need a strategic growth machine that consistently produces measurable enterprise impact...\""
-  }
+  },
+  "journey": [
+    {
+      "id": 1,
+      "year": "2012",
+      "badge": "THE BEGINNING",
+      "title": "First Marketing Role — ₹12,000 Salary",
+      "desc": "Started my career at a boutique media agency in Mumbai earning ₹12,000/month. Learned the basics of print advertising, event marketing, and client servicing from the ground up.",
+      "achievement": "Learned media buying fundamentals from zero",
+      "img": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80",
+      "tags": [
+        "Mumbai",
+        "Media Agency",
+        "Early Career"
+      ]
+    },
+    {
+      "id": 2,
+      "year": "2016",
+      "badge": "ENTREPRENEURSHIP",
+      "title": "Founded FMK Marketing & PR Agency",
+      "desc": "Launched FMK Marketing & PR Agency, offering integrated marketing and public relations services to SMEs and mid-market brands across Mumbai. Grew to a 12-person team within 3 years.",
+      "achievement": "Built a 12-person agency from scratch",
+      "img": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80",
+      "tags": [
+        "Agency Founder",
+        "PR",
+        "FMK"
+      ]
+    },
+    {
+      "id": 3,
+      "year": "2019",
+      "badge": "CORPORATE LEADERSHIP",
+      "title": "Head of Digital Marketing — Avant Garde Industries",
+      "desc": "Joined Avant Garde Industries as Head of Digital Marketing, overseeing a multi-crore digital budget across Meta, Google, and OTT platforms. Led a 25-person marketing department.",
+      "achievement": "Managed ₹5Cr+ annual digital budget",
+      "img": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80",
+      "tags": [
+        "Corporate",
+        "Digital Marketing",
+        "Leadership"
+      ]
+    },
+    {
+      "id": 4,
+      "year": "2022",
+      "badge": "PEAK REVENUE SCALE",
+      "title": "Scaled Digital Revenue to ₹3Cr/Month",
+      "desc": "Engineered a performance marketing overhaul at Avant Garde that took monthly digital revenue from ₹25–40 Lakhs to ₹2–3 Crore. Reduced CAC by 38% while expanding ROAS by 4x.",
+      "achievement": "8x revenue growth in 36 months",
+      "img": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
+      "tags": [
+        "Revenue Scale",
+        "Performance",
+        "ROAS"
+      ]
+    },
+    {
+      "id": 5,
+      "year": "2024",
+      "badge": "FINSERV LEADERSHIP",
+      "title": "Head of Marketing — DR Choksey FinServ",
+      "desc": "Appointed as Head of Marketing at DR Choksey FinServ, one of India's leading financial services groups. Building digital authority, investor brand positioning, and B2B lead generation systems.",
+      "achievement": "Leading marketing for a ₹500Cr+ financial institution",
+      "img": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=600&q=80",
+      "tags": [
+        "FinServ",
+        "B2B",
+        "Brand Building"
+      ]
+    },
+    {
+      "id": 6,
+      "year": "2025",
+      "badge": "AUTHOR & THOUGHT LEADER",
+      "title": "Writing \"No Godfather\" — First Book",
+      "desc": "Began writing the definitive playbook on building an empire without corporate patronage. The book distills 12+ years of marketing, PR, and growth experience into actionable frameworks for founders.",
+      "achievement": "In-progress: 500+ pre-launch waitlist signups",
+      "img": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80",
+      "tags": [
+        "Author",
+        "Thought Leadership",
+        "No Godfather"
+      ]
+    }
+  ],
+  "brands": [
+    {
+      "name": "DR Choksey FinServ",
+      "abbr": "DRC",
+      "color": "#1e40af"
+    },
+    {
+      "name": "Avant Garde Industries",
+      "abbr": "AGI",
+      "color": "#047857"
+    },
+    {
+      "name": "FMK Agency",
+      "abbr": "FMK",
+      "color": "#D4AF37"
+    },
+    {
+      "name": "Forbes India",
+      "abbr": "FRB",
+      "color": "#e3000b"
+    },
+    {
+      "name": "Business Standard",
+      "abbr": "BS",
+      "color": "#1a1a2e"
+    },
+    {
+      "name": "Hindustan Times",
+      "abbr": "HT",
+      "color": "#cc0000"
+    },
+    {
+      "name": "The Week",
+      "abbr": "TW",
+      "color": "#003580"
+    },
+    {
+      "name": "Mid-Day",
+      "abbr": "MD",
+      "color": "#ff6b00"
+    },
+    {
+      "name": "ANI News",
+      "abbr": "ANI",
+      "color": "#C41E3A"
+    },
+    {
+      "name": "Economic Times",
+      "abbr": "ET",
+      "color": "#f97316"
+    },
+    {
+      "name": "Inc42 Media",
+      "abbr": "I42",
+      "color": "#6d28d9"
+    },
+    {
+      "name": "YourStory",
+      "abbr": "YS",
+      "color": "#2563eb"
+    }
+  ],
+  "speaking": [
+    {
+      "id": "s1",
+      "event": "WhatsApp Business Summit",
+      "org": "Meta (WhatsApp)",
+      "topic": "Scaling SME Growth via Conversational Commerce",
+      "year": "2024",
+      "type": "KEYNOTE",
+      "icon": "message-circle",
+      "featured": true
+    },
+    {
+      "id": "s2",
+      "event": "ET Now Digital Summit",
+      "org": "Economic Times",
+      "topic": "The New-Age CMO: AI, Performance & Brand Authority",
+      "year": "2024",
+      "type": "PANEL",
+      "icon": "tv",
+      "featured": true
+    },
+    {
+      "id": "s3",
+      "event": "Google Partners Summit",
+      "org": "Google India",
+      "topic": "Scaling Search & PMax Campaigns to Multi-Crore Revenue",
+      "year": "2023",
+      "type": "TALK",
+      "icon": "search",
+      "featured": true
+    },
+    {
+      "id": "s4",
+      "event": "Meta Advantage+ Bootcamp",
+      "org": "Meta India",
+      "topic": "Creative Velocity and AI-Powered Ad Scaling",
+      "year": "2023",
+      "type": "WORKSHOP",
+      "icon": "zap",
+      "featured": false
+    },
+    {
+      "id": "s5",
+      "event": "Canva Create India",
+      "org": "Canva",
+      "topic": "Personal Brand Design Systems for Executive Leaders",
+      "year": "2024",
+      "type": "TALK",
+      "icon": "pen-tool",
+      "featured": false
+    },
+    {
+      "id": "s6",
+      "event": "HP Reinvent Partner Conference",
+      "org": "HP India",
+      "topic": "Enterprise B2B Growth Marketing Architecture",
+      "year": "2023",
+      "type": "KEYNOTE",
+      "icon": "cpu",
+      "featured": false
+    },
+    {
+      "id": "s7",
+      "event": "IIM Ahmedabad Marketing Summit",
+      "org": "IIM Ahmedabad",
+      "topic": "Building Brand Equity Without Corporate Patronage",
+      "year": "2024",
+      "type": "KEYNOTE",
+      "icon": "graduation-cap",
+      "featured": true
+    },
+    {
+      "id": "s8",
+      "event": "NMIMS Marketing Conclave",
+      "org": "NMIMS Mumbai",
+      "topic": "From Agency Life to CMO: Career Architecture for Marketers",
+      "year": "2023",
+      "type": "PANEL",
+      "icon": "users",
+      "featured": false
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "t1",
+      "name": "Rajesh Mehta",
+      "title": "Founder & CEO",
+      "company": "TechScale Ventures",
+      "quote": "Yash transformed our entire digital marketing architecture. Within 6 months, our ROAS went from 1.8x to 5.4x and monthly revenue crossed ₹1.2 Crore. His PR newsjacking framework alone got us into Forbes and Business Standard.",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
+      "stars": 5,
+      "source": "LinkedIn"
+    },
+    {
+      "id": "t2",
+      "name": "Priya Sharma",
+      "title": "VP of Marketing",
+      "company": "D2C Lifestyle Brand",
+      "quote": "Working with Yash on our performance marketing stack was a game-changer. He doesn't just run ads — he builds systems. Our CAC dropped 42% while our LTV grew 3x in one quarter. Absolutely unmatched expertise.",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
+      "stars": 5,
+      "source": "Direct"
+    },
+    {
+      "id": "t3",
+      "name": "Arun Kapoor",
+      "title": "Co-Founder",
+      "company": "FinTech Startup (Series B)",
+      "quote": "Yash's fractional CMO framework helped us build a complete marketing function from scratch. He hired our team, built our attribution model, and secured 12 national press features in 4 months. Exceptional strategic thinking.",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80",
+      "stars": 5,
+      "source": "LinkedIn"
+    },
+    {
+      "id": "t4",
+      "name": "Sneha Patel",
+      "title": "CMO",
+      "company": "Enterprise SaaS Company",
+      "quote": "I've worked with multiple marketing consultants. Yash is the only one who truly understands the intersection of brand authority, performance marketing, and AI. His No Godfather philosophy is real — no fluff, just results.",
+      "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80",
+      "stars": 5,
+      "source": "Direct"
+    },
+    {
+      "id": "t5",
+      "name": "Vikram Nair",
+      "title": "Managing Director",
+      "company": "Real Estate Developer",
+      "quote": "We hired Yash to build our digital brand from zero. Within 8 months, we had coverage in ET Realty, HT, and Mid-Day; 40,000+ qualified leads in our CRM; and a performance media engine producing ₹85L in monthly revenue.",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+      "stars": 5,
+      "source": "LinkedIn"
+    }
+  ],
+  "pressArticles": [
+    {
+      "id": "p1",
+      "publication": "Business Standard",
+      "pubColor": "#1a1a2e",
+      "headline": "Yash Agarwal: The Highest-Paid Digital Marketing Expert of Uttar Pradesh",
+      "date": "October 2020",
+      "category": "MARKETING EXPERT",
+      "img": "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80",
+      "excerpt": "Business Standard highlights Yash Agarwal's rapid rise as one of North India's most sought-after digital growth strategists and marketing leaders.",
+      "url": "https://www.business-standard.com/content/specials/yash-agarwal-the-highest-paid-digital-marketing-expert-of-uttar-pradesh-120100800881_1.html"
+    },
+    {
+      "id": "p2",
+      "publication": "DNA India",
+      "pubColor": "#f59e0b",
+      "headline": "Man with a Golden Heart: This Young Lad is Helping 100+ Slum Kids Get a Better Life",
+      "date": "January 2021",
+      "category": "SOCIAL IMPACT",
+      "img": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80",
+      "excerpt": "DNA India covers Yash Agarwal's philanthropic initiatives providing education, clothing, and digital literacy to underprivileged children.",
+      "url": "https://www.dnaindia.com/india/report-man-with-a-golden-heart-this-young-lad-is-helping-100-slum-kids-to-get-a-better-life-2866037"
+    },
+    {
+      "id": "p3",
+      "publication": "The Week",
+      "pubColor": "#003580",
+      "headline": "The Emerging Name in the Field of Modern Marketing in India: Yash Agarwal",
+      "date": "December 2020",
+      "category": "MODERN MARKETING",
+      "img": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=600&q=80",
+      "excerpt": "The Week profiles marketing architect Yash Agarwal on pioneering ROI-driven performance frameworks and brand positioning in India.",
+      "url": "https://www.theweek.in/news/biz-tech/2020/12/04/The-emerging-name-in-the-field-of-modern-marketing-in-India-Yash-garwal.html"
+    },
+    {
+      "id": "p4",
+      "publication": "Business Standard",
+      "pubColor": "#1a1a2e",
+      "headline": "DMMOI: The Best Institute for Digital Marketing in Kanpur",
+      "date": "February 2021",
+      "category": "EDUCATION & SKILLS",
+      "img": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80",
+      "excerpt": "Featured across Business Standard for establishing DMMOI, empowering tier-2 and tier-3 city youth with practical digital skills.",
+      "url": "https://www.business-standard.com/content/press-releases-ani/dmmoi-the-best-institute-for-digital-marketing-in-kanpur-121021201608_1.html"
+    },
+    {
+      "id": "p5",
+      "publication": "ANI News",
+      "pubColor": "#C41E3A",
+      "headline": "DMMOI Recognized as Leading Digital Marketing Institute in Uttar Pradesh",
+      "date": "February 2021",
+      "category": "ENTERPRISE & MEDIA",
+      "img": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80",
+      "excerpt": "ANI News feature on Yash Agarwal's mission to bridge the digital skills gap by training hundreds of aspiring marketers.",
+      "url": "https://www.aninews.in/news/business/business/dmmoi-the-best-institute-for-digital-marketing-in-kanpur20210212184726/"
+    },
+    {
+      "id": "p6",
+      "publication": "Asianet News",
+      "pubColor": "#e11d48",
+      "headline": "Kanpur Blood Donation Group Started by Yash Agarwal Becomes Key Covid Resource Group in India",
+      "date": "May 2021",
+      "category": "COVID RELIEF",
+      "img": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80",
+      "excerpt": "Asianet News reports on how Yash Agarwal mobilized emergency blood donations, plasma matching, and oxygen support during the pandemic.",
+      "url": "https://newsable.asianetnews.com/india/kanpur-blood-donation-group-started-by-yash-agarwal-becomes-the-most-active-covid-resource-group-in-india-vpn-qsdl8y"
+    },
+    {
+      "id": "p7",
+      "publication": "Forbes India",
+      "pubColor": "#e3000b",
+      "headline": "KYE Global & FMK Marketing Announce VIP Members for 2020-2022",
+      "date": "December 2020",
+      "category": "BRAND CONNECT",
+      "img": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80",
+      "excerpt": "Forbes India features FMK Marketing & PR Agency under Yash Agarwal's leadership for driving high-ticket brand positioning and PR equity.",
+      "url": "https://www.forbesindia.com/article/brand-connect/kye-global-fmk-marketing-announce-vip-members-for-20202022/65187/1"
+    },
+    {
+      "id": "p8",
+      "publication": "The India Saga",
+      "pubColor": "#059669",
+      "headline": "FMK Marketing & PR Agency by Yash Agarwal Assists Small Businesses During Economic Slowdown",
+      "date": "August 2020",
+      "category": "AGENCY & PR",
+      "img": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80",
+      "excerpt": "The India Saga details how Yash Agarwal's FMK Marketing helped SMEs pivot to digital channels and sustain revenue.",
+      "url": "https://theindiasaga.com/saga-corner/fmk-marketing-pr-agency-by-yash-agarwal-assists-small-businesses/"
+    }
+  ],
+  "videos": [
+    {
+      "id": "v1",
+      "youtubeId": "uSxtRz8vJm4",
+      "episode": "EPISODE 01",
+      "title": "Yash Agarwal — Personal Brand Equity & Executive PR Strategy",
+      "category": "YOUTUBE & PODCAST",
+      "duration": "24 MIN WATCH",
+      "desc": "Yash Agarwal breaks down personal branding frameworks, executive positioning, and earned Tier-1 PR strategies for founders.",
+      "img": "https://img.youtube.com/vi/uSxtRz8vJm4/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=uSxtRz8vJm4"
+    },
+    {
+      "id": "v2",
+      "youtubeId": "RhOz54pb-Ss",
+      "episode": "EPISODE 02",
+      "title": "MeAgarwalYash Podcast — Scaling Performance Marketing Engines",
+      "category": "PODCAST & INTERVIEW",
+      "duration": "32 MIN WATCH",
+      "desc": "Deep dive into paid acquisition architectures, reducing CAC by 38%, and scaling monthly digital revenue past ₹3 Crore.",
+      "img": "https://img.youtube.com/vi/RhOz54pb-Ss/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=RhOz54pb-Ss"
+    },
+    {
+      "id": "v3",
+      "youtubeId": "63K2FQLeUoE",
+      "episode": "EPISODE 03",
+      "title": "Deven Choksey & Yash Agarwal — DR Choksey FinServ Market Leadership",
+      "category": "FINSERV LEADERSHIP",
+      "duration": "28 MIN WATCH",
+      "desc": "Key insights on financial services brand architecture, institutional lead generation, and wealth management authority.",
+      "img": "https://img.youtube.com/vi/63K2FQLeUoE/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=63K2FQLeUoE"
+    },
+    {
+      "id": "v4",
+      "youtubeId": "laLO0o1MjjY",
+      "episode": "EPISODE 04",
+      "title": "MeAgarwalYash Keynote — Building Enterprise Growth Without Patronage",
+      "category": "KEYNOTE & TALK",
+      "duration": "19 MIN WATCH",
+      "desc": "Live keynote on building an empire from zero, executive decision-making, and scaling without corporate godfather patronage.",
+      "img": "https://img.youtube.com/vi/laLO0o1MjjY/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=laLO0o1MjjY"
+    },
+    {
+      "id": "v5",
+      "youtubeId": "T8vEnHUo5HU",
+      "episode": "EPISODE 05",
+      "title": "MeAgarwalYash Masterclass — Zero-Budget PR & Growth Architecture",
+      "category": "MASTERCLASS",
+      "duration": "45 MIN WATCH",
+      "desc": "Comprehensive growth masterclass covering macroeconomic newsjacking, Meta & Google media buying mechanics, and CRM nurture loops.",
+      "img": "https://img.youtube.com/vi/T8vEnHUo5HU/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=T8vEnHUo5HU"
+    }
+  ]
 }
