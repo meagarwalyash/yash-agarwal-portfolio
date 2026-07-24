@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'copy-cindex-to-dist',
+      name: 'ensure-cindex-dist',
       closeBundle() {
         const cindexContent = fs.readFileSync(path.resolve(__dirname, 'cindex.html'), 'utf-8');
         const distDirPath = path.resolve(__dirname, 'dist');
@@ -16,17 +16,10 @@ export default defineConfig({
           fs.mkdirSync(distDirPath, { recursive: true });
         }
         fs.writeFileSync(path.resolve(distDirPath, 'index.html'), cindexContent, 'utf-8');
-        
-        // Copy assets to dist root
-        ['no godfather cover.png', 'yashdp.png'].forEach((file) => {
-          const srcPath = path.resolve(__dirname, file);
-          if (fs.existsSync(srcPath)) {
-            fs.copyFileSync(srcPath, path.resolve(distDirPath, file));
-          }
-        });
       },
     },
   ],
+  publicDir: 'public',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
