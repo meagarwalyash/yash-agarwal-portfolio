@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRCV1573GQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DRCV1573GQ');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Enforce HTTPS Redirect for meagarwalyash.com -->
+  <!-- Enforce HTTPS Redirect for production meagarwalyash.com domain only -->
   <script>
-    if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    if (location.protocol === 'http:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
       location.replace('https:' + location.href.substring(location.protocol.length));
     }
   </script>
@@ -93,24 +102,28 @@
   </script>
 
   <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
 
-  <!-- React 18 & Babel CDN -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- React 18 & Babel CDN (High Speed Cloudflare & jsDelivr) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin></script>
 
-  <!-- Google Translate Element Script for 130+ Global Languages -->
+  <!-- Google Translate Element Script (Async & Non-blocking) -->
   <script type="text/javascript">
     function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false
-      }, 'google_translate_element');
+      if (window.google && window.google.translate) {
+        try {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+          }, 'google_translate_element');
+        } catch(e) {}
+      }
     }
   </script>
-  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 
   <style>
     * {
@@ -310,7 +323,7 @@
 <body class="bg-[#0A090E] text-white antialiased selection:bg-marie-gold/30 selection:text-white">
   
   <!-- Loading Screen -->
-  <div id="loading-screen" class="fixed inset-0 z-[100] bg-[#0A090E] flex flex-col items-center justify-center space-y-4">
+  <div id="loading-screen" class="fixed inset-0 z-[100] bg-[#0A090E] flex flex-col items-center justify-center space-y-4 transition-all duration-500">
     <div class="relative w-24 h-24 flex items-center justify-center">
       <div class="w-20 h-20 rounded-full border-2 border-marie-gold/30 border-t-marie-gold animate-spin"></div>
       <img src="maylogo.png" alt="MAY Logo" class="absolute h-14 w-auto object-contain brightness-150 contrast-125 filter drop-shadow-[0_0_20px_rgba(212,175,55,0.8)]" />
@@ -319,6 +332,25 @@
       Yash Agarwal • meagarwalyash.com
     </div>
   </div>
+  <script>
+    // Fail-safe: Guarantee loading overlay vanishes instantly so screen is never stuck
+    (function() {
+      function hideLoader() {
+        var loader = document.getElementById('loading-screen');
+        if (loader && loader.style.display !== 'none') {
+          loader.style.opacity = '0';
+          loader.style.pointerEvents = 'none';
+          setTimeout(function() { loader.style.display = 'none'; }, 400);
+        }
+      }
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(hideLoader, 300);
+      } else {
+        window.addEventListener('DOMContentLoaded', function() { setTimeout(hideLoader, 300); });
+      }
+      setTimeout(hideLoader, 1000); // Absolute fallback limit
+    })();
+  </script>
 
   <div id="root"></div>
 
@@ -655,6 +687,8 @@
       const [videoTab, setVideoTab] = useState('all');
       const [videoScrollIdx, setVideoScrollIdx] = useState(0);
       const [videoAutoPlay, setVideoAutoPlay] = useState(true);
+      const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
+      const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
       const [testimonialIdx, setTestimonialIdx] = useState(0);
       const [newsletterEmail, setNewsletterEmail] = useState('');
       const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
@@ -664,7 +698,7 @@
       // Auto-scroll Videos Carousel every 3.5 seconds
       useEffect(() => {
         if (!videoAutoPlay || selectedVideo) return;
-        const filtered = tvEpisodes.filter(ep => videoTab === 'all' || ep.category.toLowerCase().includes(videoTab));
+        const filtered = tvEpisodes.filter(ep => videoTab === 'all' || (ep && ep.category && ep.category.toLowerCase().includes(videoTab.toLowerCase())));
         if (filtered.length <= 1) return;
 
         const timer = setInterval(() => {
@@ -1030,7 +1064,7 @@
         { name: 'YourStory', abbr: 'YS', color: '#2563eb' },
       ];
 
-      // Press & Media Articles (8 Authentic Media Coverage Features)
+      // Press & Media Articles
       const pressArticles = cmsData?.pressArticles || [
         {
           id: 'p1',
@@ -1221,92 +1255,284 @@
             </div>
           </div>
 
-          {/* EXECUTIVE DOCK NAVIGATION BAR */}
-          <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${darkMode ? 'bg-[#0A090E]/90 border-b border-white/10 text-white' : 'bg-[#FAF8F5]/90 border-b border-marie-border text-black'} backdrop-blur-xl py-3 px-4 sm:px-8 shadow-xl`}>
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          {/* MARIE FORLEO STYLE EXECUTIVE DOCK NAVIGATION BAR */}
+          <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${darkMode ? 'bg-[#0A090E] border-b border-white/10 text-white' : 'bg-white border-zinc-200 text-black'} py-3 px-4 sm:px-8 shadow-sm`}>
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
               
-              {/* Logo Brand (Restored previous logo sizing & filters, shifted down 0.5cm to avoid notification bar intersection) */}
+              {/* LEFT: Logo Brand */}
               <a href="#" className="flex items-center group relative z-10 flex-shrink-0">
                 <img
                   src="maylogo.png"
                   alt="MAY Executive Logo"
-                  className="h-40 sm:h-52 md:h-60 w-auto object-contain -my-14 sm:-my-20 translate-y-4 transition-transform duration-300 group-hover:scale-105 brightness-150 contrast-125 filter drop-shadow-[0_0_24px_rgba(212,175,55,0.9)]"
+                  className="h-36 sm:h-48 md:h-56 w-auto object-contain -my-12 sm:-my-18 translate-y-3 transition-transform duration-300 group-hover:scale-105 brightness-150 contrast-125 filter drop-shadow-[0_0_24px_rgba(212,175,55,0.9)]"
                 />
               </a>
 
-              {/* Central Floating Navigation Pill (Desktop) */}
-              <nav className={`hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full border transition-all ${darkMode ? 'bg-white/5 border-white/10 text-zinc-300' : 'bg-black/5 border-black/10 text-zinc-700'}`}>
-                {[
-                  ['#impact', 'Impact'],
-                  ['#journey', 'Journey'],
-                  ['#media', 'Press'],
-                  ['#tv', 'Videos'],
-                  ['#speaking', 'Speaking'],
-                  ['#testimonials', 'Reviews'],
-                  ['#programs', 'Work With Me'],
-                  ['#book', 'Book'],
-                  ['#contact', 'Contact'],
-                ].map(([href, label]) => (
-                  <a
-                    key={href}
-                    href={href}
-                    className={`px-2.5 py-1 rounded-full text-[11px] xl:text-xs font-bold tracking-wide whitespace-nowrap transition-all ${darkMode ? 'hover:text-marie-gold hover:bg-white/10' : 'hover:text-marie-goldHover hover:bg-black/5'}`}
-                  >
-                    {label}
-                  </a>
-                ))}
-              </nav>
-
-              {/* Right Action Controls */}
-              <div className="flex items-center gap-2.5 flex-shrink-0">
+              {/* RIGHT: Right-Aligned Text Navigation + Dropdowns + Pill CTA */}
+              <div className="hidden lg:flex items-center gap-7 xl:gap-9 font-bold text-base tracking-tight ml-auto">
                 
-                {/* Theme Toggle Button */}
-                <button
-                  onClick={() => setDarkMode(!darkMode)}
-                  className={`p-2 rounded-full border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-marie-gold hover:bg-white/15' : 'border-black/15 bg-black/5 text-marie-goldHover hover:bg-black/10'}`}
-                  title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                >
-                  <i data-lucide={darkMode ? "sun" : "moon"} className="w-4 h-4"></i>
-                </button>
-
-                {/* Multi-Language Selector */}
-                <select
-                  value={lang}
-                  onChange={(e) => setLang(e.target.value)}
-                  className={`px-3 py-1.5 rounded-full font-semibold text-[11px] border focus:outline-none cursor-pointer transition-all ${darkMode ? 'bg-[#14131B] border-white/20 text-white hover:border-marie-gold' : 'bg-white border-black/20 text-black hover:border-marie-gold'}`}
-                >
-                  <option value="en">EN</option>
-                  <option value="hi">HI (हिंदी)</option>
-                  <option value="bn">BN (বাংলা)</option>
-                  <option value="mwr">MWR (मारवाड़ी)</option>
-                  <option value="mr">MR (मराठी)</option>
-                  <option value="gu">GU (ગુજરાતી)</option>
-                  <option value="kn">KN (ಕನ್ನಡ)</option>
-                  <option value="pa">PA (ਪੰਜਾਬੀ)</option>
-                  <option value="es">ES (Español)</option>
-                </select>
-
-                <div id="google_translate_element" className="hidden"></div>
-
-                {/* Growth Blueprint CTA Button */}
-                <a
-                  href="#audit"
-                  className="px-5 py-2 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md transition-all hover:scale-105 hidden sm:flex items-center gap-1.5 gold-glow-sm"
-                >
-                  <span>Free Audit</span>
-                  <i data-lucide="arrow-right" className="w-3.5 h-3.5"></i>
+                {/* Blog Link */}
+                <a href="#blog" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
+                  Blog
                 </a>
 
-                {/* Mobile Menu Toggle Button */}
+                {/* Shop Dropdown */}
+                <div className="relative" onMouseEnter={() => setShopDropdownOpen(true)} onMouseLeave={() => setShopDropdownOpen(false)}>
+                  <button className="flex items-center gap-1.5 hover:text-marie-gold transition-colors whitespace-nowrap py-2 text-base font-bold">
+                    <span>Shop</span>
+                    <i data-lucide="chevron-down" className="w-4 h-4"></i>
+                  </button>
+
+                  {shopDropdownOpen && (
+                    <div
+                      style={{ backgroundColor: darkMode ? '#14131B' : '#FFFFFF', opacity: 1 }}
+                      className={`absolute top-full right-0 w-64 rounded-2xl p-3 shadow-2xl border z-50 animate-fadeIn ${darkMode ? 'border-white/20 text-white' : 'border-zinc-200 text-black'}`}
+                    >
+                      <a href="#store" className="block px-3.5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-marie-gold/20 hover:text-marie-gold transition-colors">
+                        🎓 Masterclasses & Courses
+                      </a>
+                      <a href="#store" className="block px-3.5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-marie-gold/20 hover:text-marie-gold transition-colors">
+                        📦 Digital SOPs & Prompt Packs
+                      </a>
+                      <a href="#store" className="block px-3.5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-marie-gold/20 hover:text-marie-gold transition-colors">
+                        💼 1-on-1 Consulting & Audits
+                      </a>
+                      <a href="#book" className="block px-3.5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-marie-gold/20 hover:text-marie-gold transition-colors">
+                        📖 "No Godfather" Book
+                      </a>
+                    </div>
+                  )}
+                </div>
+
+                {/* Videos / MarieTV Link */}
+                <a href="#tv" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
+                  Videos
+                </a>
+
+                {/* Podcast Link */}
+                <a href="#tv" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
+                  Podcast
+                </a>
+
+                {/* About Link */}
+                <a href="#journey" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
+                  About
+                </a>
+
+                {/* More Dropdown */}
+                <div onMouseEnter={() => setMoreDropdownOpen(true)} onMouseLeave={() => setMoreDropdownOpen(false)}>
+                  <button className="flex items-center gap-1.5 hover:text-marie-gold transition-colors whitespace-nowrap py-2 text-base font-bold">
+                    <span>More</span>
+                    <i data-lucide={moreDropdownOpen ? "chevron-up" : "chevron-down"} className="w-4 h-4"></i>
+                  </button>
+                </div>
+
+                {/* Right Action Controls: Language, Theme & My Account */}
+                <div className="flex items-center gap-2 pl-2 border-l border-white/10">
+                  {/* Theme Toggle Button */}
+                  <button
+                    onClick={() => setDarkMode(!darkMode)}
+                    className={`p-2 rounded-full border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-marie-gold hover:bg-white/15' : 'border-black/15 bg-black/5 text-marie-goldHover hover:bg-black/10'}`}
+                    title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                  >
+                    <i data-lucide={darkMode ? "sun" : "moon"} className="w-3.5 h-3.5"></i>
+                  </button>
+
+                  {/* Multi-Language Selector */}
+                  <select
+                    value={lang}
+                    onChange={(e) => setLang(e.target.value)}
+                    className={`px-2.5 py-1 rounded-full font-semibold text-[11px] border focus:outline-none cursor-pointer transition-all ${darkMode ? 'bg-[#14131B] border-white/20 text-white hover:border-marie-gold' : 'bg-white border-black/20 text-black hover:border-marie-gold'}`}
+                  >
+                    <option value="en">EN</option>
+                    <option value="hi">HI (हिंदी)</option>
+                    <option value="bn">BN (বাংলা)</option>
+                    <option value="mwr">MWR (मारवाड़ी)</option>
+                    <option value="mr">MR (मराठी)</option>
+                    <option value="gu">GU (ગુજરાતી)</option>
+                    <option value="kn">KN (કನ್ನಡ)</option>
+                    <option value="pa">PA (ਪੰਜਾਬੀ)</option>
+                    <option value="es">ES (Español)</option>
+                  </select>
+
+                  {/* My Account */}
+                  <a
+                    href="dashboard.html"
+                    className={`px-3 py-1.5 rounded-full border text-xs font-bold transition-all flex items-center gap-1 ${darkMode ? 'border-marie-gold/40 text-marie-gold hover:bg-marie-gold/20' : 'border-black/20 text-black hover:bg-black/5'}`}
+                  >
+                    <i data-lucide="user" className="w-3 h-3"></i>
+                    <span>Account</span>
+                  </a>
+                </div>
+
+                {/* DISTINCTIVE MARIE FORLEO STYLE LIME/GOLD PILL CTA BUTTON */}
+                <a
+                  href="#audit"
+                  className="px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider transition-all duration-300 bg-[#E2F16D] text-black border border-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none hover:bg-[#d8e85c] whitespace-nowrap flex items-center gap-1"
+                >
+                  <span>Free Audit</span>
+                  <i data-lucide="sparkles" className="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+
+              {/* Mobile Actions & Menu Toggle */}
+              <div className="flex items-center gap-2 lg:hidden">
+                <a
+                  href="#audit"
+                  className="px-4 py-2 rounded-full bg-[#E2F16D] text-black font-extrabold text-xs border border-black shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+                >
+                  Free Audit
+                </a>
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className={`p-2 rounded-xl lg:hidden border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-white' : 'border-black/15 bg-black/5 text-black'}`}
+                  className={`p-2 rounded-xl border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-white' : 'border-black/15 bg-black/5 text-black'}`}
                 >
                   <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-5 h-5"></i>
                 </button>
               </div>
 
             </div>
+
+            {/* MORE MEGA DROPDOWN - ALWAYS ATTACHED DIRECTLY BELOW HEADER */}
+            {moreDropdownOpen && (
+              <div
+                onMouseEnter={() => setMoreDropdownOpen(true)}
+                onMouseLeave={() => setMoreDropdownOpen(false)}
+                style={{ backgroundColor: darkMode ? '#0F0E17' : '#FAF8F5', color: darkMode ? '#FFFFFF' : '#121212', opacity: 1 }}
+                className={`absolute top-full left-0 right-0 w-full z-[9999] shadow-2xl border-t-2 border-b-2 transition-all ${darkMode ? 'border-white/20' : 'border-zinc-300'}`}
+              >
+                <div className="max-w-7xl mx-auto py-12 px-6 sm:px-12 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 text-left">
+                  
+                  {/* COLUMN 1: Site Navigation */}
+                  <div className="md:col-span-4 space-y-4">
+                    <h3
+                      style={{ color: darkMode ? '#FFFFFF' : '#121212' }}
+                      className="font-serif text-2xl sm:text-3xl font-extrabold tracking-tight border-b-2 border-marie-gold/50 pb-2 mb-4"
+                    >
+                      Site Navigation
+                    </h3>
+                    <ul className="space-y-3 text-sm sm:text-base font-bold tracking-snug">
+                      <li><a href="#" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> Home</a></li>
+                      <li><a href="new-here.html" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> New Here? (Start Journey)</a></li>
+                      <li><a href="#store" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> Shop & Masterclasses</a></li>
+                      <li><a href="#impact" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> Impact Dashboard</a></li>
+                      <li><a href="#testimonials" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> Success Stories & Reviews</a></li>
+                      <li><a href="#audit" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> Free Tools & Growth Blueprint</a></li>
+                      <li><a href="#speaking" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> Speaking & Keynotes</a></li>
+                      <li><a href="#media" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> Press & Media Kit</a></li>
+                      <li><a href="#programs" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> Fractional CMO & Advisory</a></li>
+                      <li><a href="#contact" style={{ color: darkMode ? '#F4F4F5' : '#18181B' }} className="hover:text-marie-gold hover:translate-x-1.5 transition-all inline-flex items-center gap-2"><span className="text-marie-gold font-black text-lg">•</span> Contact & Inquiries</a></li>
+                    </ul>
+                    <a
+                      href="dashboard.html"
+                      style={{ color: darkMode ? '#FFFFFF' : '#121212', borderColor: darkMode ? '#FFFFFF' : '#121212' }}
+                      className="inline-flex items-center gap-2 mt-6 px-8 py-3 rounded-full border-2 text-xs font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-md hover:scale-105"
+                    >
+                      <span>Program Login</span>
+                      <i data-lucide="arrow-right" className="w-3.5 h-3.5"></i>
+                    </a>
+                  </div>
+
+                  {/* COLUMN 2: The Latest Insights */}
+                  <div className="md:col-span-4 space-y-5 border-l-2 border-zinc-200 dark:border-white/10 pl-0 md:pl-8">
+                    <h3
+                      style={{ color: darkMode ? '#FFFFFF' : '#121212' }}
+                      className="font-serif text-2xl sm:text-3xl font-extrabold tracking-tight border-b-2 border-marie-gold/50 pb-2 mb-4"
+                    >
+                      The Latest Insights
+                    </h3>
+                    <div className="space-y-5">
+                      <a href="#blog" className="group block space-y-1.5">
+                        <span
+                          style={{ color: darkMode ? '#FFE885' : '#B8860B', backgroundColor: darkMode ? 'rgba(212,175,55,0.25)' : 'rgba(212,175,55,0.15)' }}
+                          className="inline-block px-3 py-1 rounded-full text-[11px] font-black tracking-widest uppercase"
+                        >
+                          MONEY & REVENUE
+                        </span>
+                        <h4
+                          style={{ color: darkMode ? '#FFFFFF' : '#121212' }}
+                          className="font-serif text-lg sm:text-xl font-bold leading-snug group-hover:text-marie-gold transition-colors"
+                        >
+                          How to Scale Digital Revenue Past ₹3Cr in ANY Economy with First-Principles Marketing
+                        </h4>
+                      </a>
+                      <a href="#blog" className="group block space-y-1.5">
+                        <span
+                          style={{ color: darkMode ? '#FF9ECA' : '#A8426C', backgroundColor: darkMode ? 'rgba(168,66,108,0.25)' : 'rgba(168,66,108,0.15)' }}
+                          className="inline-block px-3 py-1 rounded-full text-[11px] font-black tracking-widest uppercase"
+                        >
+                          PR & BRAND AUTHORITY
+                        </span>
+                        <h4
+                          style={{ color: darkMode ? '#FFFFFF' : '#121212' }}
+                          className="font-serif text-lg sm:text-xl font-bold leading-snug group-hover:text-marie-gold transition-colors"
+                        >
+                          The Zero-Budget PR Framework: Winning Tier-1 Media Coverage Without $50k Agency Retainers
+                        </h4>
+                      </a>
+                      <a href="#blog" className="group block space-y-1.5">
+                        <span
+                          style={{ color: darkMode ? '#90ED94' : '#2E7D32', backgroundColor: darkMode ? 'rgba(46,125,50,0.25)' : 'rgba(46,125,50,0.15)' }}
+                          className="inline-block px-3 py-1 rounded-full text-[11px] font-black tracking-widest uppercase"
+                        >
+                          CAREER & BUSINESS
+                        </span>
+                        <h4
+                          style={{ color: darkMode ? '#FFFFFF' : '#121212' }}
+                          className="font-serif text-lg sm:text-xl font-bold leading-snug group-hover:text-marie-gold transition-colors"
+                        >
+                          From ₹12,000 Salary to Multi-Crore CMO: Building Executive Equity Without Corporate Patronage
+                        </h4>
+                      </a>
+                    </div>
+                    <a
+                      href="#blog"
+                      style={{ color: darkMode ? '#FFD700' : '#B8860B' }}
+                      className="inline-flex items-center gap-1.5 text-sm font-black hover:text-marie-gold transition-all pt-3 hover:translate-x-2"
+                    >
+                      <span>All Posts</span>
+                      <i data-lucide="arrow-right" className="w-4 h-4"></i>
+                    </a>
+                  </div>
+
+                  {/* COLUMN 3: Featured Banner Promo Card */}
+                  <div className="md:col-span-4">
+                    <div
+                      style={{
+                        backgroundColor: darkMode ? '#1A1826' : '#FFF6F0',
+                        borderColor: darkMode ? 'rgba(255,255,255,0.25)' : '#F5D8C7',
+                        color: darkMode ? '#FFFFFF' : '#121212'
+                      }}
+                      className="p-8 rounded-3xl border-2 text-center relative overflow-hidden shadow-2xl"
+                    >
+                      {/* Confetti & Header Badge */}
+                      <span className="inline-block text-xs font-black tracking-widest text-[#D96B27] bg-[#D96B27]/15 uppercase px-3 py-1 rounded-full mb-3">
+                        🎉 DID YOU HEAR?
+                      </span>
+                      <h4
+                        style={{ color: darkMode ? '#FFFFFF' : '#121212' }}
+                        className="font-serif text-2xl font-black leading-tight"
+                      >
+                        "No Godfather" Book & Masterclass Stack
+                      </h4>
+                      <p
+                        style={{ color: darkMode ? '#E4E4E7' : '#52525B' }}
+                        className="text-xs sm:text-sm font-bold mt-2"
+                      >
+                        VIP Early Access & 50% Off Founders Launch Bundle!
+                      </p>
+                      <div className="my-5">
+                        <img src="no godfather cover.png" alt="No Godfather Book Mockup" className="h-32 mx-auto object-contain filter drop-shadow-2xl transition-transform hover:scale-105" />
+                      </div>
+                      <a href="#book" className="inline-block px-8 py-3 rounded-full bg-[#A8426C] hover:bg-[#8D3358] text-white text-xs font-black uppercase tracking-widest shadow-xl transition-all hover:scale-105">
+                        Claim Discount
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            )}
           </header>
 
           {/* Mobile Dropdown Menu */}
@@ -1855,6 +2081,112 @@
                     className={`h-2 rounded-full transition-all duration-300 ${videoScrollIdx === idx ? 'w-8 bg-marie-gold' : 'w-2 bg-white/20 hover:bg-white/40'}`}
                   ></button>
                 ))}
+              </div>
+
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════
+               DIGITAL STORE & MASTERCLASSES STOREFRONT (v2.0 PLATFORM)
+          ══════════════════════════════════════════════════════════ */}
+          <section id="store" className={`py-24 border-t relative overflow-hidden ${darkMode ? 'bg-[#0B0A11] border-white/10' : 'bg-white border-marie-border'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10 space-y-12">
+              
+              <div className="text-center max-w-3xl mx-auto space-y-3 reveal-on-scroll">
+                <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-marie-gold/15 text-marie-gold border border-marie-gold/30">
+                  DIGITAL STOREFRONT & PLATFORM
+                </span>
+                <h2 className="text-4xl sm:text-5xl font-bold">Executive Masterclasses, SOPs & Advisory</h2>
+                <div className="section-divider mx-auto"></div>
+                <p className={`text-base ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                  Battle-tested operating systems, prompt packs, media buying SOPs, and executive 1-on-1 advisory sessions. Instant lifetime access.
+                </p>
+              </div>
+
+              {/* STORE GRID: COURSES & DIGITAL PRODUCTS */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-on-scroll">
+                
+                {/* Product 1: PR Masterclass */}
+                <div className={`${cardClass} rounded-3xl overflow-hidden p-6 flex flex-col justify-between group hover:border-marie-gold/60 transition-all gold-glow-sm`}>
+                  <div className="space-y-4">
+                    <div className="aspect-[16/10] rounded-2xl overflow-hidden relative">
+                      <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80" alt="Masterclass" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-marie-gold uppercase">BESTSELLER</span>
+                    </div>
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-bold text-marie-gold uppercase">ONLINE MASTERCLASS</span>
+                      <h3 className="text-xl font-bold leading-snug">The Personal Brand & Executive PR Masterclass</h3>
+                      <p className={`text-xs ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>6.5 Hours HD Video • Curriculum, PR Templates & Forbes pitch formula included.</p>
+                    </div>
+                  </div>
+                  <div className="pt-6 border-t border-white/10 flex items-center justify-between mt-4">
+                    <div>
+                      <span className="text-xs text-zinc-400 line-through">₹14,999</span>
+                      <div className="text-2xl font-bold text-marie-gold">₹9,999</div>
+                    </div>
+                    <a
+                      href="checkout.html?id=c1&price=9999&title=The%20Personal%20Brand%20%26%20Executive%20PR%20Masterclass&type=course"
+                      className="px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs transition-all shadow-md gold-glow"
+                    >
+                      Enroll Now →
+                    </a>
+                  </div>
+                </div>
+
+                {/* Product 2: Performance SOPs */}
+                <div className={`${cardClass} rounded-3xl overflow-hidden p-6 flex flex-col justify-between group hover:border-marie-gold/60 transition-all gold-glow-sm`}>
+                  <div className="space-y-4">
+                    <div className="aspect-[16/10] rounded-2xl overflow-hidden relative">
+                      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Performance SOPs" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-white uppercase">INSTANT DOWNLOAD</span>
+                    </div>
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-bold text-marie-gold uppercase">DIGITAL SOPs & CALCULATORS</span>
+                      <h3 className="text-xl font-bold leading-snug">Multi-Crore Performance Marketing SOPs</h3>
+                      <p className={`text-xs ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>Media planning Excel sheets, CAC payback models & Meta creative testing frameworks.</p>
+                    </div>
+                  </div>
+                  <div className="pt-6 border-t border-white/10 flex items-center justify-between mt-4">
+                    <div>
+                      <span className="text-xs text-zinc-400 line-through">₹4,999</span>
+                      <div className="text-2xl font-bold text-marie-gold">₹2,499</div>
+                    </div>
+                    <a
+                      href="checkout.html?id=dp2&price=2499&title=Multi-Crore%20Performance%20Marketing%20SOPs&type=product"
+                      className="px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs transition-all shadow-md gold-glow"
+                    >
+                      Buy Asset →
+                    </a>
+                  </div>
+                </div>
+
+                {/* Product 3: 1-on-1 Advisory Session */}
+                <div className={`${cardClass} rounded-3xl overflow-hidden p-6 flex flex-col justify-between group hover:border-marie-gold/60 transition-all gold-glow-sm`}>
+                  <div className="space-y-4">
+                    <div className="aspect-[16/10] rounded-2xl overflow-hidden relative">
+                      <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Advisory Call" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-marie-gold uppercase">1-ON-1 EXECUTIVE</span>
+                    </div>
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-bold text-marie-gold uppercase">CONSULTING ADVISORY</span>
+                      <h3 className="text-xl font-bold leading-snug">60-Min Deep-Dive Growth & Brand Audit</h3>
+                      <p className={`text-xs ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>Direct 1-on-1 strategy session with Yash Agarwal for acquisition, PR & brand scale.</p>
+                    </div>
+                  </div>
+                  <div className="pt-6 border-t border-white/10 flex items-center justify-between mt-4">
+                    <div>
+                      <span className="text-xs text-zinc-400 line-through">₹19,999</span>
+                      <div className="text-2xl font-bold text-marie-gold">₹14,999</div>
+                    </div>
+                    <a
+                      href="checkout.html?id=cs2&price=14999&title=60-Min%20Deep-Dive%20Growth%20%26%20Brand%20Audit&type=consulting"
+                      className="px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs transition-all shadow-md gold-glow"
+                    >
+                      Book Call →
+                    </a>
+                  </div>
+                </div>
+
               </div>
 
             </div>

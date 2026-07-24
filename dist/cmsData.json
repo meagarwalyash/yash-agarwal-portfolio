@@ -539,5 +539,129 @@
       "img": "https://img.youtube.com/vi/T8vEnHUo5HU/hqdefault.jpg",
       "url": "https://www.youtube.com/watch?v=T8vEnHUo5HU"
     }
-  ]
+  ],
+  "courses": [
+    {
+      "id": "c1",
+      "title": "The Personal Brand & Executive PR Masterclass",
+      "slug": "personal-brand-executive-pr-masterclass",
+      "category": "BRAND EQUITY",
+      "level": "Executive / C-Suite",
+      "price": 14999,
+      "discountPrice": 9999,
+      "currency": "INR",
+      "duration": "6.5 Hours HD Video",
+      "badge": "BESTSELLER",
+      "instructor": "Yash Agarwal",
+      "rating": 4.9,
+      "reviewsCount": 128,
+      "thumbnail": "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80",
+      "desc": "The complete operating system for turning executive leaders into recognized media authorities, securing Tier-1 press in Forbes & Business Standard without $50k agency retainers.",
+      "curriculum": [
+        {
+          "moduleTitle": "Module 1: Executive Positioning & Narrative Arc",
+          "lessons": [
+            { "id": "m1-l1", "title": "The First Principles of Executive Brand Equity", "duration": "18:40", "type": "video", "youtubeId": "uSxtRz8vJm4", "isFreePreview": true, "resources": ["Executive_Brand_Blueprint.pdf"] },
+            { "id": "m1-l2", "title": "Crafting Your Unfair Advantage & Positioning Matrix", "duration": "24:15", "type": "video", "youtubeId": "RhOz54pb-Ss", "isFreePreview": false, "resources": ["Positioning_Matrix.docx"] }
+          ]
+        },
+        {
+          "moduleTitle": "Module 2: The Zero-Retainer Newsjacking Engine",
+          "lessons": [
+            { "id": "m2-l1", "title": "How to Pitch Forbes, Business Standard & DNA India", "duration": "32:10", "type": "video", "youtubeId": "63K2FQLeUoE", "isFreePreview": false, "resources": ["PR_Pitch_Templates.zip"] },
+            { "id": "m2-l2", "title": "Turning Proprietary Data into Viral Press Reports", "duration": "28:45", "type": "video", "youtubeId": "laLO0o1MjjY", "isFreePreview": false, "resources": ["Media_Report_Template.xlsx"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "title": "Performance Marketing Engine: Scaling to ₹3Cr/Month",
+      "slug": "performance-marketing-engine-3cr-month",
+      "category": "PERFORMANCE",
+      "level": "Advanced",
+      "price": 24999,
+      "discountPrice": 14999,
+      "currency": "INR",
+      "duration": "12.0 Hours HD Video",
+      "badge": "HIGH ROI",
+      "instructor": "Yash Agarwal",
+      "rating": 4.95,
+      "reviewsCount": 210,
+      "thumbnail": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      "desc": "How we scaled Avant Garde Industries from ₹25L to ₹3Cr per month using Meta/Google media buying, creative velocity, and CAC payback optimization.",
+      "curriculum": [
+        {
+          "moduleTitle": "Module 1: Media Buying Mechanics at Scale",
+          "lessons": [
+            { "id": "c2m1-l1", "title": "Account Architecture & Campaign Structure for Scale", "duration": "22:15", "type": "video", "youtubeId": "RhOz54pb-Ss", "isFreePreview": true, "resources": ["Ad_Account_Structure.pdf"] },
+            { "id": "c2m1-l2", "title": "Creative Velocity: Testing 50 Hooks Per Week", "duration": "35:00", "type": "video", "youtubeId": "T8vEnHUo5HU", "isFreePreview": false, "resources": ["Creative_Testing_Sheet.xlsx"] }
+          ]
+        }
+      ]
+    }
+  ],
+  "digitalProducts": [
+    {
+      "id": "dp1",
+      "title": "The Executive PR & Newsjacking Swipe File",
+      "category": "PROMPT PACK & TEMPLATES",
+      "price": 2999,
+      "discountPrice": 1499,
+      "currency": "INR",
+      "fileType": "ZIP (PDF + DOCX + Prompts)",
+      "badge": "INSTANT DOWNLOAD",
+      "thumbnail": "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=600&q=80",
+      "desc": "50+ Battle-tested email pitches, journalist press releases, AI ChatGPT prompts for newsjacking, and Tier-1 media pitch templates.",
+      "downloadUrl": "resources/PR_Newsjacking_Swipe_File_2026.zip"
+    },
+    {
+      "id": "dp2",
+      "title": "Multi-Crore Performance Marketing SOPs & Calculators",
+      "category": "EXCEL & SOPs",
+      "price": 4999,
+      "discountPrice": 2499,
+      "currency": "INR",
+      "fileType": "ZIP (Excel + Canva + SOPs)",
+      "badge": "TOP RATED",
+      "thumbnail": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
+      "desc": "The exact media planning Excel models, CAC payback calculators, creative briefs, and CRO checklists used at Avant Garde Industries.",
+      "downloadUrl": "resources/Performance_Marketing_SOPs.zip"
+    }
+  ],
+  "consultingOptions": [
+    {
+      "id": "cs1",
+      "title": "30-Minute Executive Advisory Session",
+      "duration": "30 MIN",
+      "price": 9999,
+      "discountPrice": 7499,
+      "currency": "INR",
+      "type": "1-on-1 Call",
+      "desc": "Direct 1-on-1 strategy call with Yash Agarwal to troubleshoot performance media bottlenecks, personal positioning, or PR narrative."
+    },
+    {
+      "id": "cs2",
+      "title": "60-Minute Deep-Dive Growth & Brand Audit",
+      "duration": "60 MIN",
+      "price": 19999,
+      "discountPrice": 14999,
+      "currency": "INR",
+      "type": "1-on-1 Deep Dive",
+      "desc": "Comprehensive audit of your ad funnel, acquisition metrics, CAC payback model, and personal executive brand roadmap."
+    }
+  ],
+  "coupons": [
+    { "code": "YASH10", "discountType": "percentage", "value": 10, "expiry": "2026-12-31", "usageLimit": 500, "used": 42 },
+    { "code": "GROWTH50", "discountType": "percentage", "value": 50, "expiry": "2026-12-31", "usageLimit": 100, "used": 18 },
+    { "code": "NO_GODFATHER", "discountType": "flat", "value": 1000, "expiry": "2026-12-31", "usageLimit": 200, "used": 85 }
+  ],
+  "memberships": [
+    { "id": "free", "name": "Free Insider", "price": 0, "features": ["Access to free preview masterclasses", "Fortnightly MAY Growth Dispatch", "Community Discussion Access"] },
+    { "id": "pro", "name": "Pro Growth Executive", "price": 2999, "interval": "month", "features": ["Access to all Digital SOPs & Prompt Packs", "Monthly Group Office Hours with Yash", "Private Masterclass Library", "Priority Support"] },
+    { "id": "elite", "name": "Elite Founder Guild", "price": 29999, "interval": "year", "features": ["Unlimited Access to All Courses & Products", "Quarterly 1-on-1 Advisory Call", "Private VIP Founder Telegram Group", "Certificates of Completion"] }
+  ],
+  "orders": [],
+  "users": [],
+  "affiliates": []
 }
