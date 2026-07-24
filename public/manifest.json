@@ -1,0 +1,15 @@
+{
+  "short_name": "Yash Agarwal",
+  "name": "Yash Agarwal (MeAgarwalYash) — Executive Growth Architect",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#050505",
+  "theme_color": "#D4AF37",
+  "display": "standalone"
+}
