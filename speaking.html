@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speaking & Keynotes — Yash Agarwal (@MeAgarwalYash)</title>
+  <meta name="description" content="Book Yash Agarwal for keynotes, workshops, fireside chats, and panel discussions on Growth Marketing, Personal Branding, and AI." />
+  <link rel="icon" type="image/png" href="maylogo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            marie: {
+              gold: '#D4AF37',
+              goldHover: '#B8860B',
+              goldSoft: '#FAF4E1',
+              goldBorder: '#EEDC9A',
+              bg: '#FAF8F5',
+              border: '#EBE5D8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; }
+    @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+    .animate-marquee { display: flex; width: 200%; animation: marquee 30s linear infinite; }
+    .animate-marquee:hover { animation-play-state: paused; }
+    .gold-glow { box-shadow: 0 0 24px rgba(212, 175, 55, 0.4); }
+  </style>
+</head>
+<body class="antialiased selection:bg-marie-gold selection:text-black">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function SpeakingPage() {
+      const [darkMode, setDarkMode] = useState(true);
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+      useEffect(() => {
+        if (darkMode) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }, [darkMode]);
+
+      useEffect(() => {
+        if (window.lucide) window.lucide.createIcons();
+      });
+
+      const speakingEvents = [
+        { id: 's1', event: 'WhatsApp Business Summit', org: 'Meta (WhatsApp)', topic: 'Scaling SME Growth via Conversational Commerce', year: '2024', type: 'KEYNOTE', icon: 'message-circle', featured: true },
+        { id: 's2', event: 'ET Now Digital Summit', org: 'Economic Times', topic: 'The New-Age CMO: AI, Performance & Brand Authority', year: '2024', type: 'PANEL', icon: 'tv', featured: true },
+        { id: 's3', event: 'Google Partners Summit', org: 'Google India', topic: 'Scaling Search & PMax Campaigns to Multi-Crore Revenue', year: '2023', type: 'TALK', icon: 'search', featured: true },
+        { id: 's4', event: 'Meta Advantage+ Bootcamp', org: 'Meta India', topic: 'Creative Velocity and AI-Powered Ad Scaling', year: '2023', type: 'WORKSHOP', icon: 'zap', featured: false },
+        { id: 's5', event: 'Canva Create India', org: 'Canva', topic: 'Personal Brand Design Systems for Executive Leaders', year: '2024', type: 'TALK', icon: 'pen-tool', featured: false },
+        { id: 's6', event: 'HP Reinvent Partner Conference', org: 'HP India', topic: 'Enterprise B2B Growth Marketing Architecture', year: '2023', type: 'KEYNOTE', icon: 'cpu', featured: false },
+        { id: 's7', event: 'IIM Ahmedabad Marketing Summit', org: 'IIM Ahmedabad', topic: 'Building Brand Equity Without Corporate Patronage', year: '2024', type: 'KEYNOTE', icon: 'graduation-cap', featured: true },
+        { id: 's8', event: 'NMIMS Marketing Conclave', org: 'NMIMS Mumbai', topic: 'From Agency Life to CMO: Career Architecture for Marketers', year: '2023', type: 'PANEL', icon: 'users', featured: false }
+      ];
+
+      const cardClass = darkMode ? 'bg-[#14131B] border border-[#232230] text-white' : 'bg-white border border-marie-border text-black';
+      const bgClass = darkMode ? 'bg-[#0A090E] text-white' : 'bg-[#FAF8F5] text-[#121212]';
+
+      return (
+        <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
+          
+          {/* TOP ANNOUNCEMENT BAR */}
+          <div className="bg-[#08070D] border-b border-marie-gold/30 text-marie-gold py-2.5 overflow-hidden whitespace-nowrap relative flex items-center shadow-md">
+            <div className="inline-flex items-center gap-16 animate-marquee font-bold text-xs tracking-wider">
+              <span className="flex items-center gap-2">
+                <span>🔥 NEW: Read Yash's Latest Essay on Tier-1 PR Newsjacking • Join the Waitlist for 'No Godfather'</span>
+                <a href="index.html#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+              <span className="flex items-center gap-2">
+                <span>🔥 NEW: Read Yash's Latest Essay on Tier-1 PR Newsjacking • Join the Waitlist for 'No Godfather'</span>
+                <a href="index.html#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+            </div>
+          </div>
+
+          {/* EXACT SAME HEADER DOCK BAR AS INDEX.HTML */}
+          <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${darkMode ? 'bg-[#0A090E]/90 border-b border-white/10 text-white' : 'bg-[#FAF8F5]/90 border-b border-marie-border text-black'} backdrop-blur-xl py-3 px-4 sm:px-8 shadow-xl`}>
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+              
+              {/* Logo Brand */}
+              <a href="index.html" className="flex items-center group relative z-10 flex-shrink-0">
+                <img
+                  src="maylogo.png"
+                  alt="MAY Executive Logo"
+                  className="h-40 sm:h-52 md:h-60 w-auto object-contain -my-14 sm:-my-20 translate-y-4 transition-transform duration-300 group-hover:scale-105 brightness-150 contrast-125 filter drop-shadow-[0_0_24px_rgba(212,175,55,0.9)]"
+                />
+              </a>
+
+              {/* Central Floating Navigation Pill */}
+              <nav className={`hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full border transition-all ${darkMode ? 'bg-white/5 border-white/10 text-zinc-300' : 'bg-black/5 border-black/10 text-zinc-700'}`}>
+                {[
+                  ['index.html#impact', 'Impact'],
+                  ['index.html#journey', 'Journey'],
+                  ['media.html', 'Press'],
+                  ['index.html#tv', 'Videos'],
+                  ['speaking.html', 'Speaking'],
+                  ['index.html#testimonials', 'Reviews'],
+                  ['index.html#programs', 'Work With Me'],
+                  ['index.html#book', 'Book'],
+                  ['index.html#contact', 'Contact'],
+                ].map(([href, label]) => (
+                  <a
+                    key={href}
+                    href={href}
+                    className={`px-2.5 py-1 rounded-full text-[11px] xl:text-xs font-bold tracking-wide whitespace-nowrap transition-all ${label === 'Speaking' ? 'text-marie-gold bg-marie-gold/10' : (darkMode ? 'hover:text-marie-gold hover:bg-white/10' : 'hover:text-marie-goldHover hover:bg-black/5')}`}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </nav>
+
+              {/* Right Action Controls */}
+              <div className="flex items-center gap-2.5 flex-shrink-0">
+                
+                {/* Theme Toggle Button */}
+                <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  className={`p-2 rounded-full border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-marie-gold hover:bg-white/15' : 'border-black/15 bg-black/5 text-marie-goldHover hover:bg-black/10'}`}
+                  title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                >
+                  <i data-lucide={darkMode ? "sun" : "moon"} className="w-4 h-4"></i>
+                </button>
+
+                {/* Growth Blueprint CTA Button */}
+                <a
+                  href="index.html#audit"
+                  className="px-5 py-2 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md transition-all hover:scale-105 hidden sm:flex items-center gap-1.5 gold-glow-sm"
+                >
+                  <span>Free Audit</span>
+                  <i data-lucide="arrow-right" className="w-3.5 h-3.5"></i>
+                </a>
+
+                {/* Mobile Menu Toggle Button */}
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className={`p-2 rounded-xl lg:hidden border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-white' : 'border-black/15 bg-black/5 text-black'}`}
+                >
+                  <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-5 h-5"></i>
+                </button>
+              </div>
+
+            </div>
+          </header>
+
+          {/* Mobile Dropdown Menu */}
+          {mobileMenuOpen && (
+            <div className={`fixed inset-x-0 top-[65px] z-40 p-6 shadow-2xl lg:hidden space-y-4 font-bold text-sm backdrop-blur-2xl transition-all ${darkMode ? 'bg-[#0A090E]/95 border-b border-white/10 text-white' : 'bg-white/95 border-b border-marie-border text-[#121212]'}`}>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                {[
+                  ['index.html#impact', 'Impact'],
+                  ['index.html#journey', 'Journey'],
+                  ['media.html', 'Press & Media'],
+                  ['index.html#tv', 'Videos & Podcasts'],
+                  ['speaking.html', 'Speaking'],
+                  ['index.html#testimonials', 'Reviews'],
+                  ['index.html#programs', 'Work With Me'],
+                  ['index.html#book', 'Book'],
+                  ['index.html#audit', 'Growth Audit'],
+                  ['index.html#contact', 'Contact'],
+                ].map(([href, label]) => (
+                  <a
+                    key={href}
+                    href={href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`p-3 rounded-2xl text-xs font-semibold flex items-center justify-between border transition-all ${darkMode ? 'bg-white/5 border-white/10 hover:border-marie-gold hover:text-marie-gold' : 'bg-black/5 border-black/10 hover:border-marie-gold hover:text-marie-gold'}`}
+                  >
+                    <span>{label}</span>
+                    <i data-lucide="chevron-right" className="w-3.5 h-3.5 opacity-50"></i>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* PAGE HERO */}
+          <main className="max-w-7xl mx-auto px-6 sm:px-12 py-16 space-y-12">
+            <div className="text-center space-y-4">
+              <div className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-marie-gold/10 border border-marie-gold/20 text-marie-gold">
+                KEYNOTES, PANELS & WORKSHOPS
+              </div>
+              <h1 className="text-4xl sm:text-6xl font-bold tracking-tight">Speaking Portfolio</h1>
+              <p className={`text-base sm:text-lg max-w-2xl mx-auto leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                Delivering high-impact keynotes on performance scaling, zero-budget PR frameworks, AI growth stacks, and executive brand equity across corporate summits, tech conferences, and top B-schools.
+              </p>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className={`p-6 rounded-3xl text-center ${cardClass}`}>
+                <div className="text-3xl font-bold text-marie-gold">50+</div>
+                <div className={`text-xs mt-1 font-bold ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Total Keynotes & Panels</div>
+              </div>
+              <div className={`p-6 rounded-3xl text-center ${cardClass}`}>
+                <div className="text-3xl font-bold text-emerald-400">20+</div>
+                <div className={`text-xs mt-1 font-bold ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Corporate & Tech Summits</div>
+              </div>
+              <div className={`p-6 rounded-3xl text-center ${cardClass}`}>
+                <div className="text-3xl font-bold text-blue-400">15+</div>
+                <div className={`text-xs mt-1 font-bold ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Colleges & B-Schools</div>
+              </div>
+              <div className={`p-6 rounded-3xl text-center ${cardClass}`}>
+                <div className="text-3xl font-bold text-purple-400">10K+</div>
+                <div className={`text-xs mt-1 font-bold ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Live Audience Reached</div>
+              </div>
+            </div>
+
+            {/* Speaking Events Grid */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-marie-gold">All Speaking Engagements</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {speakingEvents.map((ev) => (
+                  <div key={ev.id} className={`${cardClass} rounded-2xl p-6 flex items-start gap-4 hover:border-marie-gold/50 transition-all`}>
+                    <div className="w-12 h-12 rounded-2xl bg-marie-gold/15 flex items-center justify-center flex-shrink-0">
+                      <i data-lucide={ev.icon} className="w-5 h-5 text-marie-gold"></i>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-marie-gold/20 text-marie-gold uppercase">{ev.type}</span>
+                        <span className={`text-xs font-bold ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>{ev.year}</span>
+                        {ev.featured && <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold">FEATURED</span>}
+                      </div>
+                      <div className="font-bold text-base mb-1">{ev.event}</div>
+                      <div className={`text-xs font-bold mb-1 ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>{ev.org}</div>
+                      <div className={`text-xs ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>{ev.topic}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Booking CTA */}
+            <div className={`p-8 sm:p-12 rounded-3xl border-2 border-marie-gold text-center space-y-6 ${darkMode ? 'bg-marie-gold/5' : 'bg-marie-goldSoft'}`}>
+              <h2 className="text-3xl font-bold">Book Yash for Your Event</h2>
+              <p className={`text-sm max-w-lg mx-auto leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                For keynote invitations, panel discussions, corporate training, or university lectures — reach out directly to check availability.
+              </p>
+              <a href="mailto:yash@meagarwalyash.com?subject=Speaking Booking Request" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-marie-gold text-black font-bold text-xs hover:bg-marie-goldHover transition-all shadow-lg gold-glow">
+                <i data-lucide="mic" className="w-4 h-4"></i>
+                <span>Send Speaking Inquiry →</span>
+              </a>
+            </div>
+          </main>
+
+          {/* EXACT SAME FOOTER AS INDEX.HTML */}
+          <footer className={`border-t ${darkMode ? 'bg-black border-white/10 text-zinc-400' : 'bg-white border-marie-border text-zinc-500'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 py-14">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
+                {/* Brand */}
+                <div className="col-span-2 sm:col-span-1 space-y-3">
+                  <img src="maylogo.png" alt="MAY Logo" className="h-10 w-auto object-contain brightness-150 contrast-125 filter drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]" />
+                  <p className="text-xs leading-relaxed">Executive Growth Architect. Author. CMO. Speaker. Built on first principles, not favours.</p>
+                  <div className="flex gap-2">
+                    {['linkedin', 'instagram', 'youtube', 'twitter'].map(icon => (
+                      <a key={icon} href={`https://${icon}.com/meagarwalyash`} target="_blank"
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all hover:text-marie-gold ${darkMode ? 'bg-white/5 hover:bg-white/10' : 'bg-zinc-100 hover:bg-zinc-200'}`}
+                      >
+                        <i data-lucide={icon} className="w-3.5 h-3.5"></i>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sections */}
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Navigate</div>
+                  {[['index.html#impact', 'Impact Dashboard'], ['index.html#journey', 'My Journey'], ['media.html', 'Press & Media'], ['index.html#brands', 'Brands'], ['speaking.html', 'Speaking']].map(([href, label]) => (
+                    <a key={href} href={href} className="block text-xs hover:text-marie-gold transition-colors">{label}</a>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Work</div>
+                  {[['index.html#programs', 'Work With Me'], ['index.html#tv', 'Videos & Podcasts'], ['index.html#book', 'No Godfather'], ['index.html#audit', 'Growth Blueprint'], ['index.html#newsletter', 'Newsletter']].map(([href, label]) => (
+                    <a key={href} href={href} className="block text-xs hover:text-marie-gold transition-colors">{label}</a>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Contact</div>
+                  <a href="mailto:yash@meagarwalyash.com" className="block text-xs hover:text-marie-gold transition-colors">yash@meagarwalyash.com</a>
+                  <a href="https://linkedin.com/in/meagarwalyash" target="_blank" className="block text-xs hover:text-marie-gold transition-colors">LinkedIn</a>
+                  <a href="https://instagram.com/meagarwalyash" target="_blank" className="block text-xs hover:text-marie-gold transition-colors">Instagram</a>
+                  <a href="https://youtube.com/@meagarwalyash" target="_blank" className="block text-xs hover:text-marie-gold transition-colors">YouTube Channel</a>
+                  <div className={`text-xs mt-2 ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>Mumbai, India 🇮🇳</div>
+                </div>
+              </div>
+
+              {/* Bottom bar */}
+              <div className={`pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-2 text-xs ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+                <div>© 2026 Yash Agarwal (@MeAgarwalYash). All Rights Reserved.</div>
+                <div className="text-marie-gold font-bold">MUMBAI, INDIA • LIVE IST</div>
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<SpeakingPage />);
+  </script>
+</body>
+</html>

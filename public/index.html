@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Enforce HTTPS Redirect for meagarwalyash.com -->
+  <script>
+    if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+      location.replace('https:' + location.href.substring(location.protocol.length));
+    }
+  </script>
   <title>Yash Agarwal (MeAgarwalYash) — Executive Growth Architect & Author</title>
   <meta name="description" content="Official platform of Yash Agarwal (MeAgarwalYash). Head of Marketing at DR Choksey FinServ, Former Head of Digital Marketing at Avant Garde Industries, Founder of FMK Agency, Author of 'No Godfather'." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="maylogo.png" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -75,7 +84,7 @@
       }, 'google_translate_element');
     }
   </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <style>
     * {
@@ -148,15 +157,15 @@
     }
   </style>
 </head>
-<body class="bg-[#FAF8F5] text-[#121212] antialiased selection:bg-marie-gold/30 selection:text-black">
+<body class="bg-[#0A090E] text-white antialiased selection:bg-marie-gold/30 selection:text-white">
   
   <!-- Loading Screen -->
-  <div id="loading-screen" class="fixed inset-0 z-[100] bg-[#FAF8F5] flex flex-col items-center justify-center space-y-4">
-    <div class="relative w-20 h-20 flex items-center justify-center">
-      <div class="w-16 h-16 rounded-full border-2 border-marie-gold/30 border-t-marie-gold animate-spin"></div>
-      <span class="absolute font-bold text-marie-gold text-lg tracking-widest">MAY</span>
+  <div id="loading-screen" class="fixed inset-0 z-[100] bg-[#0A090E] flex flex-col items-center justify-center space-y-4">
+    <div class="relative w-24 h-24 flex items-center justify-center">
+      <div class="w-20 h-20 rounded-full border-2 border-marie-gold/30 border-t-marie-gold animate-spin"></div>
+      <img src="maylogo.png" alt="MAY Logo" class="absolute h-14 w-auto object-contain brightness-150 contrast-125 filter drop-shadow-[0_0_20px_rgba(212,175,55,0.8)]" />
     </div>
-    <div class="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 animate-pulse">
+    <div class="text-xs font-bold tracking-[0.3em] uppercase text-zinc-400 animate-pulse">
       Yash Agarwal • meagarwalyash.com
     </div>
   </div>
@@ -469,7 +478,7 @@
 
     function App() {
       const [lang, setLang] = useState('en');
-      const [darkMode, setDarkMode] = useState(false);
+      const [darkMode, setDarkMode] = useState(true);
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
       const [activeModal, setActiveModal] = useState(null); // 'audit' | 'book' | 'resume' | 'admin' | 'tv' | 'course' | 'blog' | 'news'
       const [selectedVideo, setSelectedVideo] = useState(null);
@@ -513,6 +522,45 @@
         }
       }, []);
 
+      // REAL-TIME SYNC WITH ADMIN PANEL CHANGES ACROSS ALL TABS & WINDOWS
+      useEffect(() => {
+        const reloadCms = () => {
+          const saved = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
+          if (saved) {
+            try {
+              setCmsData(JSON.parse(saved));
+            } catch (e) {}
+          }
+        };
+
+        const handleStorage = (e) => {
+          if (e.key === 'MAY_WEBSITE_CMS_DATA' || !e.key) {
+            reloadCms();
+          }
+        };
+
+        window.addEventListener('storage', handleStorage);
+
+        let bc;
+        if (window.BroadcastChannel) {
+          bc = new BroadcastChannel('MAY_CMS_CHANNEL');
+          bc.onmessage = (event) => {
+            if (event.data && event.data.type === 'CMS_UPDATE') {
+              if (event.data.data) {
+                setCmsData(event.data.data);
+              } else {
+                reloadCms();
+              }
+            }
+          };
+        }
+
+        return () => {
+          window.removeEventListener('storage', handleStorage);
+          if (bc) bc.close();
+        };
+      }, []);
+
       // Scroll Intersection Observer
       useEffect(() => {
         const observer = new IntersectionObserver(
@@ -540,6 +588,9 @@
         e.preventDefault();
         if (auditEmail.trim()) {
           setAuditSubmitted(true);
+          const subject = encodeURIComponent(`New Enterprise Growth Blueprint Request (${auditEmail})`);
+          const body = encodeURIComponent(`New Growth Blueprint Request:\n\nMonthly Ad Spend: ${auditSpend}\nPrimary Scale Bottleneck: ${auditGoal}\nWork Email: ${auditEmail}\n\nSubmitted via meagarwalyash.com`);
+          window.location.href = `mailto:yash@meagarwalyash.com?subject=${subject}&body=${body}`;
         }
       };
 
@@ -547,6 +598,9 @@
         e.preventDefault();
         if (waitlistEmail.trim()) {
           setWaitlistSubmitted(true);
+          const subject = encodeURIComponent(`No Godfather Book Waitlist Access Request (${waitlistEmail})`);
+          const body = encodeURIComponent(`Please add my email to the early access waitlist for 'No Godfather':\n\nEmail: ${waitlistEmail}\n\nSubmitted via meagarwalyash.com`);
+          window.location.href = `mailto:yash@meagarwalyash.com?subject=${subject}&body=${body}`;
           setWaitlistEmail('');
         }
       };
@@ -636,29 +690,51 @@
 
       const blogPosts = rawBlogs.filter(b => b.status === 'published' || !b.status);
 
+      const announcementText = cmsData?.hero?.announcement || "🔥 NEW: Read Yash's Latest Essay on Tier-1 PR Newsjacking • Join the Waitlist for 'No Godfather'";
+      const heroBadge = cmsData?.hero?.badge || t.badge;
+      const heroGreeting = cmsData?.hero?.heroGreeting || t.heroGreeting;
+      const heroBio = cmsData?.hero?.heroBio || t.heroBio;
+      const bookTitle = cmsData?.book?.title || t.bookTitle;
+      const bookSubtitle = cmsData?.book?.subtitle || t.bookSubtitle;
+      const bookDesc = cmsData?.book?.description || t.bookDesc;
+
       const cardClass = darkMode ? 'mf-card-dark' : 'mf-card-light';
       const bgClass = darkMode ? 'bg-[#0A090E] text-white' : 'bg-[#FAF8F5] text-[#121212]';
-      const dockClass = darkMode ? 'bg-[#111018]/90 border-b border-[#232230] text-white' : 'bg-white/95 border-b border-[#EAE6DF] text-[#121212]';
+      const dockClass = 'bg-[#000000] border-b border-white/10 text-white shadow-2xl';
 
       return (
         <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
           
-          {/* TOP ANNOUNCEMENT BAR */}
-          <div className="bg-[#121212] text-white text-center py-2.5 px-4 text-xs font-bold tracking-wide flex justify-center items-center gap-3">
-            <span>{t.announcement}</span>
-            <a href="#book" className="underline hover:text-marie-gold transition-colors font-semibold">Learn More →</a>
+          {/* TOP ANNOUNCEMENT BAR — GOLDEN NEWS TICKER */}
+          <div className="bg-[#08070D] border-b border-marie-gold/30 text-marie-gold py-2.5 overflow-hidden whitespace-nowrap relative flex items-center shadow-md">
+            <div className="inline-flex items-center gap-16 animate-marquee font-bold text-xs tracking-wider">
+              <span className="flex items-center gap-2">
+                <span>{announcementText}</span>
+                <a href="#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+              <span className="flex items-center gap-2">
+                <span>{announcementText}</span>
+                <a href="#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+              <span className="flex items-center gap-2">
+                <span>{announcementText}</span>
+                <a href="#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+              <span className="flex items-center gap-2">
+                <span>{announcementText}</span>
+                <a href="#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+            </div>
           </div>
 
           {/* MARIE FORLEO DOCK NAVIGATION BAR WITH SUN/MOON & MULTI-LANG */}
-          <header className={`sticky top-0 z-50 w-full ${dockClass} py-3.5 px-6 sm:px-12 flex items-center justify-between shadow-sm backdrop-blur-md`}>
-            <a href="#" className="flex items-center gap-3 group">
-              <div className="w-9 h-9 rounded-full bg-marie-gold text-black flex items-center justify-center font-bold text-sm shadow-md group-hover:scale-105 transition-transform">
-                MAY
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold tracking-widest text-sm">YASH AGARWAL</span>
-                <span className="text-[10px] tracking-wider text-marie-gold font-bold">MEAGARWALYASH.COM</span>
-              </div>
+          <header className={`sticky top-0 z-50 w-full ${dockClass} py-3.5 px-6 sm:px-12 flex items-center justify-between shadow-md backdrop-blur-md`}>
+            <a href="#" className="flex items-center group relative z-10">
+              <img
+                src="maylogo.png"
+                alt="MAY Executive Logo"
+                className="h-40 sm:h-52 md:h-60 w-auto object-contain -my-14 sm:-my-20 transition-transform duration-300 group-hover:scale-105 brightness-150 contrast-125 filter drop-shadow-[0_0_24px_rgba(212,175,55,0.9)]"
+              />
             </a>
 
             {/* Desktop Navigation Links */}
@@ -678,30 +754,22 @@
               {/* SUN / MOON LIGHT & DARK MODE TOGGLE BUTTON */}
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className={`p-2 rounded-full border transition-all ${darkMode ? 'bg-white/10 border-white/20 text-marie-gold hover:bg-white/20' : 'bg-marie-goldSoft border-marie-goldBorder text-marie-black hover:bg-marie-gold/20'}`}
+                className="p-2 rounded-full border border-white/20 bg-white/10 text-marie-gold hover:bg-white/20 transition-all shadow-sm"
                 title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
               >
                 {darkMode ? (
                   <i data-lucide="sun" className="w-4 h-4 text-marie-gold"></i>
                 ) : (
-                  <i data-lucide="moon" className="w-4 h-4 text-black"></i>
+                  <i data-lucide="moon" className="w-4 h-4 text-marie-gold"></i>
                 )}
               </button>
 
-              {/* CMS Admin Console Link */}
-              <a
-                href="admin.html"
-                className={`p-2 rounded-full border transition-all ${darkMode ? 'bg-white/10 border-white/20 text-brand-gold hover:bg-white/20' : 'bg-marie-goldSoft border-marie-goldBorder text-black hover:bg-marie-gold/20'}`}
-                title="CMS Admin Console"
-              >
-                <i data-lucide="settings" className="w-4 h-4"></i>
-              </a>
 
               {/* Multi-Language Dropdown */}
               <select
                 value={lang}
                 onChange={(e) => setLang(e.target.value)}
-                className={`px-3 py-1.5 rounded-full font-bold text-[11px] border focus:outline-none cursor-pointer ${darkMode ? 'bg-white/10 text-marie-gold border-white/20' : 'bg-marie-goldSoft text-black border-marie-goldBorder'}`}
+                className="px-3 py-1.5 rounded-full font-bold text-[11px] border border-white/20 bg-[#14131B] text-white focus:outline-none cursor-pointer hover:border-marie-gold shadow-sm"
               >
                 <option value="en">EN (English)</option>
                 <option value="hi">HI (हिंदी)</option>
@@ -750,23 +818,23 @@
           )}
 
           {/* HERO SECTION */}
-          <section className="py-20 px-6 sm:px-12 max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <section className="pt-4 pb-6 px-6 sm:px-12 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               
-              <div className="lg:col-span-7 space-y-6 reveal-on-scroll">
+              <div className="lg:col-span-7 space-y-5 reveal-on-scroll">
                 <div className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border ${darkMode ? 'bg-white/10 border-white/20 text-marie-gold' : 'bg-marie-goldSoft border-marie-goldBorder text-marie-goldHover'}`}>
-                  {t.badge}
+                  {heroBadge}
                 </div>
 
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
-                  {t.heroGreeting}
+                  {heroGreeting}
                 </h1>
 
                 <p className={`text-lg sm:text-xl leading-relaxed font-normal ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  {t.heroBio}
+                  {heroBio}
                 </p>
 
-                <div className="flex flex-wrap gap-4 pt-4">
+                <div className="flex flex-wrap gap-4 pt-2">
                   <a
                     href="#audit"
                     className="px-8 py-4 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-sm shadow-lg hover:scale-105 transition-all flex items-center gap-2"
@@ -784,7 +852,7 @@
                 </div>
 
                 {/* Key Metrics */}
-                <div className={`pt-8 border-t grid grid-cols-4 gap-4 text-center sm:text-left ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+                <div className={`pt-6 border-t grid grid-cols-4 gap-4 text-center sm:text-left ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
                   <div>
                     <div className="text-3xl font-bold text-marie-gold">12+</div>
                     <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{t.yearsExp}</div>
@@ -811,22 +879,68 @@
                   <img
                     src="yashdp.png"
                     alt="Yash Agarwal"
-                    className="w-full h-auto max-h-[700px] object-cover rounded-3xl filter contrast-[1.03] transform group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-auto max-h-[460px] object-cover rounded-3xl filter contrast-[1.03] transform group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
               </div>
 
             </div>
-          </section>
 
-          {/* AS FEATURED IN MEDIA TICKER */}
-          <section className={`py-8 border-y ${darkMode ? 'bg-[#14131B] border-white/10' : 'bg-white border-marie-border'}`}>
-            <div className="max-w-7xl mx-auto px-6 text-center space-y-4">
-              <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest">AS FEATURED ACROSS NATIONAL PRESS & MEDIA</div>
-              <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-14 font-bold text-sm text-zinc-400 tracking-wider uppercase">
-                <span>BUSINESS STANDARD</span> • <span>FORBES INDIA</span> • <span>HINDUSTAN TIMES</span> • <span>THE WEEK</span> • <span>MID-DAY</span> • <span>ANI PRESS</span>
+            {/* AS FEATURED IN MEDIA TICKER (INTEGRATED INSIDE HERO SECTION ABOVE THE FOLD) */}
+            <div className={`mt-6 pt-6 border-t ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+              <div className="text-center space-y-4">
+                <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-[0.3em]">AS FEATURED ACROSS NATIONAL PRESS & MEDIA</div>
+                <div className="grid grid-cols-5 items-center justify-items-center gap-2 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
+                  
+                  {/* Business Standard Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="business standard logo.png"
+                      alt="Business Standard"
+                      className={`max-h-8 sm:max-h-11 md:max-h-13 w-auto object-contain ${darkMode ? 'brightness-0 invert' : ''}`}
+                    />
+                  </div>
+
+                  {/* Forbes Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="Forbes-Logo.png"
+                      alt="Forbes India"
+                      className={`max-h-7 sm:max-h-10 md:max-h-12 w-auto object-contain ${darkMode ? 'brightness-0 invert' : ''}`}
+                    />
+                  </div>
+
+                  {/* The Week Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="theWeek logo.png"
+                      alt="The Week"
+                      className={`max-h-7 sm:max-h-10 md:max-h-12 w-auto object-contain ${darkMode ? 'brightness-0 invert' : ''}`}
+                    />
+                  </div>
+
+                  {/* Mid-Day Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="midday_logo_clean.png"
+                      alt="Mid-Day"
+                      className={`max-h-7 sm:max-h-10 md:max-h-12 w-auto object-contain ${darkMode ? 'brightness-0 invert' : ''}`}
+                    />
+                  </div>
+
+                  {/* ANI News Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="Ani-news logo.png"
+                      alt="ANI News"
+                      className={`max-h-8 sm:max-h-11 md:max-h-13 w-auto object-contain ${darkMode ? 'brightness-0 invert' : ''}`}
+                    />
+                  </div>
+
+                </div>
               </div>
             </div>
+
           </section>
 
           {/* "WHAT ARE YOU LOOKING TO BUILD?" PATH FINDER */}
@@ -933,15 +1047,15 @@
 
                 <div className="lg:col-span-7 space-y-6 text-left reveal-on-scroll">
                   <div className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border ${darkMode ? 'bg-white/10 border-white/20 text-marie-gold' : 'bg-white border-marie-goldBorder text-marie-goldHover'}`}>
-                    {t.bookSubtitle}
+                    {bookSubtitle}
                   </div>
 
                   <h2 className="text-4xl sm:text-6xl font-bold">
-                    "{t.bookTitle}"
+                    "{bookTitle}"
                   </h2>
 
                   <p className={`text-base sm:text-lg leading-relaxed font-normal ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                    {t.bookDesc}
+                    {bookDesc}
                   </p>
 
                   {waitlistSubmitted ? (
@@ -1094,8 +1208,8 @@
               </p>
 
               <div className="flex flex-wrap justify-center gap-4 pt-4">
-                <a href="mailto:hello@meagarwalyash.com" className="px-8 py-4 rounded-full bg-marie-gold text-black font-bold text-sm hover:bg-marie-goldHover transition-all shadow-lg">
-                  EmailDirect: hello@meagarwalyash.com
+                <a href="mailto:yash@meagarwalyash.com" className="px-8 py-4 rounded-full bg-marie-gold text-black font-bold text-sm hover:bg-marie-goldHover transition-all shadow-lg">
+                  EmailDirect: yash@meagarwalyash.com
                 </a>
                 <a href="https://linkedin.com/in/meagarwalyash" target="_blank" className={`px-8 py-4 rounded-full border font-bold text-sm transition-all ${darkMode ? 'border-white text-white hover:bg-white hover:text-black' : 'border-marie-border bg-white text-black hover:bg-marie-goldHover hover:text-white'}`}>
                   Connect on LinkedIn →

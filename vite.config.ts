@@ -8,14 +8,14 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'ensure-cindex-dist',
+      name: 'ensure-index-dist',
       closeBundle() {
-        const cindexContent = fs.readFileSync(path.resolve(__dirname, 'cindex.html'), 'utf-8');
+        const indexContent = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf-8');
         const distDirPath = path.resolve(__dirname, 'dist');
         if (!fs.existsSync(distDirPath)) {
           fs.mkdirSync(distDirPath, { recursive: true });
         }
-        fs.writeFileSync(path.resolve(distDirPath, 'index.html'), cindexContent, 'utf-8');
+        fs.writeFileSync(path.resolve(distDirPath, 'index.html'), indexContent, 'utf-8');
       },
     },
   ],

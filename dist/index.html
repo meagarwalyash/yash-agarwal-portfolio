@@ -12,6 +12,9 @@
   <title>Yash Agarwal (MeAgarwalYash) — Executive Growth Architect & Author</title>
   <meta name="description" content="Official platform of Yash Agarwal (MeAgarwalYash). Head of Marketing at DR Choksey FinServ, Former Head of Digital Marketing at Avant Garde Industries, Founder of FMK Agency, Author of 'No Godfather'." />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="maylogo.png" />
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -47,6 +50,12 @@
           animation: {
             'float': 'float 6s ease-in-out infinite',
             'marquee': 'marquee 35s linear infinite',
+            'logo-scroll': 'logoScroll 30s linear infinite',
+            'logo-scroll-slow': 'logoScroll 50s linear infinite',
+            'count-up': 'countUp 0.8s ease forwards',
+            'slide-up': 'slideUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards',
+            'fade-in': 'fadeIn 0.5s ease forwards',
+            'pulse-gold': 'pulseGold 2s ease-in-out infinite',
           },
           keyframes: {
             float: {
@@ -56,6 +65,26 @@
             marquee: {
               '0%': { transform: 'translateX(0%)' },
               '100%': { transform: 'translateX(-50%)' },
+            },
+            logoScroll: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
+            },
+            countUp: {
+              '0%': { opacity: '0', transform: 'translateY(12px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(32px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            pulseGold: {
+              '0%, 100%': { boxShadow: '0 0 0 0 rgba(212,175,55,0.4)' },
+              '50%': { boxShadow: '0 0 0 12px rgba(212,175,55,0)' },
             }
           }
         }
@@ -81,7 +110,7 @@
       }, 'google_translate_element');
     }
   </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <style>
     * {
@@ -152,17 +181,141 @@
     #loading-screen {
       transition: opacity 0.6s ease, visibility 0.6s ease;
     }
+
+    /* === PHASE 2 PREMIUM ANIMATIONS === */
+
+    /* Infinite Logo Scroll */
+    .logo-scroll-track {
+      display: flex;
+      width: max-content;
+      animation: logoScroll 35s linear infinite;
+    }
+    .logo-scroll-track:hover { animation-play-state: paused; }
+    @keyframes logoScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Timeline */
+    .timeline-line {
+      position: absolute;
+      left: 23px;
+      top: 56px;
+      bottom: -28px;
+      width: 2px;
+      background: linear-gradient(to bottom, #D4AF37 60%, transparent 100%);
+    }
+
+    /* Glassmorphism cards */
+    .glass-dark {
+      background: rgba(20, 19, 27, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 175, 55, 0.18);
+    }
+    .glass-light {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+
+    /* Premium gold glow */
+    .gold-glow { box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), 0 0 60px rgba(212, 175, 55, 0.1); }
+    .gold-glow-sm { box-shadow: 0 0 16px rgba(212, 175, 55, 0.25); }
+    .gold-text-glow { text-shadow: 0 0 24px rgba(212, 175, 55, 0.6); }
+
+    /* Premium cursor */
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: #D4AF37;
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(212, 175, 55, 0.55);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease, width 0.25s ease, height 0.25s ease;
+    }
+
+    /* Stagger delays */
+    .stagger-1 { animation-delay: 0.05s; }
+    .stagger-2 { animation-delay: 0.12s; }
+    .stagger-3 { animation-delay: 0.2s; }
+    .stagger-4 { animation-delay: 0.3s; }
+    .stagger-5 { animation-delay: 0.4s; }
+    .stagger-6 { animation-delay: 0.5s; }
+
+    /* Shimmer loading skeleton */
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+    .shimmer {
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(212,175,55,0.08) 50%, rgba(255,255,255,0.04) 75%);
+      background-size: 1000px 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    /* Testimonial carousel */
+    .testimonial-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #D4AF37 0%, #FFF8DC 50%, #B8860B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Impact stat counter */
+    .impact-stat {
+      position: relative;
+      overflow: hidden;
+    }
+    .impact-stat::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: #D4AF37;
+      transition: width 1.2s ease;
+    }
+    .impact-stat.is-visible::after { width: 100%; }
+
+    /* Section divider */
+    .section-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, #D4AF37, transparent);
+      border-radius: 2px;
+      margin: 12px 0;
+    }
   </style>
 </head>
-<body class="bg-[#FAF8F5] text-[#121212] antialiased selection:bg-marie-gold/30 selection:text-black">
+<body class="bg-[#0A090E] text-white antialiased selection:bg-marie-gold/30 selection:text-white">
   
   <!-- Loading Screen -->
-  <div id="loading-screen" class="fixed inset-0 z-[100] bg-[#FAF8F5] flex flex-col items-center justify-center space-y-4">
-    <div class="relative w-20 h-20 flex items-center justify-center">
-      <div class="w-16 h-16 rounded-full border-2 border-marie-gold/30 border-t-marie-gold animate-spin"></div>
-      <span class="absolute font-bold text-marie-gold text-lg tracking-widest">MAY</span>
+  <div id="loading-screen" class="fixed inset-0 z-[100] bg-[#0A090E] flex flex-col items-center justify-center space-y-4">
+    <div class="relative w-24 h-24 flex items-center justify-center">
+      <div class="w-20 h-20 rounded-full border-2 border-marie-gold/30 border-t-marie-gold animate-spin"></div>
+      <img src="maylogo.png" alt="MAY Logo" class="absolute h-14 w-auto object-contain brightness-150 contrast-125 filter drop-shadow-[0_0_20px_rgba(212,175,55,0.8)]" />
     </div>
-    <div class="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 animate-pulse">
+    <div class="text-xs font-bold tracking-[0.3em] uppercase text-zinc-400 animate-pulse">
       Yash Agarwal • meagarwalyash.com
     </div>
   </div>
@@ -475,7 +628,7 @@
 
     function App() {
       const [lang, setLang] = useState('en');
-      const [darkMode, setDarkMode] = useState(false);
+      const [darkMode, setDarkMode] = useState(true);
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
       const [activeModal, setActiveModal] = useState(null); // 'audit' | 'book' | 'resume' | 'admin' | 'tv' | 'course' | 'blog' | 'news'
       const [selectedVideo, setSelectedVideo] = useState(null);
@@ -497,6 +650,39 @@
 
       const [currentTime, setCurrentTime] = useState('');
 
+      // Phase 2 — New Section States
+      const [expandedMilestone, setExpandedMilestone] = useState(null);
+      const [videoTab, setVideoTab] = useState('all');
+      const [videoScrollIdx, setVideoScrollIdx] = useState(0);
+      const [videoAutoPlay, setVideoAutoPlay] = useState(true);
+      const [testimonialIdx, setTestimonialIdx] = useState(0);
+      const [newsletterEmail, setNewsletterEmail] = useState('');
+      const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+      const [countersVisible, setCountersVisible] = useState(false);
+      const countersRef = useRef(null);
+
+      // Auto-scroll Videos Carousel every 3.5 seconds
+      useEffect(() => {
+        if (!videoAutoPlay || selectedVideo) return;
+        const filtered = tvEpisodes.filter(ep => videoTab === 'all' || ep.category.toLowerCase().includes(videoTab));
+        if (filtered.length <= 1) return;
+
+        const timer = setInterval(() => {
+          setVideoScrollIdx((prev) => (prev + 1) % filtered.length);
+        }, 3500);
+
+        return () => clearInterval(timer);
+      }, [videoAutoPlay, selectedVideo, videoTab, tvEpisodes]);
+
+      // CMS DATA — Read from LocalStorage (synced from admin.html)
+      const [cmsData, setCmsData] = useState(() => {
+        const saved = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
+        if (saved) {
+          try { return JSON.parse(saved); } catch(e) { return null; }
+        }
+        return null;
+      });
+
       // IST Live Time
       useEffect(() => {
         const updateTime = () => {
@@ -517,6 +703,45 @@
             loader.style.visibility = 'hidden';
           }, 600);
         }
+      }, []);
+
+      // REAL-TIME SYNC WITH ADMIN PANEL CHANGES ACROSS ALL TABS & WINDOWS
+      useEffect(() => {
+        const reloadCms = () => {
+          const saved = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
+          if (saved) {
+            try {
+              setCmsData(JSON.parse(saved));
+            } catch (e) {}
+          }
+        };
+
+        const handleStorage = (e) => {
+          if (e.key === 'MAY_WEBSITE_CMS_DATA' || !e.key) {
+            reloadCms();
+          }
+        };
+
+        window.addEventListener('storage', handleStorage);
+
+        let bc;
+        if (window.BroadcastChannel) {
+          bc = new BroadcastChannel('MAY_CMS_CHANNEL');
+          bc.onmessage = (event) => {
+            if (event.data && event.data.type === 'CMS_UPDATE') {
+              if (event.data.data) {
+                setCmsData(event.data.data);
+              } else {
+                reloadCms();
+              }
+            }
+          };
+        }
+
+        return () => {
+          window.removeEventListener('storage', handleStorage);
+          if (bc) bc.close();
+        };
       }, []);
 
       // Scroll Intersection Observer
@@ -546,6 +771,9 @@
         e.preventDefault();
         if (auditEmail.trim()) {
           setAuditSubmitted(true);
+          const subject = encodeURIComponent(`New Enterprise Growth Blueprint Request (${auditEmail})`);
+          const body = encodeURIComponent(`New Growth Blueprint Request:\n\nMonthly Ad Spend: ${auditSpend}\nPrimary Scale Bottleneck: ${auditGoal}\nWork Email: ${auditEmail}\n\nSubmitted via meagarwalyash.com`);
+          window.location.href = `mailto:yash@meagarwalyash.com?subject=${subject}&body=${body}`;
         }
       };
 
@@ -553,40 +781,93 @@
         e.preventDefault();
         if (waitlistEmail.trim()) {
           setWaitlistSubmitted(true);
+          const subject = encodeURIComponent(`No Godfather Book Waitlist Access Request (${waitlistEmail})`);
+          const body = encodeURIComponent(`Please add my email to the early access waitlist for 'No Godfather':\n\nEmail: ${waitlistEmail}\n\nSubmitted via meagarwalyash.com`);
+          window.location.href = `mailto:yash@meagarwalyash.com?subject=${subject}&body=${body}`;
           setWaitlistEmail('');
         }
       };
 
+      const handleNewsletterSubmit = (e) => {
+        e.preventDefault();
+        if (newsletterEmail.trim()) {
+          setNewsletterSubmitted(true);
+          const subject = encodeURIComponent(`Newsletter Subscription Request (${newsletterEmail})`);
+          const body = encodeURIComponent(`Please add me to the MAY Executive Newsletter:\n\nEmail: ${newsletterEmail}\n\nSubmitted via meagarwalyash.com`);
+          window.location.href = `mailto:yash@meagarwalyash.com?subject=${subject}&body=${body}`;
+        }
+      };
+
+      // Counter visibility observer — triggers animated stats
+      useEffect(() => {
+        if (!countersRef.current) return;
+        const observer = new IntersectionObserver(
+          ([entry]) => { if (entry.isIntersecting) { setCountersVisible(true); observer.disconnect(); } },
+          { threshold: 0.3 }
+        );
+        observer.observe(countersRef.current);
+        return () => observer.disconnect();
+      }, []);
+
       const t = translations[lang] || translations.en;
 
       // MarieTV Episode Data
-      const tvEpisodes = [
+      // 5 Authentic YouTube Videos & Podcasts
+      const tvEpisodes = cmsData?.videos || [
         {
-          id: 'ep1',
-          episode: 'EPISODE 104',
-          title: 'How to Scale Digital Revenue from ₹25L to ₹3Cr/Month Without VC Patronage',
-          category: 'REVENUE SCALE',
-          duration: '18 MIN WATCH',
-          desc: 'In this episode, Yash breaks down the performance media allocation, creative velocity, and team structure used at Avant Garde Industries.',
-          img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=80'
+          id: 'v1',
+          youtubeId: 'uSxtRz8vJm4',
+          episode: 'EPISODE 01',
+          title: 'Yash Agarwal — Personal Brand Equity & Executive PR Strategy',
+          category: 'YOUTUBE & PODCAST',
+          duration: '24 MIN WATCH',
+          desc: 'Yash Agarwal breaks down personal branding frameworks, executive positioning, and earned Tier-1 PR strategies for founders.',
+          img: 'https://img.youtube.com/vi/uSxtRz8vJm4/hqdefault.jpg',
+          url: 'https://www.youtube.com/watch?v=uSxtRz8vJm4'
         },
         {
-          id: 'ep2',
-          episode: 'EPISODE 103',
-          title: 'The Zero-Retainer PR Newsjacking Formula for Forbes & Business Standard',
-          category: 'MEDIA AUTHORITY',
-          duration: '14 MIN WATCH',
-          desc: 'Why paying $50,000/month PR retainers is dead and how to leverage original macroeconomic benchmarks to land Tier-1 press.',
-          img: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80'
+          id: 'v2',
+          youtubeId: 'RhOz54pb-Ss',
+          episode: 'EPISODE 02',
+          title: 'MeAgarwalYash Podcast — Scaling Performance Marketing Engines',
+          category: 'PODCAST & INTERVIEW',
+          duration: '32 MIN WATCH',
+          desc: 'Deep dive into paid acquisition architectures, reducing CAC by 38%, and scaling monthly digital revenue past ₹3 Crore.',
+          img: 'https://img.youtube.com/vi/RhOz54pb-Ss/hqdefault.jpg',
+          url: 'https://www.youtube.com/watch?v=RhOz54pb-Ss'
         },
         {
-          id: 'ep3',
-          episode: 'EPISODE 102',
-          title: 'Why Every Founder Needs a Personal Brand Equity Flywheel in 2026',
-          category: 'BRAND EQUITY',
-          duration: '22 MIN WATCH',
-          desc: 'How turning executive leaders into recognized media entities drastically lowers customer acquisition costs (CAC) across paid channels.',
-          img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80'
+          id: 'v3',
+          youtubeId: '63K2FQLeUoE',
+          episode: 'EPISODE 03',
+          title: 'Deven Choksey & Yash Agarwal — DR Choksey FinServ Market Leadership',
+          category: 'FINSERV LEADERSHIP',
+          duration: '28 MIN WATCH',
+          desc: 'Key insights on financial services brand architecture, institutional lead generation, and wealth management authority.',
+          img: 'https://img.youtube.com/vi/63K2FQLeUoE/hqdefault.jpg',
+          url: 'https://www.youtube.com/watch?v=63K2FQLeUoE'
+        },
+        {
+          id: 'v4',
+          youtubeId: 'laLO0o1MjjY',
+          episode: 'EPISODE 04',
+          title: 'MeAgarwalYash Keynote — Building Enterprise Growth Without Patronage',
+          category: 'KEYNOTE & TALK',
+          duration: '19 MIN WATCH',
+          desc: 'Live keynote on building an empire from zero, executive decision-making, and scaling without corporate godfather patronage.',
+          img: 'https://img.youtube.com/vi/laLO0o1MjjY/hqdefault.jpg',
+          url: 'https://www.youtube.com/watch?v=laLO0o1MjjY'
+        },
+        {
+          id: 'v5',
+          youtubeId: 'T8vEnHUo5HU',
+          episode: 'EPISODE 05',
+          title: 'MeAgarwalYash Masterclass — Zero-Budget PR & Growth Architecture',
+          category: 'MASTERCLASS',
+          duration: '45 MIN WATCH',
+          desc: 'Comprehensive growth masterclass covering macroeconomic newsjacking, Meta & Google media buying mechanics, and CRM nurture loops.',
+          img: 'https://img.youtube.com/vi/T8vEnHUo5HU/hqdefault.jpg',
+          url: 'https://www.youtube.com/watch?v=T8vEnHUo5HU'
         }
       ];
 
@@ -624,15 +905,6 @@
         }
       ];
 
-      // Read Live CMS Data from LocalStorage if edited via admin.html
-      const [cmsData, setCmsData] = useState(() => {
-        const saved = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
-        if (saved) {
-          try { return JSON.parse(saved); } catch(e) { return null; }
-        }
-        return null;
-      });
-
       // Filter published blogs from CMS or fallback array
       const rawBlogs = cmsData && cmsData.blogs ? cmsData.blogs : [
         { id: 1, heading: 'The Zero-Budget PR Framework: Winning Tier-1 Media Without $50k Retainers', category: 'PR STRATEGY', date: 'July 2024', readTime: '6 min read', snippet: 'Most founders assume getting into Forbes or Business Standard requires astronomical monthly agency retainers. Here is the exact newsjacking & narrative framework I used to secure 500+ top-tier press features.', status: 'published' },
@@ -642,129 +914,443 @@
 
       const blogPosts = rawBlogs.filter(b => b.status === 'published' || !b.status);
 
+      // CMS field reads — admin uses hero.badge, hero.greeting, hero.bio, hero.name etc.
+      const announcementText = cmsData?.hero?.announcement || "🔥 NEW: Read Yash's Latest Essay on Tier-1 PR Newsjacking • Join the Waitlist for 'No Godfather'";
+      const heroBadge = cmsData?.hero?.badge || t.badge;
+      // heroName must come before heroGreeting (used in the greeting string)
+      const heroName = cmsData?.hero?.name || 'Yash Agarwal';
+      // Admin stores greeting prefix & name separately; combine them for the h1
+      const heroGreetingPrefix = cmsData?.hero?.greeting || null;
+      const heroGreeting = heroGreetingPrefix
+        ? `${heroGreetingPrefix} ${heroName}`
+        : (cmsData?.hero?.heroGreeting || t.heroGreeting);
+      const heroBio = cmsData?.hero?.bio || cmsData?.hero?.heroBio || t.heroBio;
+      const heroImage = cmsData?.hero?.imageSrc || 'yashdp.png';
+      const heroExpYears = cmsData?.hero?.expYears || '12+';
+      const heroCampaigns = cmsData?.hero?.campaignsCount || '100+';
+      const heroBrands = cmsData?.hero?.brandsCount || '300+';
+      const heroCountries = cmsData?.hero?.countriesCount || '15+';
+      // News from CMS
+      const newsItems = cmsData?.news || null;
+      const bookTitle = cmsData?.book?.title || t.bookTitle;
+      const bookSubtitle = cmsData?.book?.subtitle || t.bookSubtitle;
+      const bookDesc = cmsData?.book?.description || t.bookDesc;
+      const bookCoverImg = cmsData?.book?.coverImg || 'no godfather cover.png';
+
       const cardClass = darkMode ? 'mf-card-dark' : 'mf-card-light';
       const bgClass = darkMode ? 'bg-[#0A090E] text-white' : 'bg-[#FAF8F5] text-[#121212]';
-      const dockClass = darkMode ? 'bg-[#111018]/90 border-b border-[#232230] text-white' : 'bg-white/95 border-b border-[#EAE6DF] text-[#121212]';
+      const dockClass = 'bg-[#000000] border-b border-white/10 text-white shadow-2xl';
+
+      // ── PHASE 2 DATA ──────────────────────────────────────────────
+
+      // Impact Dashboard Stats
+      const impactStats = cmsData?.impactStats || [
+        { value: '12+', label: 'Years in Growth & Marketing', icon: 'award', color: 'text-marie-gold' },
+        { value: '₹3Cr+', label: 'Monthly Digital Revenue Scaled', icon: 'trending-up', color: 'text-emerald-400' },
+        { value: '500+', label: 'National Press Features', icon: 'newspaper', color: 'text-blue-400' },
+        { value: '300+', label: 'Brands & Campaigns Executed', icon: 'briefcase', color: 'text-purple-400' },
+        { value: '100+', label: 'Enterprise Growth Campaigns', icon: 'zap', color: 'text-orange-400' },
+        { value: '15+', label: 'Countries & Global Markets', icon: 'globe', color: 'text-cyan-400' },
+        { value: '5M+', label: 'Digital Audience Reached', icon: 'users', color: 'text-pink-400' },
+        { value: '50+', label: 'Speaking Engagements', icon: 'mic', color: 'text-red-400' },
+      ];
+
+      // Journey Milestones
+      const journeyMilestones = cmsData?.journey || [
+        {
+          id: 1, year: '2012', badge: 'THE BEGINNING',
+          title: 'First Marketing Role — ₹12,000 Salary',
+          desc: 'Started my career at a boutique media agency in Mumbai earning ₹12,000/month. Learned the basics of print advertising, event marketing, and client servicing from the ground up.',
+          achievement: 'Learned media buying fundamentals from zero',
+          img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80',
+          tags: ['Mumbai', 'Media Agency', 'Early Career']
+        },
+        {
+          id: 2, year: '2016', badge: 'ENTREPRENEURSHIP',
+          title: 'Founded FMK Marketing & PR Agency',
+          desc: 'Launched FMK Marketing & PR Agency, offering integrated marketing and public relations services to SMEs and mid-market brands across Mumbai. Grew to a 12-person team within 3 years.',
+          achievement: 'Built a 12-person agency from scratch',
+          img: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80',
+          tags: ['Agency Founder', 'PR', 'FMK']
+        },
+        {
+          id: 3, year: '2019', badge: 'CORPORATE LEADERSHIP',
+          title: 'Head of Digital Marketing — Avant Garde Industries',
+          desc: 'Joined Avant Garde Industries as Head of Digital Marketing, overseeing a multi-crore digital budget across Meta, Google, and OTT platforms. Led a 25-person marketing department.',
+          achievement: 'Managed ₹5Cr+ annual digital budget',
+          img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80',
+          tags: ['Corporate', 'Digital Marketing', 'Leadership']
+        },
+        {
+          id: 4, year: '2022', badge: 'PEAK REVENUE SCALE',
+          title: 'Scaled Digital Revenue to ₹3Cr/Month',
+          desc: 'Engineered a performance marketing overhaul at Avant Garde that took monthly digital revenue from ₹25–40 Lakhs to ₹2–3 Crore. Reduced CAC by 38% while expanding ROAS by 4x.',
+          achievement: '8x revenue growth in 36 months',
+          img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80',
+          tags: ['Revenue Scale', 'Performance', 'ROAS']
+        },
+        {
+          id: 5, year: '2024', badge: 'FINSERV LEADERSHIP',
+          title: 'Head of Marketing — DR Choksey FinServ',
+          desc: 'Appointed as Head of Marketing at DR Choksey FinServ, one of India\'s leading financial services groups. Building digital authority, investor brand positioning, and B2B lead generation systems.',
+          achievement: 'Leading marketing for a ₹500Cr+ financial institution',
+          img: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=600&q=80',
+          tags: ['FinServ', 'B2B', 'Brand Building']
+        },
+        {
+          id: 6, year: '2025', badge: 'AUTHOR & THOUGHT LEADER',
+          title: 'Writing "No Godfather" — First Book',
+          desc: 'Began writing the definitive playbook on building an empire without corporate patronage. The book distills 12+ years of marketing, PR, and growth experience into actionable frameworks for founders.',
+          achievement: 'In-progress: 500+ pre-launch waitlist signups',
+          img: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
+          tags: ['Author', 'Thought Leadership', 'No Godfather']
+        },
+      ];
+
+      // Brands Worked With
+      const brandLogos = cmsData?.brands || [
+        { name: 'DR Choksey FinServ', abbr: 'DRC', color: '#1e40af' },
+        { name: 'Avant Garde Industries', abbr: 'AGI', color: '#047857' },
+        { name: 'FMK Agency', abbr: 'FMK', color: '#D4AF37' },
+        { name: 'Forbes India', abbr: 'FRB', color: '#e3000b' },
+        { name: 'Business Standard', abbr: 'BS', color: '#1a1a2e' },
+        { name: 'Hindustan Times', abbr: 'HT', color: '#cc0000' },
+        { name: 'The Week', abbr: 'TW', color: '#003580' },
+        { name: 'Mid-Day', abbr: 'MD', color: '#ff6b00' },
+        { name: 'ANI News', abbr: 'ANI', color: '#C41E3A' },
+        { name: 'Economic Times', abbr: 'ET', color: '#f97316' },
+        { name: 'Inc42 Media', abbr: 'I42', color: '#6d28d9' },
+        { name: 'YourStory', abbr: 'YS', color: '#2563eb' },
+      ];
+
+      // Press & Media Articles (8 Authentic Media Coverage Features)
+      const pressArticles = cmsData?.pressArticles || [
+        {
+          id: 'p1',
+          publication: 'Business Standard',
+          pubLogo: 'business standard logo.png',
+          pubColor: '#1a1a2e',
+          headline: 'Yash Agarwal: The Highest-Paid Digital Marketing Expert of Uttar Pradesh',
+          date: 'October 2020',
+          category: 'MARKETING EXPERT',
+          img: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'Business Standard highlights Yash Agarwal\'s rapid rise as one of North India\'s most sought-after digital growth strategists and marketing leaders.',
+          url: 'https://www.business-standard.com/content/specials/yash-agarwal-the-highest-paid-digital-marketing-expert-of-uttar-pradesh-120100800881_1.html'
+        },
+        {
+          id: 'p2',
+          publication: 'DNA India',
+          pubLogo: null,
+          pubColor: '#f59e0b',
+          headline: 'Man with a Golden Heart: This Young Lad is Helping 100+ Slum Kids Get a Better Life',
+          date: 'January 2021',
+          category: 'SOCIAL IMPACT',
+          img: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'DNA India covers Yash Agarwal\'s philanthropic initiatives providing education, clothing, and digital literacy to underprivileged children.',
+          url: 'https://www.dnaindia.com/india/report-man-with-a-golden-heart-this-young-lad-is-helping-100-slum-kids-to-get-a-better-life-2866037'
+        },
+        {
+          id: 'p3',
+          publication: 'The Week',
+          pubLogo: 'theWeek logo.png',
+          pubColor: '#003580',
+          headline: 'The Emerging Name in the Field of Modern Marketing in India: Yash Agarwal',
+          date: 'December 2020',
+          category: 'MODERN MARKETING',
+          img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'The Week profiles marketing architect Yash Agarwal on pioneering ROI-driven performance frameworks and brand positioning in India.',
+          url: 'https://www.theweek.in/news/biz-tech/2020/12/04/The-emerging-name-in-the-field-of-modern-marketing-in-India-Yash-garwal.html'
+        },
+        {
+          id: 'p4',
+          publication: 'Business Standard',
+          pubLogo: 'business standard logo.png',
+          pubColor: '#1a1a2e',
+          headline: 'DMMOI: The Best Institute for Digital Marketing in Kanpur',
+          date: 'February 2021',
+          category: 'EDUCATION & SKILLS',
+          img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'Featured across Business Standard for establishing DMMOI, empowering tier-2 and tier-3 city youth with practical digital skills.',
+          url: 'https://www.business-standard.com/content/press-releases-ani/dmmoi-the-best-institute-for-digital-marketing-in-kanpur-121021201608_1.html'
+        },
+        {
+          id: 'p5',
+          publication: 'ANI News',
+          pubLogo: 'Ani-news logo.png',
+          pubColor: '#C41E3A',
+          headline: 'DMMOI Recognized as Leading Digital Marketing Institute in Uttar Pradesh',
+          date: 'February 2021',
+          category: 'ENTERPRISE & MEDIA',
+          img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'ANI News feature on Yash Agarwal\'s mission to bridge the digital skills gap by training hundreds of aspiring marketers.',
+          url: 'https://www.aninews.in/news/business/business/dmmoi-the-best-institute-for-digital-marketing-in-kanpur20210212184726/'
+        },
+        {
+          id: 'p6',
+          publication: 'Asianet News',
+          pubLogo: null,
+          pubColor: '#e11d48',
+          headline: 'Kanpur Blood Donation Group Started by Yash Agarwal Becomes Key Covid Resource Group in India',
+          date: 'May 2021',
+          category: 'COVID RELIEF',
+          img: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'Asianet News reports on how Yash Agarwal mobilized emergency blood donations, plasma matching, and oxygen support during the pandemic.',
+          url: 'https://newsable.asianetnews.com/india/kanpur-blood-donation-group-started-by-yash-agarwal-becomes-the-most-active-covid-resource-group-in-india-vpn-qsdl8y'
+        },
+        {
+          id: 'p7',
+          publication: 'Forbes India',
+          pubLogo: 'Forbes-Logo.png',
+          pubColor: '#e3000b',
+          headline: 'KYE Global & FMK Marketing Announce VIP Members for 2020-2022',
+          date: 'December 2020',
+          category: 'BRAND CONNECT',
+          img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'Forbes India features FMK Marketing & PR Agency under Yash Agarwal\'s leadership for driving high-ticket brand positioning and PR equity.',
+          url: 'https://www.forbesindia.com/article/brand-connect/kye-global-fmk-marketing-announce-vip-members-for-20202022/65187/1'
+        },
+        {
+          id: 'p8',
+          publication: 'The India Saga',
+          pubLogo: null,
+          pubColor: '#059669',
+          headline: 'FMK Marketing & PR Agency by Yash Agarwal Assists Small Businesses During Economic Slowdown',
+          date: 'August 2020',
+          category: 'AGENCY & PR',
+          img: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'The India Saga details how Yash Agarwal\'s FMK Marketing helped SMEs pivot to digital channels and sustain revenue.',
+          url: 'https://theindiasaga.com/saga-corner/fmk-marketing-pr-agency-by-yash-agarwal-assists-small-businesses/'
+        }
+      ];
+
+      // Speaking Events
+      const speakingEvents = cmsData?.speaking || [
+        { id: 's1', event: 'WhatsApp Business Summit', org: 'Meta (WhatsApp)', topic: 'Scaling SME Growth via Conversational Commerce', year: '2024', type: 'KEYNOTE', icon: 'message-circle', featured: true },
+        { id: 's2', event: 'ET Now Digital Summit', org: 'Economic Times', topic: 'The New-Age CMO: AI, Performance & Brand Authority', year: '2024', type: 'PANEL', icon: 'tv', featured: true },
+        { id: 's3', event: 'Google Partners Summit', org: 'Google India', topic: 'Scaling Search & PMax Campaigns to Multi-Crore Revenue', year: '2023', type: 'TALK', icon: 'search', featured: true },
+        { id: 's4', event: 'Meta Advantage+ Bootcamp', org: 'Meta India', topic: 'Creative Velocity and AI-Powered Ad Scaling', year: '2023', type: 'WORKSHOP', icon: 'zap', featured: false },
+        { id: 's5', event: 'Canva Create India', org: 'Canva', topic: 'Personal Brand Design Systems for Executive Leaders', year: '2024', type: 'TALK', icon: 'pen-tool', featured: false },
+        { id: 's6', event: 'HP Reinvent Partner Conference', org: 'HP India', topic: 'Enterprise B2B Growth Marketing Architecture', year: '2023', type: 'KEYNOTE', icon: 'cpu', featured: false },
+        { id: 's7', event: 'IIM Ahmedabad Marketing Summit', org: 'IIM Ahmedabad', topic: 'Building Brand Equity Without Corporate Patronage', year: '2024', type: 'KEYNOTE', icon: 'graduation-cap', featured: true },
+        { id: 's8', event: 'NMIMS Marketing Conclave', org: 'NMIMS Mumbai', topic: 'From Agency Life to CMO: Career Architecture for Marketers', year: '2023', type: 'PANEL', icon: 'users', featured: false },
+      ];
+
+      // Testimonials
+      const testimonials = cmsData?.testimonials || [
+        {
+          id: 't1',
+          name: 'Rajesh Mehta',
+          title: 'Founder & CEO',
+          company: 'TechScale Ventures',
+          quote: 'Yash transformed our entire digital marketing architecture. Within 6 months, our ROAS went from 1.8x to 5.4x and monthly revenue crossed ₹1.2 Crore. His PR newsjacking framework alone got us into Forbes and Business Standard.',
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80',
+          stars: 5,
+          source: 'LinkedIn'
+        },
+        {
+          id: 't2',
+          name: 'Priya Sharma',
+          title: 'VP of Marketing',
+          company: 'D2C Lifestyle Brand',
+          quote: 'Working with Yash on our performance marketing stack was a game-changer. He doesn\'t just run ads — he builds systems. Our CAC dropped 42% while our LTV grew 3x in one quarter. Absolutely unmatched expertise.',
+          avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
+          stars: 5,
+          source: 'Direct'
+        },
+        {
+          id: 't3',
+          name: 'Arun Kapoor',
+          title: 'Co-Founder',
+          company: 'FinTech Startup (Series B)',
+          quote: 'Yash\'s fractional CMO framework helped us build a complete marketing function from scratch. He hired our team, built our attribution model, and secured 12 national press features in 4 months. Exceptional strategic thinking.',
+          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
+          stars: 5,
+          source: 'LinkedIn'
+        },
+        {
+          id: 't4',
+          name: 'Sneha Patel',
+          title: 'CMO',
+          company: 'Enterprise SaaS Company',
+          quote: 'I\'ve worked with multiple marketing consultants. Yash is the only one who truly understands the intersection of brand authority, performance marketing, and AI. His No Godfather philosophy is real — no fluff, just results.',
+          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80',
+          stars: 5,
+          source: 'Direct'
+        },
+        {
+          id: 't5',
+          name: 'Vikram Nair',
+          title: 'Managing Director',
+          company: 'Real Estate Developer',
+          quote: 'We hired Yash to build our digital brand from zero. Within 8 months, we had coverage in ET Realty, HT, and Mid-Day; 40,000+ qualified leads in our CRM; and a performance media engine producing ₹85L in monthly revenue.',
+          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
+          stars: 5,
+          source: 'LinkedIn'
+        },
+      ];
 
       return (
         <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
           
-          {/* TOP ANNOUNCEMENT BAR */}
-          <div className="bg-[#121212] text-white text-center py-2.5 px-4 text-xs font-bold tracking-wide flex justify-center items-center gap-3">
-            <span>{t.announcement}</span>
-            <a href="#book" className="underline hover:text-marie-gold transition-colors font-semibold">Learn More →</a>
+          {/* TOP ANNOUNCEMENT BAR — GOLDEN NEWS TICKER */}
+          <div className="bg-[#08070D] border-b border-marie-gold/30 text-marie-gold py-2.5 overflow-hidden whitespace-nowrap relative flex items-center shadow-md">
+            <div className="inline-flex items-center gap-16 animate-marquee font-bold text-xs tracking-wider">
+              <span className="flex items-center gap-2">
+                <span>{announcementText}</span>
+                <a href="#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+              <span className="flex items-center gap-2">
+                <span>{announcementText}</span>
+                <a href="#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+              <span className="flex items-center gap-2">
+                <span>{announcementText}</span>
+                <a href="#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+              <span className="flex items-center gap-2">
+                <span>{announcementText}</span>
+                <a href="#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+            </div>
           </div>
 
-          {/* MARIE FORLEO DOCK NAVIGATION BAR WITH SUN/MOON & MULTI-LANG */}
-          <header className={`sticky top-0 z-50 w-full ${dockClass} py-3.5 px-6 sm:px-12 flex items-center justify-between shadow-sm backdrop-blur-md`}>
-            <a href="#" className="flex items-center gap-3 group">
-              <div className="w-9 h-9 rounded-full bg-marie-gold text-black flex items-center justify-center font-bold text-sm shadow-md group-hover:scale-105 transition-transform">
-                MAY
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold tracking-widest text-sm">YASH AGARWAL</span>
-                <span className="text-[10px] tracking-wider text-marie-gold font-bold">MEAGARWALYASH.COM</span>
-              </div>
-            </a>
-
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs font-bold tracking-wider">
-              <a href="#about" className="hover:text-marie-gold transition-colors">{t.navAbout}</a>
-              <a href="#tv" className="hover:text-marie-gold transition-colors">{t.navTV}</a>
-              <a href="#book" className="hover:text-marie-gold transition-colors">{t.navBook}</a>
-              <a href="#programs" className="hover:text-marie-gold transition-colors">{t.navPrograms}</a>
-              <a href="#audit" className="hover:text-marie-gold transition-colors">{t.navAudit}</a>
-              <a href="#blog" className="hover:text-marie-gold transition-colors">{t.navBlog}</a>
-              <a href="#proof" className="hover:text-marie-gold transition-colors">{t.navProof}</a>
-              <a href="#contact" className="hover:text-marie-gold transition-colors">{t.navContact}</a>
-            </nav>
-
-            <div className="flex items-center gap-3">
+          {/* EXECUTIVE DOCK NAVIGATION BAR */}
+          <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${darkMode ? 'bg-[#0A090E]/90 border-b border-white/10 text-white' : 'bg-[#FAF8F5]/90 border-b border-marie-border text-black'} backdrop-blur-xl py-3 px-4 sm:px-8 shadow-xl`}>
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
               
-              {/* SUN / MOON LIGHT & DARK MODE TOGGLE BUTTON */}
-              <button
-                onClick={() => setDarkMode(!darkMode)}
-                className={`p-2 rounded-full border transition-all ${darkMode ? 'bg-white/10 border-white/20 text-marie-gold hover:bg-white/20' : 'bg-marie-goldSoft border-marie-goldBorder text-marie-black hover:bg-marie-gold/20'}`}
-                title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-              >
-                {darkMode ? (
-                  <i data-lucide="sun" className="w-4 h-4 text-marie-gold"></i>
-                ) : (
-                  <i data-lucide="moon" className="w-4 h-4 text-black"></i>
-                )}
-              </button>
-
-
-              {/* Multi-Language Dropdown */}
-              <select
-                value={lang}
-                onChange={(e) => setLang(e.target.value)}
-                className={`px-3 py-1.5 rounded-full font-bold text-[11px] border focus:outline-none cursor-pointer ${darkMode ? 'bg-white/10 text-marie-gold border-white/20' : 'bg-marie-goldSoft text-black border-marie-goldBorder'}`}
-              >
-                <option value="en">EN (English)</option>
-                <option value="hi">HI (हिंदी)</option>
-                <option value="bn">BN (বাংলা)</option>
-                <option value="mwr">MWR (मारवाड़ी)</option>
-                <option value="mr">MR (मराठी)</option>
-                <option value="gu">GU (ગુજરાતી)</option>
-                <option value="kn">KN (ಕನ್ನಡ)</option>
-                <option value="pa">PA (ਪੰਜਾਬੀ)</option>
-                <option value="es">ES (Español)</option>
-              </select>
-
-              {/* Hidden Google Translate Widget trigger for all 130+ languages */}
-              <div id="google_translate_element" className="hidden sm:inline-block"></div>
-
-              <a
-                href="#audit"
-                className="px-5 py-2 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md transition-all hidden sm:inline-block"
-              >
-                {t.btnAudit}
+              {/* Logo Brand (Restored previous logo sizing & filters, shifted down 0.5cm to avoid notification bar intersection) */}
+              <a href="#" className="flex items-center group relative z-10 flex-shrink-0">
+                <img
+                  src="maylogo.png"
+                  alt="MAY Executive Logo"
+                  className="h-40 sm:h-52 md:h-60 w-auto object-contain -my-14 sm:-my-20 translate-y-4 transition-transform duration-300 group-hover:scale-105 brightness-150 contrast-125 filter drop-shadow-[0_0_24px_rgba(212,175,55,0.9)]"
+                />
               </a>
 
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg lg:hidden focus:outline-none"
-              >
-                <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-6 h-6"></i>
-              </button>
+              {/* Central Floating Navigation Pill (Desktop) */}
+              <nav className={`hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full border transition-all ${darkMode ? 'bg-white/5 border-white/10 text-zinc-300' : 'bg-black/5 border-black/10 text-zinc-700'}`}>
+                {[
+                  ['#impact', 'Impact'],
+                  ['#journey', 'Journey'],
+                  ['#media', 'Press'],
+                  ['#tv', 'Videos'],
+                  ['#speaking', 'Speaking'],
+                  ['#testimonials', 'Reviews'],
+                  ['#programs', 'Work With Me'],
+                  ['#book', 'Book'],
+                  ['#contact', 'Contact'],
+                ].map(([href, label]) => (
+                  <a
+                    key={href}
+                    href={href}
+                    className={`px-2.5 py-1 rounded-full text-[11px] xl:text-xs font-bold tracking-wide whitespace-nowrap transition-all ${darkMode ? 'hover:text-marie-gold hover:bg-white/10' : 'hover:text-marie-goldHover hover:bg-black/5'}`}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </nav>
+
+              {/* Right Action Controls */}
+              <div className="flex items-center gap-2.5 flex-shrink-0">
+                
+                {/* Theme Toggle Button */}
+                <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  className={`p-2 rounded-full border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-marie-gold hover:bg-white/15' : 'border-black/15 bg-black/5 text-marie-goldHover hover:bg-black/10'}`}
+                  title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                >
+                  <i data-lucide={darkMode ? "sun" : "moon"} className="w-4 h-4"></i>
+                </button>
+
+                {/* Multi-Language Selector */}
+                <select
+                  value={lang}
+                  onChange={(e) => setLang(e.target.value)}
+                  className={`px-3 py-1.5 rounded-full font-semibold text-[11px] border focus:outline-none cursor-pointer transition-all ${darkMode ? 'bg-[#14131B] border-white/20 text-white hover:border-marie-gold' : 'bg-white border-black/20 text-black hover:border-marie-gold'}`}
+                >
+                  <option value="en">EN</option>
+                  <option value="hi">HI (हिंदी)</option>
+                  <option value="bn">BN (বাংলা)</option>
+                  <option value="mwr">MWR (मारवाड़ी)</option>
+                  <option value="mr">MR (मराठी)</option>
+                  <option value="gu">GU (ગુજરાતી)</option>
+                  <option value="kn">KN (ಕನ್ನಡ)</option>
+                  <option value="pa">PA (ਪੰਜਾਬੀ)</option>
+                  <option value="es">ES (Español)</option>
+                </select>
+
+                <div id="google_translate_element" className="hidden"></div>
+
+                {/* Growth Blueprint CTA Button */}
+                <a
+                  href="#audit"
+                  className="px-5 py-2 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md transition-all hover:scale-105 hidden sm:flex items-center gap-1.5 gold-glow-sm"
+                >
+                  <span>Free Audit</span>
+                  <i data-lucide="arrow-right" className="w-3.5 h-3.5"></i>
+                </a>
+
+                {/* Mobile Menu Toggle Button */}
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className={`p-2 rounded-xl lg:hidden border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-white' : 'border-black/15 bg-black/5 text-black'}`}
+                >
+                  <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-5 h-5"></i>
+                </button>
+              </div>
+
             </div>
           </header>
 
           {/* Mobile Dropdown Menu */}
           {mobileMenuOpen && (
-            <div className={`fixed inset-x-0 top-20 z-40 p-6 shadow-2xl lg:hidden space-y-4 font-bold text-sm ${darkMode ? 'bg-[#14131B] border-b border-[#232230] text-white' : 'bg-white border-b border-marie-border text-[#121212]'}`}>
-              <div className="grid grid-cols-2 gap-3">
-                <a href="#about" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navAbout}</a>
-                <a href="#tv" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navTV}</a>
-                <a href="#book" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navBook}</a>
-                <a href="#programs" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navPrograms}</a>
-                <a href="#audit" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navAudit}</a>
-                <a href="#blog" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navBlog}</a>
-                <a href="#proof" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navProof}</a>
-                <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navContact}</a>
+            <div className={`fixed inset-x-0 top-[65px] z-40 p-6 shadow-2xl lg:hidden space-y-4 font-bold text-sm backdrop-blur-2xl transition-all ${darkMode ? 'bg-[#0A090E]/95 border-b border-white/10 text-white' : 'bg-white/95 border-b border-marie-border text-[#121212]'}`}>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                {[
+                  ['#impact', 'Impact'],
+                  ['#journey', 'Journey'],
+                  ['#brands', 'Brands'],
+                  ['#media', 'Press & Media'],
+                  ['#tv', 'Videos & Podcasts'],
+                  ['#speaking', 'Speaking'],
+                  ['#testimonials', 'Reviews'],
+                  ['#programs', 'Work With Me'],
+                  ['#book', 'Book'],
+                  ['#audit', t.navAudit],
+                  ['#contact', t.navContact],
+                ].map(([href, label]) => (
+                  <a
+                    key={href}
+                    href={href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`p-3 rounded-2xl text-xs font-semibold flex items-center justify-between border transition-all ${darkMode ? 'bg-white/5 border-white/10 hover:border-marie-gold hover:text-marie-gold' : 'bg-black/5 border-black/10 hover:border-marie-gold hover:text-marie-gold'}`}
+                  >
+                    <span>{label}</span>
+                    <i data-lucide="chevron-right" className="w-3.5 h-3.5 opacity-50"></i>
+                  </a>
+                ))}
               </div>
             </div>
           )}
 
           {/* HERO SECTION */}
-          <section className="py-20 px-6 sm:px-12 max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <section className="pt-4 pb-6 px-6 sm:px-12 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               
-              <div className="lg:col-span-7 space-y-6 reveal-on-scroll">
+              <div className="lg:col-span-7 space-y-5 reveal-on-scroll">
                 <div className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border ${darkMode ? 'bg-white/10 border-white/20 text-marie-gold' : 'bg-marie-goldSoft border-marie-goldBorder text-marie-goldHover'}`}>
-                  {t.badge}
+                  {heroBadge}
                 </div>
 
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
-                  {t.heroGreeting}
+                  {heroGreeting}
                 </h1>
 
                 <p className={`text-lg sm:text-xl leading-relaxed font-normal ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  {t.heroBio}
+                  {heroBio}
                 </p>
 
-                <div className="flex flex-wrap gap-4 pt-4">
+                <div className="flex flex-wrap gap-4 pt-2">
                   <a
                     href="#audit"
                     className="px-8 py-4 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-sm shadow-lg hover:scale-105 transition-all flex items-center gap-2"
@@ -782,9 +1368,9 @@
                 </div>
 
                 {/* Key Metrics */}
-                <div className={`pt-8 border-t grid grid-cols-4 gap-4 text-center sm:text-left ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+                <div className={`pt-6 border-t grid grid-cols-4 gap-4 text-center sm:text-left ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
                   <div>
-                    <div className="text-3xl font-bold text-marie-gold">12+</div>
+                    <div className="text-3xl font-bold text-marie-gold">{heroExpYears}</div>
                     <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{t.yearsExp}</div>
                   </div>
                   <div>
@@ -792,11 +1378,11 @@
                     <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{t.monthlyRev}</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold">500+</div>
+                    <div className="text-3xl font-bold">{heroCampaigns}</div>
                     <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{t.pressCov}</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold">15+</div>
+                    <div className="text-3xl font-bold">{heroCountries}</div>
                     <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{t.countries}</div>
                   </div>
                 </div>
@@ -807,27 +1393,303 @@
               <div className="lg:col-span-5 flex justify-center reveal-on-scroll">
                 <div className="relative w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden group">
                   <img
-                    src="yashdp.png"
-                    alt="Yash Agarwal"
-                    className="w-full h-auto max-h-[700px] object-cover rounded-3xl filter contrast-[1.03] transform group-hover:scale-105 transition-transform duration-700"
+                    src={heroImage}
+                    alt={heroName}
+                    className="w-full h-auto max-h-[460px] object-cover rounded-3xl filter contrast-[1.03] transform group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
               </div>
 
             </div>
+
+            {/* AS FEATURED IN MEDIA TICKER (INTEGRATED INSIDE HERO SECTION ABOVE THE FOLD) */}
+            <div className={`mt-6 pt-6 border-t ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+              <div className="text-center space-y-4">
+                <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-[0.3em]">AS FEATURED ACROSS NATIONAL PRESS & MEDIA</div>
+                <div className="grid grid-cols-5 items-center justify-items-center gap-2 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
+                  
+                  {/* Business Standard Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="business standard logo.png"
+                      alt="Business Standard"
+                      className={`max-h-8 sm:max-h-11 md:max-h-13 w-auto object-contain ${darkMode ? 'brightness-0 invert' : ''}`}
+                    />
+                  </div>
+
+                  {/* Forbes Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="Forbes-Logo.png"
+                      alt="Forbes India"
+                      className={`max-h-7 sm:max-h-10 md:max-h-12 w-auto object-contain ${darkMode ? 'brightness-0 invert' : ''}`}
+                    />
+                  </div>
+
+                  {/* The Week Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="theWeek logo.png"
+                      alt="The Week"
+                      className={`max-h-7 sm:max-h-10 md:max-h-12 w-auto object-contain ${darkMode ? 'brightness-150 contrast-125' : ''}`}
+                    />
+                  </div>
+
+                  {/* Mid-Day Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="midday_logo_clean.png"
+                      alt="Mid-Day"
+                      className={`max-h-7 sm:max-h-10 md:max-h-12 w-auto object-contain ${darkMode ? 'brightness-0 invert' : ''}`}
+                    />
+                  </div>
+
+                  {/* ANI News Logo */}
+                  <div className="w-full h-12 sm:h-16 flex items-center justify-center p-1 sm:p-2 opacity-95 hover:opacity-100 transition-all hover:scale-105">
+                    <img
+                      src="Ani-news logo.png"
+                      alt="ANI News"
+                      className={`max-h-8 sm:max-h-11 md:max-h-13 w-auto object-contain ${darkMode ? 'brightness-0 invert' : ''}`}
+                    />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
           </section>
 
-          {/* AS FEATURED IN MEDIA TICKER */}
-          <section className={`py-8 border-y ${darkMode ? 'bg-[#14131B] border-white/10' : 'bg-white border-marie-border'}`}>
-            <div className="max-w-7xl mx-auto px-6 text-center space-y-4">
-              <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest">AS FEATURED ACROSS NATIONAL PRESS & MEDIA</div>
-              <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-14 font-bold text-sm text-zinc-400 tracking-wider uppercase">
-                <span>BUSINESS STANDARD</span> • <span>FORBES INDIA</span> • <span>HINDUSTAN TIMES</span> • <span>THE WEEK</span> • <span>MID-DAY</span> • <span>ANI PRESS</span>
+          {/* ══════════════════════════════════════════════════════════
+               IMPACT DASHBOARD — ANIMATED STATISTICS
+          ══════════════════════════════════════════════════════════ */}
+          <section id="impact" ref={countersRef} className={`py-20 border-t relative overflow-hidden ${darkMode ? 'bg-[#0D0C14] border-white/10' : 'bg-white border-marie-border'}`}>
+            {/* Ambient glow bg */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-marie-gold/8 to-transparent blur-[100px]"></div>
+            </div>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
+              <div className="text-center space-y-3 mb-14 reveal-on-scroll">
+                <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">NUMBERS THAT SPEAK</div>
+                <h2 className="text-4xl sm:text-5xl font-bold">12 Years of Measurable Impact</h2>
+                <div className="section-divider mx-auto"></div>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+                {impactStats.map((stat, i) => (
+                  <div
+                    key={i}
+                    className={`impact-stat ${countersVisible ? 'is-visible' : ''} ${cardClass} rounded-3xl p-6 text-center group hover:border-marie-gold/60 transition-all duration-500 reveal-on-scroll`}
+                    style={{ animationDelay: `${i * 0.08}s` }}
+                  >
+                    <div className={`w-10 h-10 rounded-2xl bg-marie-gold/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-marie-gold/20 transition-colors`}>
+                      <i data-lucide={stat.icon} className={`w-5 h-5 ${stat.color}`}></i>
+                    </div>
+                    <div className={`text-3xl sm:text-4xl font-bold ${stat.color} gradient-text mb-1`}
+                      style={countersVisible ? { animation: `countUp 0.7s ease ${i * 0.08}s both` } : { opacity: 0 }}
+                    >
+                      {stat.value}
+                    </div>
+                    <div className={`text-xs font-medium leading-snug ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>{stat.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
 
-          {/* "WHAT ARE YOU LOOKING TO BUILD?" PATH FINDER */}
+          {/* FEATURED EXECUTIVE KEYNOTE VIDEO — FULL-WIDTH EDGE-TO-EDGE SHOWCASE */}
+          <section className="w-full bg-black relative border-y border-marie-gold/30">
+            <div className="w-full relative aspect-video sm:aspect-[21/9] md:aspect-[16/9] bg-black">
+              <iframe
+                src="https://www.youtube.com/embed/uSxtRz8vJm4?autoplay=1&start=30&mute=1&enablejsapi=1&rel=0&modestbranding=1&controls=1"
+                title="Yash Agarwal Executive Keynote"
+                className="w-full h-full border-0 absolute inset-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════
+               MY JOURNEY — INTERACTIVE EXPANDABLE TIMELINE
+          ══════════════════════════════════════════════════════════ */}
+          <section id="journey" className={`py-24 border-t ${darkMode ? 'bg-[#0A090E] border-white/10' : 'bg-[#FAF8F5] border-marie-border'}`}>
+            <div className="max-w-5xl mx-auto px-6 sm:px-12">
+              <div className="text-center space-y-3 mb-16 reveal-on-scroll">
+                <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">THE REAL STORY</div>
+                <h2 className="text-4xl sm:text-5xl font-bold">From ₹12,000 Salary to Building<br className="hidden sm:block" /> Multi-Crore Growth Engines</h2>
+                <div className="section-divider mx-auto"></div>
+                <p className={`text-base max-w-2xl mx-auto ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
+                  No godfather. No corporate patronage. Just relentless execution, systems thinking, and a deep obsession with measurable enterprise impact.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {journeyMilestones.map((m, i) => (
+                  <div key={m.id} className="relative pl-14 reveal-on-scroll" style={{ animationDelay: `${i * 0.1}s` }}>
+                    {/* Timeline connector */}
+                    {i < journeyMilestones.length - 1 && <div className="timeline-line"></div>}
+
+                    {/* Year dot */}
+                    <div className="absolute left-0 top-3 w-12 h-12 rounded-2xl bg-marie-gold flex items-center justify-center text-black font-bold text-[10px] text-center leading-tight shadow-lg gold-glow-sm z-10">
+                      {m.year.slice(2)}
+                    </div>
+
+                    {/* Card */}
+                    <div
+                      className={`${cardClass} rounded-3xl overflow-hidden cursor-pointer transition-all duration-400`}
+                      onClick={() => setExpandedMilestone(expandedMilestone === m.id ? null : m.id)}
+                    >
+                      <div className="p-6 flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-2">
+                            <span className="px-3 py-1 rounded-full bg-marie-gold/20 text-marie-gold text-[10px] font-bold uppercase tracking-wider">{m.badge}</span>
+                            <span className={`text-xs font-bold ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>{m.year}</span>
+                          </div>
+                          <h3 className="text-xl font-bold group-hover:text-marie-gold transition-colors">{m.title}</h3>
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {m.tags.map(tag => (
+                              <span key={tag} className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${darkMode ? 'bg-white/5 text-zinc-400' : 'bg-zinc-100 text-zinc-500'}`}>{tag}</span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 ${expandedMilestone === m.id ? 'rotate-180 bg-marie-gold text-black' : (darkMode ? 'bg-white/10 text-zinc-400' : 'bg-zinc-100 text-zinc-500')}`}>
+                          <i data-lucide="chevron-down" className="w-4 h-4"></i>
+                        </div>
+                      </div>
+
+                      {/* Expanded Content */}
+                      {expandedMilestone === m.id && (
+                        <div className={`px-6 pb-6 border-t ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+                            <div className="space-y-3">
+                              <p className={`text-sm leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{m.desc}</p>
+                              <div className={`flex items-start gap-2 p-3 rounded-2xl ${darkMode ? 'bg-marie-gold/10 border border-marie-gold/20' : 'bg-marie-goldSoft border border-marie-goldBorder'}`}>
+                                <i data-lucide="trophy" className="w-4 h-4 text-marie-gold mt-0.5 flex-shrink-0"></i>
+                                <div>
+                                  <div className="text-xs font-bold text-marie-gold mb-0.5">KEY ACHIEVEMENT</div>
+                                  <div className={`text-xs ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{m.achievement}</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="rounded-2xl overflow-hidden">
+                              <img src={m.img} alt={m.title} className="w-full h-40 object-cover rounded-2xl hover:scale-105 transition-transform duration-500" />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════
+               BRANDS WORKED WITH — INFINITE SCROLL LOGO WALL
+          ══════════════════════════════════════════════════════════ */}
+          <section id="brands" className={`py-16 border-t overflow-hidden ${darkMode ? 'bg-[#111018] border-white/10' : 'bg-white border-marie-border'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 mb-8 reveal-on-scroll">
+              <div className="text-center space-y-2">
+                <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">TRUSTED BY THE BEST</div>
+                <h2 className="text-2xl sm:text-3xl font-bold">Brands & Organizations I've Worked With</h2>
+              </div>
+            </div>
+            {/* Infinite Scroll Track */}
+            <div className="relative w-full overflow-hidden">
+              <div className="flex gap-6 logo-scroll-track">
+                {[...brandLogos, ...brandLogos].map((brand, i) => (
+                  <div
+                    key={i}
+                    className={`flex-shrink-0 flex items-center gap-3 px-6 py-4 rounded-2xl ${darkMode ? 'bg-[#14131B] border border-[#232230] hover:border-marie-gold/40' : 'bg-white border border-marie-border hover:border-marie-gold'} transition-all duration-300 cursor-default`}
+                    title={brand.name}
+                  >
+                    <div
+                      className="w-8 h-8 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0"
+                      style={{ background: brand.color }}
+                    >
+                      {brand.abbr.slice(0, 2)}
+                    </div>
+                    <span className={`text-sm font-bold whitespace-nowrap ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>{brand.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════
+               PRESS & MEDIA — PREMIUM ARTICLE CARDS
+          ══════════════════════════════════════════════════════════ */}
+          <section id="media" className={`py-24 border-t ${darkMode ? 'bg-[#0A090E] border-white/10' : 'bg-[#FAF8F5] border-marie-border'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-14 reveal-on-scroll">
+                <div>
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest mb-2">NATIONAL & GLOBAL PRESS</div>
+                  <h2 className="text-4xl sm:text-5xl font-bold">Press & Media Coverage</h2>
+                  <div className="section-divider mt-3"></div>
+                </div>
+                <div className={`text-xs font-bold px-4 py-2 rounded-full border ${darkMode ? 'border-white/20 text-zinc-300' : 'border-marie-border text-zinc-600'}`}>500+ National Press Features</div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 reveal-on-scroll">
+                {pressArticles.slice(0, 6).map((article) => (
+                  <a
+                    key={article.id}
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${cardClass} rounded-3xl overflow-hidden group flex flex-col hover:border-marie-gold/60 transition-all`}
+                  >
+                    {/* Thumbnail */}
+                    <div className="aspect-[16/9] overflow-hidden relative">
+                      <img src={article.img} alt={article.headline} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                      <div className="absolute top-3 left-3">
+                        <span className="px-3 py-1 rounded-full text-[10px] font-bold text-white bg-black/60 backdrop-blur-sm border border-white/20 uppercase">{article.category}</span>
+                      </div>
+                      {/* Publication badge */}
+                      <div className="absolute bottom-3 left-3 flex items-center gap-2">
+                        {article.pubLogo ? (
+                          <img
+                            src={article.pubLogo}
+                            alt={article.publication}
+                            className="h-6 w-auto object-contain brightness-150 drop-shadow-md"
+                          />
+                        ) : (
+                          <div className="flex items-center gap-1.5">
+                            <div className="w-5 h-5 rounded-full flex items-center justify-center text-white font-bold text-[8px]" style={{ background: article.pubColor }}>
+                              {article.publication.slice(0, 2)}
+                            </div>
+                            <span className="text-white text-xs font-bold drop-shadow-md">{article.publication}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    {/* Content */}
+                    <div className="p-5 flex flex-col flex-1">
+                      <div className={`text-[11px] font-bold mb-2 ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>{article.date}</div>
+                      <h3 className="text-base font-bold leading-snug group-hover:text-marie-gold transition-colors mb-2 flex-1">{article.headline}</h3>
+                      <p className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>{article.excerpt}</p>
+                      <div className="mt-4 flex items-center gap-1.5 text-xs font-bold text-marie-gold group-hover:gap-2.5 transition-all">
+                        <span>Read Full Article</span>
+                        <i data-lucide="external-link" className="w-3.5 h-3.5"></i>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+              {/* READ MORE CTA BUTTON — OPENS DEDICATED MEDIA PAGE */}
+              <div className="mt-12 text-center reveal-on-scroll">
+                <a
+                  href="media.html"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-lg transition-all hover:scale-105 gold-glow"
+                >
+                  <span>View All 8 Press Coverage Articles & Features →</span>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          {/* \"WHAT ARE YOU LOOKING TO BUILD?\" PATH FINDER */}
           <section className="py-20 px-6 sm:px-12 max-w-7xl mx-auto">
             <div className="text-center max-w-3xl mx-auto space-y-4 mb-12 reveal-on-scroll">
               <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">CHOOSE YOUR GROWTH PATH</div>
@@ -870,44 +1732,121 @@
             </div>
           </section>
 
-          {/* MAY TV SHOWCASE SECTION */}
+          {/* VIDEOS & PODCASTS SECTION — AUTO-SCROLLING CAROUSEL */}
           <section id="tv" className={`py-20 border-t ${darkMode ? 'bg-[#14131B] border-white/10' : 'bg-white border-marie-border'}`}>
-            <div className="max-w-7xl mx-auto px-6 sm:px-12 space-y-12">
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 space-y-8">
               
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 reveal-on-scroll">
                 <div>
-                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">WATCH & LISTEN</div>
-                  <h2 className="text-4xl sm:text-5xl font-bold mt-1">MAY TV & Audio Keynotes</h2>
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest flex items-center gap-2">
+                    <span>WATCH & LISTEN</span>
+                    <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-bold mt-1">Videos & Podcasts</h2>
+                  <div className="section-divider mt-2"></div>
                 </div>
-                <a href="#contact" className="text-xs font-bold text-marie-gold underline">View All Episodes →</a>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  {/* Category Filter Tabs */}
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { id: 'all', label: 'All Shows (5)' },
+                      { id: 'youtube', label: 'YouTube' },
+                      { id: 'podcast', label: 'Podcasts' },
+                      { id: 'masterclass', label: 'Masterclasses' },
+                    ].map(tab => (
+                      <button
+                        key={tab.id}
+                        onClick={() => { setVideoTab(tab.id); setVideoScrollIdx(0); }}
+                        className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${videoTab === tab.id ? 'bg-marie-gold text-black shadow-md' : (darkMode ? 'bg-white/10 text-zinc-300 hover:bg-white/20' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200')}`}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Carousel Prev / Next Controls */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => {
+                        const filteredCount = tvEpisodes.filter(ep => videoTab === 'all' || ep.category.toLowerCase().includes(videoTab)).length;
+                        setVideoScrollIdx(prev => (prev - 1 + filteredCount) % filteredCount);
+                      }}
+                      className={`p-2.5 rounded-full border transition-all ${darkMode ? 'border-white/20 bg-white/5 hover:bg-white/15 text-white' : 'border-black/20 bg-black/5 hover:bg-black/10 text-black'}`}
+                      title="Previous Video"
+                    >
+                      <i data-lucide="chevron-left" className="w-4 h-4"></i>
+                    </button>
+                    <button
+                      onClick={() => {
+                        const filteredCount = tvEpisodes.filter(ep => videoTab === 'all' || ep.category.toLowerCase().includes(videoTab)).length;
+                        setVideoScrollIdx(prev => (prev + 1) % filteredCount);
+                      }}
+                      className={`p-2.5 rounded-full border transition-all ${darkMode ? 'border-white/20 bg-white/5 hover:bg-white/15 text-white' : 'border-black/20 bg-black/5 hover:bg-black/10 text-black'}`}
+                      title="Next Video"
+                    >
+                      <i data-lucide="chevron-right" className="w-4 h-4"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-on-scroll">
-                {tvEpisodes.map((ep) => (
-                  <div
-                    key={ep.id}
-                    onClick={() => { setSelectedVideo(ep); setActiveModal('tv'); }}
-                    className={`${cardClass} rounded-3xl overflow-hidden cursor-pointer flex flex-col justify-between group`}
-                  >
-                    <div>
-                      <div className="aspect-[16/10] overflow-hidden relative">
-                        <img src={ep.img} alt={ep.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/20 transition-colors">
-                          <div className="w-12 h-12 rounded-full bg-marie-gold text-black flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                            <i data-lucide="play" className="w-5 h-5 fill-black"></i>
+              {/* AUTO-SCROLLING CAROUSEL TRACK */}
+              <div
+                className="overflow-hidden relative rounded-3xl p-1"
+                onMouseEnter={() => setVideoAutoPlay(false)}
+                onMouseLeave={() => setVideoAutoPlay(true)}
+              >
+                <div
+                  className="flex gap-6 transition-transform duration-700 ease-in-out"
+                  style={{ transform: `translateX(-${videoScrollIdx * 340}px)` }}
+                >
+                  {tvEpisodes
+                    .filter(ep => videoTab === 'all' || ep.category.toLowerCase().includes(videoTab))
+                    .map((ep) => (
+                    <div
+                      key={ep.id}
+                      onClick={() => { setSelectedVideo(ep); setActiveModal('tv'); }}
+                      className={`w-[300px] sm:w-[350px] flex-shrink-0 ${cardClass} rounded-3xl overflow-hidden cursor-pointer flex flex-col justify-between group hover:border-marie-gold/60 transition-all shadow-xl`}
+                    >
+                      <div>
+                        {/* Thumbnail */}
+                        <div className="aspect-[16/10] overflow-hidden relative">
+                          <img src={ep.img} alt={ep.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/10 transition-colors">
+                            <div className="w-14 h-14 rounded-full bg-marie-gold text-black flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform gold-glow-sm">
+                              <i data-lucide="play" className="w-6 h-6 fill-black ml-0.5"></i>
+                            </div>
                           </div>
+                          <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-white uppercase backdrop-blur-sm border border-white/20">{ep.category}</span>
+                          <span className="absolute bottom-3 right-3 px-3 py-1 rounded-md bg-white text-black font-bold text-[10px]">{ep.duration}</span>
                         </div>
-                        <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-white uppercase">{ep.category}</span>
-                        <span className="absolute bottom-3 right-3 px-3 py-1 rounded-md bg-white text-black font-bold text-[10px]">{ep.duration}</span>
+                        {/* Content */}
+                        <div className="p-6 space-y-2">
+                          <div className="text-xs font-bold text-marie-gold">{ep.episode}</div>
+                          <h3 className="text-lg font-bold leading-snug group-hover:text-marie-gold transition-colors line-clamp-2">{ep.title}</h3>
+                          <p className={`text-xs line-clamp-2 mt-2 ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{ep.desc}</p>
+                        </div>
                       </div>
-                      <div className="p-6 space-y-2">
-                        <div className="text-xs font-bold text-marie-gold">{ep.episode}</div>
-                        <h3 className="text-lg font-bold leading-snug group-hover:text-marie-gold transition-colors">{ep.title}</h3>
-                        <p className={`text-xs line-clamp-2 mt-2 ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{ep.desc}</p>
+                      <div className="px-6 pb-6 pt-2 text-xs font-bold text-marie-gold flex items-center gap-1.5">
+                        <span>Play Video Embed</span>
+                        <i data-lucide="play-circle" className="w-4 h-4"></i>
                       </div>
                     </div>
-                    <div className="px-6 pb-6 pt-2 text-xs font-bold text-marie-gold">Watch Episode →</div>
-                  </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Progress Indicator Dots */}
+              <div className="flex justify-center items-center gap-2 pt-2">
+                {tvEpisodes
+                  .filter(ep => videoTab === 'all' || ep.category.toLowerCase().includes(videoTab))
+                  .map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setVideoScrollIdx(idx)}
+                    className={`h-2 rounded-full transition-all duration-300 ${videoScrollIdx === idx ? 'w-8 bg-marie-gold' : 'w-2 bg-white/20 hover:bg-white/40'}`}
+                  ></button>
                 ))}
               </div>
 
@@ -922,8 +1861,8 @@
                 <div className="lg:col-span-5 flex justify-center reveal-on-scroll">
                   <div className={`relative w-64 sm:w-80 rounded-2xl p-2 border-2 shadow-2xl group hover:scale-105 transition-transform duration-500 ${darkMode ? 'bg-[#14131B] border-white/20' : 'bg-white border-marie-goldBorder'}`}>
                     <img
-                      src="no godfather cover.png"
-                      alt="No Godfather by Yash Agarwal"
+                      src={bookCoverImg}
+                      alt={`${bookTitle} by ${heroName}`}
                       className="w-full h-auto rounded-xl shadow-lg object-cover"
                     />
                   </div>
@@ -931,15 +1870,15 @@
 
                 <div className="lg:col-span-7 space-y-6 text-left reveal-on-scroll">
                   <div className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border ${darkMode ? 'bg-white/10 border-white/20 text-marie-gold' : 'bg-white border-marie-goldBorder text-marie-goldHover'}`}>
-                    {t.bookSubtitle}
+                    {bookSubtitle}
                   </div>
 
                   <h2 className="text-4xl sm:text-6xl font-bold">
-                    "{t.bookTitle}"
+                    "{bookTitle}"
                   </h2>
 
                   <p className={`text-base sm:text-lg leading-relaxed font-normal ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                    {t.bookDesc}
+                    {bookDesc}
                   </p>
 
                   {waitlistSubmitted ? (
@@ -1082,9 +2021,206 @@
             </div>
           </section>
 
+          {/* ══════════════════════════════════════════════════════════
+               TESTIMONIALS — CLIENT REVIEWS CAROUSEL
+          ══════════════════════════════════════════════════════════ */}
+          <section id="testimonials" className={`py-24 border-t relative overflow-hidden ${darkMode ? 'bg-[#0A090E] border-white/10' : 'bg-[#FAF8F5] border-marie-border'}`}>
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute bottom-0 right-0 w-[500px] h-[300px] bg-gradient-to-tl from-marie-gold/6 to-transparent blur-[80px]"></div>
+            </div>
+            <div className="max-w-6xl mx-auto px-6 sm:px-12 relative z-10">
+              <div className="text-center space-y-3 mb-14 reveal-on-scroll">
+                <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">CLIENT RESULTS & REVIEWS</div>
+                <h2 className="text-4xl sm:text-5xl font-bold">What Leaders Say After Working With Yash</h2>
+                <div className="section-divider mx-auto"></div>
+              </div>
+
+              {/* Carousel */}
+              <div className="relative overflow-hidden reveal-on-scroll">
+                <div
+                  className="testimonial-track"
+                  style={{ transform: `translateX(-${testimonialIdx * 100}%)` }}
+                >
+                  {testimonials.map((t2) => (
+                    <div key={t2.id} className="w-full flex-shrink-0 px-2">
+                      <div className={`${darkMode ? 'glass-dark' : 'glass-light'} rounded-3xl p-8 sm:p-10 space-y-6`}>
+                        {/* Stars */}
+                        <div className="flex items-center gap-1">
+                          {[...Array(t2.stars)].map((_, i) => (
+                            <span key={i} className="text-marie-gold text-lg">★</span>
+                          ))}
+                          <span className={`ml-2 text-xs font-bold px-2 py-0.5 rounded-full ${darkMode ? 'bg-white/10 text-zinc-300' : 'bg-zinc-100 text-zinc-600'}`}>{t2.source}</span>
+                        </div>
+                        {/* Quote */}
+                        <blockquote className={`text-lg sm:text-xl leading-relaxed font-normal italic ${darkMode ? 'text-zinc-200' : 'text-zinc-700'}`}>
+                          "{t2.quote}"
+                        </blockquote>
+                        {/* Person */}
+                        <div className="flex items-center gap-4 pt-2">
+                          <img
+                            src={t2.avatar}
+                            alt={t2.name}
+                            className="w-12 h-12 rounded-full object-cover border-2 border-marie-gold/40"
+                          />
+                          <div>
+                            <div className="font-bold text-base">{t2.name}</div>
+                            <div className={`text-xs ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>{t2.title}, {t2.company}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Navigation */}
+                <div className="flex items-center justify-center gap-4 mt-6">
+                  <button
+                    onClick={() => setTestimonialIdx(Math.max(0, testimonialIdx - 1))}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all ${testimonialIdx === 0 ? 'opacity-30 cursor-default' : 'hover:border-marie-gold hover:text-marie-gold'} ${darkMode ? 'border-white/20 text-zinc-400' : 'border-marie-border text-zinc-500'}`}
+                  >
+                    <i data-lucide="chevron-left" className="w-4 h-4"></i>
+                  </button>
+                  {testimonials.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setTestimonialIdx(i)}
+                      className={`w-2 h-2 rounded-full transition-all ${i === testimonialIdx ? 'bg-marie-gold w-6' : (darkMode ? 'bg-white/20' : 'bg-zinc-300')}`}
+                    ></button>
+                  ))}
+                  <button
+                    onClick={() => setTestimonialIdx(Math.min(testimonials.length - 1, testimonialIdx + 1))}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all ${testimonialIdx === testimonials.length - 1 ? 'opacity-30 cursor-default' : 'hover:border-marie-gold hover:text-marie-gold'} ${darkMode ? 'border-white/20 text-zinc-400' : 'border-marie-border text-zinc-500'}`}
+                  >
+                    <i data-lucide="chevron-right" className="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════
+               SPEAKING PORTFOLIO SECTION
+          ══════════════════════════════════════════════════════════ */}
+          <section id="speaking" className={`py-24 border-t ${darkMode ? 'bg-[#0D0C14] border-white/10' : 'bg-white border-marie-border'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+                {/* Left — Header + CTA */}
+                <div className="lg:col-span-2 reveal-on-scroll">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest mb-3">KEYNOTES & PANELS</div>
+                  <h2 className="text-4xl sm:text-5xl font-bold mb-4">Speaking Portfolio</h2>
+                  <div className="section-divider mb-5"></div>
+                  <p className={`text-sm leading-relaxed mb-8 ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                    Yash has delivered keynotes, panels, and workshops at some of India's most prestigious corporate, startup, and academic platforms — from Meta and Google to IIM Ahmedabad and Economic Times.
+                  </p>
+
+                  {/* Stats */}
+                  <div className="grid grid-cols-2 gap-4 mb-8">
+                    {[
+                      { val: '50+', label: 'Total Events' },
+                      { val: '20+', label: 'Corporates' },
+                      { val: '15+', label: 'Colleges & B-Schools' },
+                      { val: '10K+', label: 'Audience Reached' },
+                    ].map((s) => (
+                      <div key={s.label} className={`p-4 rounded-2xl text-center ${cardClass}`}>
+                        <div className="text-2xl font-bold text-marie-gold">{s.val}</div>
+                        <div className={`text-xs mt-1 ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Book CTA */}
+                  <div className={`p-6 rounded-3xl border-2 border-marie-gold space-y-4 ${darkMode ? 'bg-marie-gold/5' : 'bg-marie-goldSoft'}`}>
+                    <div className="text-sm font-bold text-marie-gold">BOOK YASH FOR YOUR EVENT</div>
+                    <p className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                      Available for keynotes, workshops, fireside chats, and panel discussions on Growth Marketing, Personal Branding, AI in Marketing, and Startup Scaling.
+                    </p>
+                    <a
+                      href="mailto:yash@meagarwalyash.com?subject=Speaking Enquiry"
+                      className="flex items-center gap-2 px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs transition-all shadow-md w-fit"
+                    >
+                      <i data-lucide="mic" className="w-3.5 h-3.5"></i>
+                      <span>Book a Speaking Engagement →</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Right — Events List */}
+                <div className="lg:col-span-3 space-y-3 reveal-on-scroll">
+                  {speakingEvents.map((ev) => (
+                    <div key={ev.id} className={`${cardClass} rounded-2xl p-5 flex items-start gap-4 group hover:border-marie-gold/50 transition-all`}>
+                      <div className="w-10 h-10 rounded-xl bg-marie-gold/15 flex items-center justify-center flex-shrink-0 group-hover:bg-marie-gold/25 transition-colors">
+                        <i data-lucide={ev.icon} className="w-4 h-4 text-marie-gold"></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
+                          <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-marie-gold/20 text-marie-gold uppercase">{ev.type}</span>
+                          <span className={`text-[11px] font-bold ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>{ev.year}</span>
+                          {ev.featured && <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold">FEATURED</span>}
+                        </div>
+                        <div className="font-bold text-sm mb-0.5">{ev.event}</div>
+                        <div className={`text-[11px] font-bold mb-1 ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>{ev.org}</div>
+                        <div className={`text-xs ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>{ev.topic}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════
+               NEWSLETTER — PREMIUM SIGNUP
+          ══════════════════════════════════════════════════════════ */}
+          <section id="newsletter" className={`py-20 border-t relative overflow-hidden ${darkMode ? 'bg-[#0A090E] border-white/10' : 'bg-[#FAF8F5] border-marie-border'}`}>
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-marie-gold/5 rounded-full blur-[120px]"></div>
+            </div>
+            <div className="max-w-3xl mx-auto px-6 sm:px-12 text-center relative z-10 reveal-on-scroll">
+              <div className="text-xs font-bold text-marie-gold uppercase tracking-widest mb-3">EXECUTIVE INTELLIGENCE</div>
+              <h2 className="text-4xl sm:text-5xl font-bold mb-4">The MAY Growth Dispatch</h2>
+              <div className="section-divider mx-auto mb-5"></div>
+              <p className={`text-base max-w-xl mx-auto leading-relaxed mb-2 ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                High-signal, low-noise insights on Growth Marketing, AI, Personal Branding, and Enterprise Strategy — delivered fortnightly to 10,000+ leaders.
+              </p>
+
+              {/* Feature Tags */}
+              <div className="flex flex-wrap justify-center gap-2 mb-8">
+                {['No Fluff', 'Actionable Frameworks', 'Real Case Studies', 'AI Tools', 'PR Playbooks'].map(tag => (
+                  <span key={tag} className={`px-3 py-1 rounded-full text-xs font-bold ${darkMode ? 'bg-white/10 text-zinc-300 border border-white/10' : 'bg-white border border-marie-border text-zinc-600'}`}>{tag}</span>
+                ))}
+              </div>
+
+              {newsletterSubmitted ? (
+                <div className={`p-8 rounded-3xl border-2 border-marie-gold space-y-3 ${darkMode ? 'bg-marie-gold/10' : 'bg-marie-goldSoft'}`}>
+                  <div className="text-3xl font-bold text-marie-gold">✓ Welcome to the Dispatch!</div>
+                  <p className={`text-sm ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>You're now part of 10,000+ founders, CMOs, and growth leaders receiving high-signal insights from Yash.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleNewsletterSubmit} className="flex flex-wrap gap-3 justify-center">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Enter your best email address"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    className={`px-6 py-4 rounded-full border text-sm placeholder:text-zinc-400 focus:outline-none focus:border-marie-gold flex-1 min-w-[260px] max-w-sm ${darkMode ? 'bg-white/10 border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                  />
+                  <button type="submit" className="px-8 py-4 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-sm shadow-lg transition-all flex items-center gap-2 animate-pulse-gold">
+                    <span>Subscribe Free →</span>
+                  </button>
+                </form>
+              )}
+              <p className={`text-xs mt-4 ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>No spam. Unsubscribe anytime. Trusted by 10,000+ growth leaders.</p>
+            </div>
+          </section>
+
           {/* CONTACT & FOOTER SIGNATURE BANNER */}
-          <section id="contact" className={`py-24 border-t text-center ${darkMode ? 'bg-[#12111A] border-white/10' : 'bg-marie-goldSoft border-marie-border'}`}>
-            <div className="max-w-4xl mx-auto px-6 space-y-8 reveal-on-scroll">
+          <section id="contact" className={`py-24 border-t text-center relative overflow-hidden ${darkMode ? 'bg-[#12111A] border-white/10' : 'bg-marie-goldSoft border-marie-border'}`}>
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute bottom-0 left-0 w-[400px] h-[300px] bg-gradient-to-tr from-marie-gold/8 to-transparent blur-[80px]"></div>
+              <div className="absolute top-0 right-0 w-[300px] h-[200px] bg-gradient-to-bl from-marie-gold/6 to-transparent blur-[80px]"></div>
+            </div>
+            <div className="max-w-4xl mx-auto px-6 space-y-8 reveal-on-scroll relative z-10">
               <span className="text-xs font-bold text-marie-gold uppercase tracking-widest">START A CONVERSATION</span>
               <h2 className="text-4xl sm:text-6xl font-bold">Ready To Build A Growth Engine You Love?</h2>
               <p className={`text-base max-w-xl mx-auto leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
@@ -1092,20 +2228,131 @@
               </p>
 
               <div className="flex flex-wrap justify-center gap-4 pt-4">
-                <a href="mailto:hello@meagarwalyash.com" className="px-8 py-4 rounded-full bg-marie-gold text-black font-bold text-sm hover:bg-marie-goldHover transition-all shadow-lg">
-                  EmailDirect: hello@meagarwalyash.com
+                <a href="mailto:yash@meagarwalyash.com" className="px-8 py-4 rounded-full bg-marie-gold text-black font-bold text-sm hover:bg-marie-goldHover transition-all shadow-lg flex items-center gap-2 gold-glow">
+                  <i data-lucide="mail" className="w-4 h-4"></i>
+                  <span>yash@meagarwalyash.com</span>
                 </a>
-                <a href="https://linkedin.com/in/meagarwalyash" target="_blank" className={`px-8 py-4 rounded-full border font-bold text-sm transition-all ${darkMode ? 'border-white text-white hover:bg-white hover:text-black' : 'border-marie-border bg-white text-black hover:bg-marie-goldHover hover:text-white'}`}>
-                  Connect on LinkedIn →
+                <a href="https://linkedin.com/in/meagarwalyash" target="_blank" className={`px-8 py-4 rounded-full border font-bold text-sm transition-all flex items-center gap-2 ${darkMode ? 'border-white text-white hover:bg-white hover:text-black' : 'border-marie-border bg-white text-black hover:bg-marie-goldHover hover:text-white'}`}>
+                  <i data-lucide="linkedin" className="w-4 h-4"></i>
+                  <span>Connect on LinkedIn →</span>
                 </a>
+              </div>
+
+              {/* Social quick-links */}
+              <div className="flex flex-wrap justify-center gap-3 pt-2">
+                {[
+                  { label: 'LinkedIn', icon: 'linkedin', url: 'https://linkedin.com/in/meagarwalyash' },
+                  { label: 'Instagram', icon: 'instagram', url: 'https://instagram.com/meagarwalyash' },
+                  { label: 'YouTube', icon: 'youtube', url: 'https://youtube.com/@meagarwalyash' },
+                  { label: 'X / Twitter', icon: 'twitter', url: 'https://x.com/meagarwalyash' },
+                  { label: 'Threads', icon: 'at-sign', url: 'https://threads.net/@meagarwalyash' },
+                ].map(s => (
+                  <a key={s.label} href={s.url} target="_blank" title={s.label}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all hover:border-marie-gold hover:text-marie-gold ${darkMode ? 'border-white/20 text-zinc-400' : 'border-marie-border text-zinc-500'}`}
+                  >
+                    <i data-lucide={s.icon} className="w-4 h-4"></i>
+                  </a>
+                ))}
               </div>
             </div>
           </section>
 
-          {/* FOOTER */}
-          <footer className={`py-12 border-t text-center text-xs space-y-2 ${darkMode ? 'bg-black border-white/10 text-zinc-400' : 'bg-white border-marie-border text-zinc-500'}`}>
-            <div>© 2026 Yash Agarwal (@MeAgarwalYash). All Rights Reserved.</div>
-            <div className="text-marie-gold font-bold">MUMBAI, INDIA • LIVE IST: {currentTime || '12:00:00 AM'}</div>
+          {/* YOUTUBE INTERACTIVE VIDEO EMBED MODAL */}
+          {selectedVideo && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-xl animate-fadeIn">
+              <div className={`relative w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border ${darkMode ? 'bg-[#14131B] border-white/20' : 'bg-white border-marie-border'}`}>
+                
+                {/* Header Bar */}
+                <div className="p-4 sm:p-6 flex items-center justify-between border-b border-white/10">
+                  <div>
+                    <span className="text-xs font-bold text-marie-gold uppercase tracking-wider">{selectedVideo.category} • {selectedVideo.episode}</span>
+                    <h3 className="text-lg sm:text-xl font-bold line-clamp-1">{selectedVideo.title}</h3>
+                  </div>
+                  <button
+                    onClick={() => setSelectedVideo(null)}
+                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all"
+                  >
+                    <i data-lucide="x" className="w-5 h-5"></i>
+                  </button>
+                </div>
+
+                {/* YouTube Responsive Iframe Player */}
+                <div className="aspect-video w-full bg-black relative">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
+                    title={selectedVideo.title}
+                    className="w-full h-full border-0 absolute inset-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+
+                {/* Footer Info */}
+                <div className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <p className={`text-xs max-w-xl ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{selectedVideo.desc}</p>
+                  <a
+                    href={selectedVideo.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs flex items-center gap-2 whitespace-nowrap shadow-md"
+                  >
+                    <span>Watch on YouTube</span>
+                    <i data-lucide="external-link" className="w-3.5 h-3.5"></i>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          )}
+
+          {/* EXPANDED FOOTER */}
+          <footer className={`border-t ${darkMode ? 'bg-black border-white/10 text-zinc-400' : 'bg-white border-marie-border text-zinc-500'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 py-14">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
+                {/* Brand */}
+                <div className="col-span-2 sm:col-span-1 space-y-3">
+                  <img src="maylogo.png" alt="MAY Logo" className="h-10 w-auto object-contain brightness-150 contrast-125 filter drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]" />
+                  <p className="text-xs leading-relaxed">Executive Growth Architect. Author. CMO. Speaker. Built on first principles, not favours.</p>
+                  <div className="flex gap-2">
+                    {['linkedin', 'instagram', 'youtube', 'twitter'].map(icon => (
+                      <a key={icon} href={`https://${icon}.com/meagarwalyash`} target="_blank"
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all hover:text-marie-gold ${darkMode ? 'bg-white/5 hover:bg-white/10' : 'bg-zinc-100 hover:bg-zinc-200'}`}
+                      >
+                        <i data-lucide={icon} className="w-3.5 h-3.5"></i>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sections */}
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Navigate</div>
+                  {[['#impact', 'Impact Dashboard'], ['#journey', 'My Journey'], ['#media', 'Press & Media'], ['#brands', 'Brands'], ['#speaking', 'Speaking']].map(([href, label]) => (
+                    <a key={href} href={href} className="block text-xs hover:text-marie-gold transition-colors">{label}</a>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Work</div>
+                  {[['#programs', 'Work With Me'], ['#tv', 'Videos & Podcasts'], ['#book', 'No Godfather'], ['#audit', 'Growth Blueprint'], ['#newsletter', 'Newsletter']].map(([href, label]) => (
+                    <a key={href} href={href} className="block text-xs hover:text-marie-gold transition-colors">{label}</a>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Contact</div>
+                  <a href="mailto:yash@meagarwalyash.com" className="block text-xs hover:text-marie-gold transition-colors">yash@meagarwalyash.com</a>
+                  <a href="https://linkedin.com/in/meagarwalyash" target="_blank" className="block text-xs hover:text-marie-gold transition-colors">LinkedIn</a>
+                  <a href="https://instagram.com/meagarwalyash" target="_blank" className="block text-xs hover:text-marie-gold transition-colors">Instagram</a>
+                  <a href="https://youtube.com/@meagarwalyash" target="_blank" className="block text-xs hover:text-marie-gold transition-colors">YouTube Channel</a>
+                  <div className={`text-xs mt-2 ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>Mumbai, India 🇮🇳</div>
+                </div>
+              </div>
+
+              {/* Bottom bar */}
+              <div className={`pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-2 text-xs ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+                <div>© 2026 Yash Agarwal (@MeAgarwalYash). All Rights Reserved.</div>
+                <div className="text-marie-gold font-bold">MUMBAI, INDIA • LIVE IST: {currentTime || '12:00:00 AM'}</div>
+              </div>
+            </div>
           </footer>
 
         </div>
