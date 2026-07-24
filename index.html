@@ -1,76 +1,1120 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  
-  <!-- Primary Meta Tags -->
-  <title>Yash Agarwal (MeAgarwalYash) — Executive Growth Architect & Brand Strategist</title>
-  <meta name="title" content="Yash Agarwal (MeAgarwalYash) — Executive Growth Architect & Brand Strategist" />
-  <meta name="description" content="Official personal branding platform of Yash Agarwal (MeAgarwalYash). 12+ Years Experience, Head of Marketing, PR Strategist, Author of 'No Godfather'." />
-  <meta name="keywords" content="Yash Agarwal, MeAgarwalYash, Head of Marketing, Growth Architect, PR Strategist, Fractional CMO, No Godfather, Brand Strategy, Performance Marketing" />
-  <meta name="author" content="Yash Agarwal" />
-  <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#050505" />
-  <link rel="canonical" href="https://yashagarwal.com/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yash Agarwal (MeAgarwalYash) — Executive Growth Architect & Author</title>
+  <meta name="description" content="Official platform of Yash Agarwal (MeAgarwalYash). Head of Marketing at DR Choksey FinServ, Former Head of Digital Marketing at Avant Garde Industries, Founder of FMK Agency, Author of 'No Godfather'." />
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yashagarwal.com/" />
-  <meta property="og:title" content="Yash Agarwal (MeAgarwalYash) — Executive Growth Architect & Brand Strategist" />
-  <meta property="og:description" content="Official personal branding platform of Yash Agarwal (MeAgarwalYash). 12+ Years Experience, Head of Marketing, PR Strategist, Author of 'No Godfather'." />
-  <meta property="og:image" content="https://yashagarwal.com/yashdp.png" />
-  <meta property="og:site_name" content="Yash Agarwal Executive Platform" />
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://yashagarwal.com/" />
-  <meta property="twitter:site" content="@MeAgarwalYash" />
-  <meta property="twitter:creator" content="@MeAgarwalYash" />
-  <meta property="twitter:title" content="Yash Agarwal (MeAgarwalYash) — Executive Growth Architect" />
-  <meta property="twitter:description" content="Official personal branding platform of Yash Agarwal (MeAgarwalYash). 12+ Years Experience, Head of Marketing, PR Strategist, Author of 'No Godfather'." />
-  <meta property="twitter:image" content="https://yashagarwal.com/yashdp.png" />
-
-  <!-- Favicon & Icons -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="alternate icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="manifest" href="/manifest.json" />
-
-  <!-- Google Fonts Preconnect -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-  <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Yash Agarwal",
-      "alternateName": "MeAgarwalYash",
-      "jobTitle": "Executive Growth Architect & Head of Marketing",
-      "url": "https://yashagarwal.com",
-      "sameAs": [
-        "https://linkedin.com/in/meagarwalyash",
-        "https://twitter.com/MeAgarwalYash"
-      ],
-      "knowsAbout": [
-        "Performance Marketing",
-        "Brand Strategy",
-        "Public Relations",
-        "AI Marketing Automation",
-        "Fractional CMO Leadership"
-      ]
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            marie: {
+              bg: '#FAF8F5',         /* Marie Forleo warm signature cream */
+              white: '#FFFFFF',
+              black: '#121212',
+              card: '#FFFFFF',
+              gold: '#D4AF37',
+              goldHover: '#B8860B',
+              goldSoft: '#FDF8EC',
+              goldBorder: '#E6D298',
+              muted: '#666666',
+              border: '#EAE6DF'
+            },
+            darkMarie: {
+              bg: '#0A090E',
+              card: '#14131B',
+              border: '#232230',
+              goldSoft: '#1F1B10'
+            }
+          },
+          fontFamily: {
+            sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+            serif: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+            mono: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'marquee': 'marquee 35s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' },
+            }
+          }
+        }
+      }
     }
   </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- React 18 & Babel CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Google Translate Element Script for 130+ Global Languages -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <style>
+    * {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    }
+    body {
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D4AF37;
+      border-radius: 3px;
+    }
+
+    /* Hide Google Translate Banner Frame overlay cleanly */
+    .goog-te-banner-frame { display: none !important; }
+    body { top: 0px !important; }
+    .goog-te-gadget-icon { display: none !important; }
+    .goog-te-gadget-simple {
+      background-color: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      font-size: 11px !important;
+      color: inherit !important;
+    }
+
+    /* Cards Styling */
+    .mf-card-light {
+      background: #FFFFFF;
+      border: 1px solid #EAE6DF;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mf-card-light:hover {
+      border-color: #D4AF37;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.12);
+    }
+
+    .mf-card-dark {
+      background: #14131B;
+      border: 1px solid #232230;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mf-card-dark:hover {
+      border-color: #D4AF37;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25);
+    }
+
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #loading-screen {
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+  </style>
 </head>
-<body class="bg-[#050505] text-zinc-100 antialiased selection:bg-gold-500/30 selection:text-gold-300">
+<body class="bg-[#FAF8F5] text-[#121212] antialiased selection:bg-marie-gold/30 selection:text-black">
   
-  <!-- Root Container -->
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="fixed inset-0 z-[100] bg-[#FAF8F5] flex flex-col items-center justify-center space-y-4">
+    <div class="relative w-20 h-20 flex items-center justify-center">
+      <div class="w-16 h-16 rounded-full border-2 border-marie-gold/30 border-t-marie-gold animate-spin"></div>
+      <span class="absolute font-bold text-marie-gold text-lg tracking-widest">MAY</span>
+    </div>
+    <div class="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 animate-pulse">
+      Yash Agarwal • meagarwalyash.com
+    </div>
+  </div>
+
   <div id="root"></div>
 
-  <!-- Vite App Module Entry -->
-  <script type="module" src="/src/main.tsx"></script>
+  <!-- React Application Logic -->
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
 
+    const translations = {
+      en: {
+        announcement: "🔥 NEW: Read Yash's Latest Essay on Tier-1 PR Newsjacking • Join the Waitlist for 'No Godfather'",
+        badge: "YASH AGARWAL • EXECUTIVE GROWTH ARCHITECT & AUTHOR",
+        heroGreeting: "Hey there! I'm Yash Agarwal.",
+        heroBio: "Head of Marketing at DR Choksey FinServ, former Head of Digital Marketing at Avant Garde Industries, and Founder of FMK Agency. I help ambitious founders & enterprise leaders scale multi-crore digital revenue engines and build unassailable brand authority.",
+        btnAudit: "Get Free Growth Blueprint",
+        btnBook: "Book Advisory Call",
+        btnWork: "Explore Case Studies",
+        btnResume: "Executive CV (PDF)",
+        navAbout: "ABOUT",
+        navTV: "MAY TV",
+        navBook: "THE BOOK",
+        navPrograms: "MASTERCLASSES",
+        navAudit: "FREE AUDIT",
+        navBlog: "BLOG",
+        navProof: "PROOF",
+        navContact: "CONTACT",
+        pathTitle: "What Are You Looking To Build Today?",
+        pathSub: "Select your primary goal to get tailored growth frameworks and direct advisory access.",
+        p1Title: "Scale Digital Revenue Past ₹3Cr",
+        p1Desc: "Optimize performance media buying, creative velocity, and 60-day cash payback funnels.",
+        p2Title: "Build Founder & Executive Authority",
+        p2Desc: "Transform your personal brand into an enterprise media asset that commands high-ticket fees.",
+        p3Title: "Hire Yash as Fractional CMO",
+        p3Desc: "Embedded executive marketing leadership to audit, structure, and scale your growth department.",
+        bookTitle: "No Godfather",
+        bookSubtitle: "FORTHCOMING DEBUT MASTERWORK",
+        bookDesc: "A definitive guide to building an empire and a personal brand from scratch — written from 12 years of first-hand experience across agency life, corporate marketing leadership, and scaling P&Ls without corporate patronage.",
+        yearsExp: "Years Exp",
+        monthlyRev: "Monthly Rev",
+        pressCov: "Press Coverage",
+        countries: "Countries"
+      },
+      hi: {
+        announcement: "🔥 नया: यश का नवीनतम पीआर लेख पढ़ें • 'नो गॉडफादर' वेटलिस्ट में शामिल हों",
+        badge: "यश अग्रवाल • कार्यकारी ग्रोथ आर्किटेक्ट और लेखक",
+        heroGreeting: "नमस्ते! मैं यश अग्रवाल हूँ।",
+        heroBio: "DR Choksey FinServ के मार्केटिंग प्रमुख, Avant Garde Industries के पूर्व डिजिटल मार्केटिंग प्रमुख, और FMK एजेंसी के संस्थापक। मैं संस्थापकों को ₹3Cr+ राजस्व स्केल करने में मदद करता हूँ।",
+        btnAudit: "फ्री ग्रोत ऑडिट प्राप्त करें",
+        btnBook: "रणनीति कॉल बुक करें",
+        btnWork: "केस स्टडीज देखें",
+        btnResume: "रेज्यूमे डाउनलोड करें",
+        navAbout: "परिचय",
+        navTV: "MAY टीवी",
+        navBook: "किताब",
+        navPrograms: "मास्टरक्लास",
+        navAudit: "फ्री ऑडिट",
+        navBlog: "ब्लॉग",
+        navProof: "प्रमाण",
+        navContact: "संपर्क",
+        pathTitle: "आज आप क्या बनाना चाहते हैं?",
+        pathSub: "अनुकूलित विकास ढांचा प्राप्त करने के लिए अपना प्राथमिक लक्ष्य चुनें।",
+        p1Title: "डिजिटल राजस्व ₹3Cr से अधिक बढ़ाएं",
+        p1Desc: "प्रदर्शन मीडिया खरीद और 60-दिवसीय नकद वापसी फ़नल को अनुकूलित करें।",
+        p2Title: "संस्थापक और कार्यकारी प्राधिकरण का निर्माण करें",
+        p2Desc: "अपने व्यक्तिगत ब्रांड को एक उद्यम मीडिया संपत्ति में बदलें।",
+        p3Title: "यश को फ्रैक्शनल सीएमओ के रूप में नियुक्त करें",
+        p3Desc: "अपने विकास विभाग को ऑडिट, संरचना और स्केल करने के लिए कार्यकारी नेतृत्व।",
+        bookTitle: "नो गॉडफादर",
+        bookSubtitle: "आगामी पहली पुस्तक",
+        bookDesc: "बिना कॉर्पोरेट संरक्षण के शुरुआत से एक साम्राज्य और एक व्यक्तिगत ब्रांड बनाने के लिए एक निश्चित मार्गदर्शिका।",
+        yearsExp: "वर्षों का अनुभव",
+        monthlyRev: "मासिक राजस्व",
+        pressCov: "प्रेस कवरेज",
+        countries: "देश"
+      },
+      bn: {
+        announcement: "🔥 নতুন: যশের সর্বশেষ পিআর প্রবন্ধ পড়ুন • 'নো গডফাদার' ওয়েটলিস্টে যোগ দিন",
+        badge: "যশ আগরওয়াল • এক্সিকিউটিভ গ্রোথ আর্কিটেক্ট এবং লেখক",
+        heroGreeting: "হ্যালো! আমি যশ আগরওয়াল।",
+        heroBio: "DR Choksey FinServ-এর মার্কেটিং প্রধান, Avant Garde Industries-এর প্রাক্তন ডিজিটাল মার্কেটিং প্রধান, এবং FMK এজেন্সির প্রতিষ্ঠাতা।",
+        btnAudit: "ফ্রি গ্রোথ ব্লুপ্রিন্ট পান",
+        btnBook: "পরামর্শ কল বুক করুন",
+        btnWork: "কেস স্টাডিজ দেখুন",
+        btnResume: "সিভি ডাউনলোড (PDF)",
+        navAbout: "পরিচিতি",
+        navTV: "MAY টিভি",
+        navBook: "বই",
+        navPrograms: "মাস্টারক্লাস",
+        navAudit: "ফ্রি অডিট",
+        navBlog: "ব্লগ",
+        navProof: "প্রমাণ",
+        navContact: "যোগাযোগ",
+        pathTitle: "আজ আপনি কী তৈরি করতে চান?",
+        pathSub: "আপনার প্রাথমিক লক্ষ্য নির্বাচন করুন।",
+        p1Title: "ডিজিটাল রাজস্ব ₹৩ কোটি ছাড়িয়ে বাড়ান",
+        p1Desc: "পারফরম্যান্স মিডিয়া কেনাকাটা এবং ৬০ দিনের ক্যাশ ব্যাক ফানেল অপ্টিমাইজ করুন।",
+        p2Title: "ব্যক্তিগত ব্র্যান্ড অথরিটি তৈরি করুন",
+        p2Desc: "আপনার ব্র্যান্ডকে একটি এন্টারপ্রাইজ মিডিয়া সম্পদে রূপান্তর করুন।",
+        p3Title: "যশকে ফ্র্যাকশনাল সিএমও হিসাবে নিয়োগ করুন",
+        p3Desc: "আপনার গ্রোথ ডিপার্টমেন্ট স্কেল করার জন্য এক্সিকিউটিভ লিডারশিপ।",
+        bookTitle: "নো গডফাদার",
+        bookSubtitle: "আসন্ন প্রথম বই",
+        bookDesc: "কর্পোরেট অভিভাবকত্ব ছাড়াই স্ক্র্যাচ থেকে একটি সাম্রাজ্য গড়ার চূড়ান্ত নির্দেশিকা।",
+        yearsExp: "বছরের অভিজ্ঞতা",
+        monthlyRev: "মাসিক রাজস্ব",
+        pressCov: "প্রেস কভারেজ",
+        countries: "দেশ"
+      },
+      mwr: {
+        announcement: "🔥 नयो: यश रो पीआर लेख पढ़ो • 'नो गॉडफादर' री वेटलिस्ट में जुड़ो",
+        badge: "यश अग्रवाल • कार्यकारी ग्रोथ आर्किटेक्ट अर लेखक",
+        heroGreeting: "राम राम सा! मैं यश अग्रवाल हूँ।",
+        heroBio: "DR Choksey FinServ रा मार्केटिंग हेड, Avant Garde Industries रा भूतपूर्व डिजिटल हेड, अर FMK एजेंसी रा संस्थापक।",
+        btnAudit: "फ्री ग्रोथ ऑडिट लेवो",
+        btnBook: "मीटिंग बुक करो",
+        btnWork: "केस स्टडीज देखो",
+        btnResume: "रेज्यूमे डाउनलोड करो",
+        navAbout: "परिचय",
+        navTV: "MAY टीवी",
+        navBook: "पोथी",
+        navPrograms: "मास्टरक्लास",
+        navAudit: "फ्री ऑडिट",
+        navBlog: "ब्लॉग",
+        navProof: "सबूत",
+        navContact: "संपर्क",
+        pathTitle: "आज आप कांई बणावणी चावो हो?",
+        pathSub: "आपरौ मुख्य लक्ष्य चुणो अर बढाव री रणनीति पावो।",
+        p1Title: "डिजिटल कमाई ₹3 करोड़ सूं बत्ती बढावो",
+        p1Desc: "मीडिया खरीद अर नकद वापसी री रणनीति सुधारो।",
+        p2Title: "आपरौ खुद रो नाम अर धाक बढावो",
+        p2Desc: "आपरै निजी ब्रांड ने एक मोटी संपत्ति बणावो।",
+        p3Title: "यश ने आपरै सीएमओ री जगह राखो",
+        p3Desc: "कंपनी रा विकास खातर अनुभवी नेतृत्व।",
+        bookTitle: "नो गॉडफादर",
+        bookSubtitle: "आवण आळी पोथी",
+        bookDesc: "बिना किसी गॉडफादर रा खुद री मेहनत सूं आगे बधन री पूरी गाथा।",
+        yearsExp: "सालां रो अनुभव",
+        monthlyRev: "महीनै री कमाई",
+        pressCov: "खबरों में छप्या",
+        countries: "देश"
+      },
+      mr: {
+        announcement: "🔥 नवीन: यशचा नवीन लेख वाचा • 'नो गॉडफादर' वेटलिस्टमध्ये सामील व्हा",
+        badge: "यश अग्रवाल • कार्यकारी ग्रोथ आर्किटेक्ट आणि लेखक",
+        heroGreeting: "नमस्कार! मी यश अग्रवाल आहे.",
+        heroBio: "DR Choksey FinServ चे मार्केटिंग प्रमुख, Avant Garde Industries चे माजी डिजिटल मार्केटिंग प्रमुख, आणि FMK एजन्सीचे संस्थापक.",
+        btnAudit: "मोफत ग्रोथ ब्लूप्रिंट मिळवा",
+        btnBook: "सल्लामसलत कॉल बुक करा",
+        btnWork: "केस स्टडीज पहा",
+        btnResume: "रेज्युमे डाउनलोड करा",
+        navAbout: "बद्दल",
+        navTV: "MAY टीव्ही",
+        navBook: "पुस्तक",
+        navPrograms: "मास्टरक्लास",
+        navAudit: "मोफत ऑडिट",
+        navBlog: "ब्लॉग",
+        navProof: "पुरावा",
+        navContact: "संपर्क",
+        pathTitle: "आज तुम्हाला काय तयार करायचे आहे?",
+        pathSub: "तुमचे प्राथमिक ध्येय निवडा.",
+        p1Title: "डिजिटल महसूल ₹3 कोटींहून अधिक वाढवा",
+        p1Desc: "मीडिया खरेदी आणि 60-दिवसांच्या कॅश बॅक फनेल ऑप्टिमाइझ करा.",
+        p2Title: "वैयक्तिक ब्रँड अथॉरिटी तयार करा",
+        p2Desc: "तुमच्या ब्रँडचे एंटरप्राइझ मीडिया मालमत्तेमध्ये रूपांतर करा.",
+        p3Title: "यशला फ्रॅक्शनल सीएमओ म्हणून नियुक्त करा",
+        p3Desc: "तुमचा विभाग वाढवण्यासाठी कार्यकारी नेतृत्व.",
+        bookTitle: "नो गॉडफादर",
+        bookSubtitle: "येणारे पहिले पुस्तक",
+        bookDesc: "कॉर्पोरेट पाठिंब्याशिवाय शून्यातून साम्राज्य उभारण्यासाठी मार्गदर्शक.",
+        yearsExp: "वर्षांचा अनुभव",
+        monthlyRev: "मासिक महसूल",
+        pressCov: "प्रेस कव्हरेज",
+        countries: "देश"
+      },
+      gu: {
+        announcement: "🔥 નવું: યશનો નવો લેખ વાંચો • 'નો ગોડફાધર' વેટલિસ્ટમાં જોડાઓ",
+        badge: "યશ અગ્રવાલ • એક્ઝિક્યુટિવ ગ્રોથ આર્કિટેક્ટ અને લેખક",
+        heroGreeting: "નમસ્તે! હું યશ અગ્રવાલ છું.",
+        heroBio: "DR Choksey FinServ ના માર્કેટિંગ હેડ, Avant Garde Industries ના ભૂતપૂર્વ ડિજિટલ માર્કેટિંગ હેડ, અને FMK એજન્સીના સ્થાપક.",
+        btnAudit: "ફ્રી ગ્રોથ બ્લૂપ્રિન્ટ મેળવો",
+        btnBook: "મીટિંગ બુક કરો",
+        btnWork: "કેસ સ્ટડીઝ જુઓ",
+        btnResume: "રેઝ્યૂમે ડાઉનલોડ કરો",
+        navAbout: "અંગે",
+        navTV: "MAY ટીવી",
+        navBook: "પુસ્તક",
+        navPrograms: "માસ્ટરક્લાસ",
+        navAudit: "ફ્રી ઓડિટ",
+        navBlog: "બ્લોગ",
+        navProof: "પુરાવો",
+        navContact: "સંપર્ક",
+        pathTitle: "આજે તમે શું બનાવવા માંગો છો?",
+        pathSub: "તમારો પ્રાથમિક ધ્યેય પસંદ કરો.",
+        p1Title: "ડિજિટલ આવક ₹3 કરોડથી વધુ વધારો",
+        p1Desc: "મીડિયા ખરીદી અને ફનલ ઓપ્ટિમાઇઝ કરો.",
+        p2Title: "વ્યક્તિગત બ્રાન્ડ ઓથોરિટી બનાવો",
+        p2Desc: "તમારી બ્રાન્ડને એન્ટરપ્રાઇઝ મીડિયા એસેટમાં ફેરવો.",
+        p3Title: "યશને ફ્રેક્શનલ સીએમઓ તરીકે નિયુક્ત કરો",
+        p3Desc: "તમારા ગ્રોથ ડિપાર્ટમેન્ટને સ્કેલ કરવા માટે સક્ષમ નેતૃત્વ.",
+        bookTitle: "નો ગોડફાધર",
+        bookSubtitle: "આગામી પ્રથમ પુસ્તક",
+        bookDesc: "કોઈપણ ગોડફાધર વગર શૂન્યમાંથી સામ્રાજ્ય બનાવવાની માર્ગદર્શિકા.",
+        yearsExp: "વર્ષોનો અનુભવ",
+        monthlyRev: "માસિક આવક",
+        pressCov: "પ્રેસ કવરેજ",
+        countries: "દેશો"
+      },
+      kn: {
+        announcement: "🔥 ಹೊಸದು: ಯಶ್ ಅವರ ಇತ್ತೀಚಿನ ಲೇಖನ ಓದಿ • 'ನೋ ಗಾಡ್‌ಫಾದರ್' ವೇಟ್‌ಲಿಸ್ಟ್‌ಗೆ ಸೇರಿ",
+        badge: "ಯಶ್ ಅಗರ್ವಾಲ್ • ಎಕ್ಸಿಕ್ಯೂಟಿವ್ ಗ್ರೋತ್ ಆರ್ಕಿಟೆಕ್ಟ್ ಮತ್ತು ಲೇಖಕ",
+        heroGreeting: "ನಮಸ್ಕಾರ! ನಾನು ಯಶ್ ಅಗರ್ವಾಲ್.",
+        heroBio: "DR Choksey FinServ ನ ಮಾರ್ಕೆಟಿಂಗ್ ಹೆಡ್, Avant Garde Industries ನ ಮಾಜಿ ಡಿಜಿಟಲ್ ಹೆಡ್, ಮತ್ತು FMK ಏಜೆನ್ಸಿಯ ಸಂಸ್ಥಾಪಕ.",
+        btnAudit: "ಉಚಿತ ಗ್ರೋತ್ ಬ್ಲೂಪ್ರಿಂಟ್ ಪಡೆಯಿರಿ",
+        btnBook: "ಸಲಹೆ ಕಾಲ್ ಬುಕ್ ಮಾಡಿ",
+        btnWork: "ಕೇಸ್ ಸ್ಟಡೀಸ್ ನೋಡಿ",
+        btnResume: "ಸಿವಿ ಡೌನ್‌ಲೋಡ್ (PDF)",
+        navAbout: "ಬಗ್ಗೆ",
+        navTV: "MAY ಟಿವಿ",
+        navBook: "ಪುಸ್ತಕ",
+        navPrograms: "ಮಾಸ್ಟರ್‌ಕ್ಲಾಸ್",
+        navAudit: "ಉಚಿತ ಆಡಿಟ್",
+        navBlog: "ಬ್ಲಾಗ್",
+        navProof: "ಸಾಕ್ಷಿ",
+        navContact: "ಸಂಪರ್ಕ",
+        pathTitle: "ಇಂದು ನೀವು ಏನನ್ನು ನಿರ್ಮಿಸಲು ಬಯಸುತ್ತೀರಿ?",
+        pathSub: "ನಿಮ್ಮ ಪ್ರಾಥಮಿಕ ಗುರಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+        p1Title: "ಡಿಜಿಟಲ್ ಆದಾಯವನ್ನು ₹3 ಕೋಟಿಗಿಂತ ಹೆಚ್ಚಿಸಿ",
+        p1Desc: "ಮಿಡಿಯಾ ಖರೀದಿ ಮತ್ತು ಕ್ಯಾಶ್ ಬ್ಯಾಕ್ ಫನೆಲ್‌ಗಳನ್ನು ಉತ್ತಮಗೊಳಿಸಿ.",
+        p2Title: "ವೈಯಕ್ತಿಕ ಬ್ರ್ಯಾಂಡ್ ಪ್ರಾಬಲ್ಯ ನಿರ್ಮಿಸಿ",
+        p2Desc: "ನಿಮ್ಮ ಬ್ರ್ಯಾಂಡ್ ಅನ್ನು ಎಂಟರ್‌ಪ್ರೈಸ್ ಮೀಡಿಯಾ ಆಸ್ತಿಯಾಗಿ ಪರಿವರ್ತಿಸಿ.",
+        p3Title: "ಯಶ್ ಅವರನ್ನು ಫ್ರಾಕ್ಷನಲ್ ಸಿಎಮ್‌ಒ ಆಗಿ ನೇಮಿಸಿ",
+        p3Desc: "ನಿಮ್ಮ ಸಂಸ್ಥೆಯನ್ನು ಬೆಳೆಸಲು ಕಾರ್ಯನಿರ್ವಾಹಕ ನಾಯಕತ್ವ.",
+        bookTitle: "ನೋ ಗಾಡ್‌ಫಾದರ್",
+        bookSubtitle: "ಮುಂಬರುವ ಮೊದಲ ಪುಸ್ತಕ",
+        bookDesc: "ಯಾವುದೇ ಬೆಂಬಲವಿಲ್ಲದೆ ಶೂನ್ಯದಿಂದ ಸಾಮ್ರಾಜ್ಯವನ್ನು ನಿರ್ಮಿಸುವ ಮಾರ್ಗದರ್ಶಿ.",
+        yearsExp: "ವರ್ಷಗಳ ಅನುಭವ",
+        monthlyRev: "ಮಾಸಿಕ ಆದಾಯ",
+        pressCov: "ಪ್ರೆಸ್ ಕವರೇಜ್",
+        countries: "ದೇಶಗಳು"
+      },
+      pa: {
+        announcement: "🔥 ਨਵਾਂ: ਯਸ਼ ਦਾ ਲੇਖ ਪੜ੍ਹੋ • 'ਨੋ ਗੌਡਫਾਦਰ' ਵੇਟਲਿਸਟ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ",
+        badge: "ਯਸ਼ ਅਗਰਵਾਲ • ਐਗਜ਼ੀਕਿਊਟਿਵ ਗ੍ਰੋਥ ਆਰਕੀਟੈਕਟ ਅਤੇ ਲੇਖਕ",
+        heroGreeting: "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! ਮੈਂ ਯਸ਼ ਅਗਰਵਾਲ ਹਾਂ।",
+        heroBio: "DR Choksey FinServ ਦੇ ਮਾਰਕੀਟਿੰਗ ਹੈੱਡ, Avant Garde Industries ਦੇ ਸਾਬਕਾ ਡਿਜੀਟਲ ਹੈੱਡ, ਅਤੇ FMK ਏਜੰਸੀ ਦੇ ਸੰਸਥਾਪਕ।",
+        btnAudit: "ਮੁਫਤ ਗ੍ਰੋਥ ਬਲੂਪ੍ਰਿੰਟ ਪ੍ਰਾਪਤ ਕਰੋ",
+        btnBook: "ਮੀਟਿੰਗ ਬੁੱਕ ਕਰੋ",
+        btnWork: "ਕੇਸ ਸਟੱਡੀਜ਼ ਵੇਖੋ",
+        btnResume: "ਰਿਜ਼ਿਊਮੇ ਡਾਊਨਲੋਡ ਕਰੋ",
+        navAbout: "ਬਾਰੇ",
+        navTV: "MAY ਟੀਵੀ",
+        navBook: "ਕਿਤਾਬ",
+        navPrograms: "ਮਾਸਟਰਕਲਾਸ",
+        navAudit: "ਮੁਫਤ ਆਡਿਟ",
+        navBlog: "ਬਲੌਗ",
+        navProof: "ਸਬੂਤ",
+        navContact: "ਸੰਪਰਕ",
+        pathTitle: "ਅੱਜ ਤੁਸੀਂ ਕੀ ਬਣਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?",
+        pathSub: "ਆਪਣਾ ਮੁੱਖ ਟੀਚਾ ਚੁਣੋ।",
+        p1Title: "ਡਿਜੀਟਲ ਆਮਦਨ ₹3 ਕਰੋੜ ਤੋਂ ਵੱਧ ਵਧਾਓ",
+        p1Desc: "ਮੀਡੀਆ ਖਰੀਦਦਾਰੀ ਅਤੇ ਫਨਲ ਨੂੰ ਬਿਹਤਰ ਬਣਾਓ।",
+        p2Title: "ਵਿਅਕਤੀਗਤ ਬ੍ਰਾਂਡ ਅਥਾਰਟੀ ਬਣਾਓ",
+        p2Desc: "ਆਪਣੇ ਬ੍ਰਾਂਡ ਨੂੰ ਇੱਕ ਵੱਡੀ ਸੰਪਤੀ ਵਿੱਚ ਬਦਲੋ।",
+        p3Title: "ਯਸ਼ ਨੂੰ ਫਰੈਕਸ਼ਨਲ ਸੀਐਮਓ ਵਜੋਂ ਨਿਯੁਕਤ ਕਰੋ",
+        p3Desc: "ਤੁਹਾਡੇ ਵਿਕਾਸ ਵਿਭਾਗ ਲਈ ਤਜਰਬੇਕਾਰ ਅਗਵਾਈ।",
+        bookTitle: "ਨੋ ਗੌਡਫਾਦਰ",
+        bookSubtitle: "ਆਉਣ ਵਾਲੀ ਪਹਿਲੀ ਕਿਤਾਬ",
+        bookDesc: "ਬਿਨਾਂ ਕਿਸੇ ਗੌਡਫਾਦਰ ਦੇ ਸ਼ੁਰੂਆਤ ਤੋਂ ਸਫਲਤਾ ਪ੍ਰਾਪਤ ਕਰਨ ਦੀ ਗਾਈਡ।",
+        yearsExp: "ਸਾਲਾਂ ਦਾ ਤਜਰਬਾ",
+        monthlyRev: "ਮਹੀਨਾਵਾਰ ਆਮਦਨ",
+        pressCov: "ਪ੍ਰੈਸ ਕਵਰੇਜ",
+        countries: "ਦੇਸ਼"
+      },
+      es: {
+        announcement: "🔥 NUEVO: Lee el último ensayo de Yash sobre PR • Únete a la lista para 'No Godfather'",
+        badge: "YASH AGARWAL • ARQUITECTO DE CRECIMIENTO EJECUTIVO Y AUTOR",
+        heroGreeting: "¡Hola! Soy Yash Agarwal.",
+        heroBio: "Director de Marketing en DR Choksey FinServ, ex Director de Marketing Digital en Avant Garde Industries y Fundador de FMK Agency.",
+        btnAudit: "Obtener Plan de Crecimiento",
+        btnBook: "Reservar Llamada de Asesoría",
+        btnWork: "Ver Casos de Estudio",
+        btnResume: "Descargar CV (PDF)",
+        navAbout: "SOBRE MÍ",
+        navTV: "MAY TV",
+        navBook: "EL LIBRO",
+        navPrograms: "MASTERCLASSES",
+        navAudit: "AUDITORÍA GRATIS",
+        navBlog: "BLOG",
+        navProof: "PRUEBAS",
+        navContact: "CONTACTO",
+        pathTitle: "¿Qué buscas construir hoy?",
+        pathSub: "Selecciona tu objetivo principal para obtener un marco de crecimiento personalizado.",
+        p1Title: "Escalar Ingresos Digitales a +₹3Cr",
+        p1Desc: "Optimiza la compra de medios y los embudos de retorno de inversión.",
+        p2Title: "Construir Autoridad de Marca Personal",
+        p2Desc: "Transforma tu marca en un activo de medios empresarial.",
+        p3Title: "Contratar a Yash como CMO Fraccional",
+        p3Desc: "Liderazgo ejecutivo integrado para auditar y escalar tu departamento de crecimiento.",
+        bookTitle: "No Godfather",
+        bookSubtitle: "PRÓXIMO LIBRO DE DEBUT",
+        bookDesc: "Guía definitiva para construir un imperio de marca desde cero sin patrocinio corporativo.",
+        yearsExp: "Años de Exp",
+        monthlyRev: "Ingreso Mensual",
+        pressCov: "Prensa y Medios",
+        countries: "Países"
+      }
+    };
+
+    function App() {
+      const [lang, setLang] = useState('en');
+      const [darkMode, setDarkMode] = useState(false);
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      const [activeModal, setActiveModal] = useState(null); // 'audit' | 'book' | 'resume' | 'admin' | 'tv' | 'course' | 'blog' | 'news'
+      const [selectedVideo, setSelectedVideo] = useState(null);
+      const [selectedBlog, setSelectedBlog] = useState(null);
+      const [selectedNews, setSelectedNews] = useState(null);
+      const [selectedCourse, setSelectedCourse] = useState(null);
+
+      // Path Finder Interactive Selector State
+      const [userGoal, setUserGoal] = useState('revenue');
+
+      // Lead Generation State
+      const [auditSpend, setAuditSpend] = useState('₹10L - ₹50L/mo');
+      const [auditGoal, setAuditGoal] = useState('Scale Digital Revenue Past ₹3Cr');
+      const [auditEmail, setAuditEmail] = useState('');
+      const [auditSubmitted, setAuditSubmitted] = useState(false);
+
+      const [waitlistEmail, setWaitlistEmail] = useState('');
+      const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+
+      const [currentTime, setCurrentTime] = useState('');
+
+      // IST Live Time
+      useEffect(() => {
+        const updateTime = () => {
+          const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+          setCurrentTime(new Intl.DateTimeFormat('en-US', options).format(new Date()));
+        };
+        updateTime();
+        const interval = setInterval(updateTime, 1000);
+        return () => clearInterval(interval);
+      }, []);
+
+      // Hide Loader
+      useEffect(() => {
+        const loader = document.getElementById('loading-screen');
+        if (loader) {
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+          }, 600);
+        }
+      }, []);
+
+      // Scroll Intersection Observer
+      useEffect(() => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+              }
+            });
+          },
+          { threshold: 0.12 }
+        );
+
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        revealElements.forEach((el) => observer.observe(el));
+
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+
+        return () => observer.disconnect();
+      }, [lang, darkMode, activeModal, mobileMenuOpen, userGoal]);
+
+      const handleAuditSubmit = (e) => {
+        e.preventDefault();
+        if (auditEmail.trim()) {
+          setAuditSubmitted(true);
+        }
+      };
+
+      const handleWaitlistSubmit = (e) => {
+        e.preventDefault();
+        if (waitlistEmail.trim()) {
+          setWaitlistSubmitted(true);
+          setWaitlistEmail('');
+        }
+      };
+
+      const t = translations[lang] || translations.en;
+
+      // MarieTV Episode Data
+      const tvEpisodes = [
+        {
+          id: 'ep1',
+          episode: 'EPISODE 104',
+          title: 'How to Scale Digital Revenue from ₹25L to ₹3Cr/Month Without VC Patronage',
+          category: 'REVENUE SCALE',
+          duration: '18 MIN WATCH',
+          desc: 'In this episode, Yash breaks down the performance media allocation, creative velocity, and team structure used at Avant Garde Industries.',
+          img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=80'
+        },
+        {
+          id: 'ep2',
+          episode: 'EPISODE 103',
+          title: 'The Zero-Retainer PR Newsjacking Formula for Forbes & Business Standard',
+          category: 'MEDIA AUTHORITY',
+          duration: '14 MIN WATCH',
+          desc: 'Why paying $50,000/month PR retainers is dead and how to leverage original macroeconomic benchmarks to land Tier-1 press.',
+          img: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80'
+        },
+        {
+          id: 'ep3',
+          episode: 'EPISODE 102',
+          title: 'Why Every Founder Needs a Personal Brand Equity Flywheel in 2026',
+          category: 'BRAND EQUITY',
+          duration: '22 MIN WATCH',
+          desc: 'How turning executive leaders into recognized media entities drastically lowers customer acquisition costs (CAC) across paid channels.',
+          img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80'
+        }
+      ];
+
+      // Marie Forleo B-School Style Masterclasses
+      const masterclasses = [
+        {
+          id: 1,
+          badge: 'EXECUTIVE COHORT',
+          title: 'The Personal Brand Authority Engine',
+          audience: 'Founders, Executives & C-Suite',
+          graduates: '1,250+ Graduates',
+          rating: '★ 4.9/5.0 Rating',
+          desc: 'The step-by-step masterclass on transforming your reputation into enterprise leverage, landing earned Tier-1 media, and commanding premium advisory fees.',
+          img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80'
+        },
+        {
+          id: 2,
+          badge: 'GROWTH ARCHITECTURE',
+          title: 'Performance Scaleup Blueprint (₹25L to ₹3Cr)',
+          audience: 'CMOs, Growth Leads & Marketers',
+          graduates: '850+ Marketers',
+          rating: '★ 4.95/5.0 Rating',
+          desc: 'The exact media buying mechanics, creative testing cycles, and attribution models required to scale Meta & Google ad spend safely.',
+          img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80'
+        },
+        {
+          id: 3,
+          badge: 'AI ENGINE STACK',
+          title: 'AI Growth Automation & CRM Retention Workflows',
+          audience: 'Marketing Ops & VPs of Growth',
+          graduates: '600+ Enterprise Leaders',
+          rating: '★ 4.88/5.0 Rating',
+          desc: 'Deploy custom LLM pipelines, predictive lead scoring models, and automated CRM nurture loops that double customer lifetime value (LTV).',
+          img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80'
+        }
+      ];
+
+      // Read Live CMS Data from LocalStorage if edited via admin.html
+      const [cmsData, setCmsData] = useState(() => {
+        const saved = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
+        if (saved) {
+          try { return JSON.parse(saved); } catch(e) { return null; }
+        }
+        return null;
+      });
+
+      // Filter published blogs from CMS or fallback array
+      const rawBlogs = cmsData && cmsData.blogs ? cmsData.blogs : [
+        { id: 1, heading: 'The Zero-Budget PR Framework: Winning Tier-1 Media Without $50k Retainers', category: 'PR STRATEGY', date: 'July 2024', readTime: '6 min read', snippet: 'Most founders assume getting into Forbes or Business Standard requires astronomical monthly agency retainers. Here is the exact newsjacking & narrative framework I used to secure 500+ top-tier press features.', status: 'published' },
+        { id: 2, heading: 'Scaling Performance Funnels Past $10M: Lessons from 12+ Years in Media Buying', category: 'PERFORMANCE', date: 'May 2024', readTime: '8 min read', snippet: 'When scaling paid acquisition from ₹30L to ₹3Cr per month, the bottleneck is rarely media bidding—it is creative fatigue, post-click conversion architecture, and attribution lag.', status: 'published' },
+        { id: 3, heading: 'Why Fractional CMOs are the Secret Weapon for Series A-C Startup Scaleups', category: 'LEADERSHIP', date: 'March 2024', readTime: '5 min read', snippet: 'Hiring a full-time $350k CMO before product-market fit or unit economics stabilization is a common mistake. Fractional executive leadership provides high-level architecture without fixed burn.', status: 'published' }
+      ];
+
+      const blogPosts = rawBlogs.filter(b => b.status === 'published' || !b.status);
+
+      const cardClass = darkMode ? 'mf-card-dark' : 'mf-card-light';
+      const bgClass = darkMode ? 'bg-[#0A090E] text-white' : 'bg-[#FAF8F5] text-[#121212]';
+      const dockClass = darkMode ? 'bg-[#111018]/90 border-b border-[#232230] text-white' : 'bg-white/95 border-b border-[#EAE6DF] text-[#121212]';
+
+      return (
+        <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
+          
+          {/* TOP ANNOUNCEMENT BAR */}
+          <div className="bg-[#121212] text-white text-center py-2.5 px-4 text-xs font-bold tracking-wide flex justify-center items-center gap-3">
+            <span>{t.announcement}</span>
+            <a href="#book" className="underline hover:text-marie-gold transition-colors font-semibold">Learn More →</a>
+          </div>
+
+          {/* MARIE FORLEO DOCK NAVIGATION BAR WITH SUN/MOON & MULTI-LANG */}
+          <header className={`sticky top-0 z-50 w-full ${dockClass} py-3.5 px-6 sm:px-12 flex items-center justify-between shadow-sm backdrop-blur-md`}>
+            <a href="#" className="flex items-center gap-3 group">
+              <div className="w-9 h-9 rounded-full bg-marie-gold text-black flex items-center justify-center font-bold text-sm shadow-md group-hover:scale-105 transition-transform">
+                MAY
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold tracking-widest text-sm">YASH AGARWAL</span>
+                <span className="text-[10px] tracking-wider text-marie-gold font-bold">MEAGARWALYASH.COM</span>
+              </div>
+            </a>
+
+            {/* Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs font-bold tracking-wider">
+              <a href="#about" className="hover:text-marie-gold transition-colors">{t.navAbout}</a>
+              <a href="#tv" className="hover:text-marie-gold transition-colors">{t.navTV}</a>
+              <a href="#book" className="hover:text-marie-gold transition-colors">{t.navBook}</a>
+              <a href="#programs" className="hover:text-marie-gold transition-colors">{t.navPrograms}</a>
+              <a href="#audit" className="hover:text-marie-gold transition-colors">{t.navAudit}</a>
+              <a href="#blog" className="hover:text-marie-gold transition-colors">{t.navBlog}</a>
+              <a href="#proof" className="hover:text-marie-gold transition-colors">{t.navProof}</a>
+              <a href="#contact" className="hover:text-marie-gold transition-colors">{t.navContact}</a>
+            </nav>
+
+            <div className="flex items-center gap-3">
+              
+              {/* SUN / MOON LIGHT & DARK MODE TOGGLE BUTTON */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className={`p-2 rounded-full border transition-all ${darkMode ? 'bg-white/10 border-white/20 text-marie-gold hover:bg-white/20' : 'bg-marie-goldSoft border-marie-goldBorder text-marie-black hover:bg-marie-gold/20'}`}
+                title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                {darkMode ? (
+                  <i data-lucide="sun" className="w-4 h-4 text-marie-gold"></i>
+                ) : (
+                  <i data-lucide="moon" className="w-4 h-4 text-black"></i>
+                )}
+              </button>
+
+              {/* CMS Admin Console Link */}
+              <a
+                href="admin.html"
+                className={`p-2 rounded-full border transition-all ${darkMode ? 'bg-white/10 border-white/20 text-brand-gold hover:bg-white/20' : 'bg-marie-goldSoft border-marie-goldBorder text-black hover:bg-marie-gold/20'}`}
+                title="CMS Admin Console"
+              >
+                <i data-lucide="settings" className="w-4 h-4"></i>
+              </a>
+
+              {/* Multi-Language Dropdown */}
+              <select
+                value={lang}
+                onChange={(e) => setLang(e.target.value)}
+                className={`px-3 py-1.5 rounded-full font-bold text-[11px] border focus:outline-none cursor-pointer ${darkMode ? 'bg-white/10 text-marie-gold border-white/20' : 'bg-marie-goldSoft text-black border-marie-goldBorder'}`}
+              >
+                <option value="en">EN (English)</option>
+                <option value="hi">HI (हिंदी)</option>
+                <option value="bn">BN (বাংলা)</option>
+                <option value="mwr">MWR (मारवाड़ी)</option>
+                <option value="mr">MR (मराठी)</option>
+                <option value="gu">GU (ગુજરાતી)</option>
+                <option value="kn">KN (ಕನ್ನಡ)</option>
+                <option value="pa">PA (ਪੰਜਾਬੀ)</option>
+                <option value="es">ES (Español)</option>
+              </select>
+
+              {/* Hidden Google Translate Widget trigger for all 130+ languages */}
+              <div id="google_translate_element" className="hidden sm:inline-block"></div>
+
+              <a
+                href="#audit"
+                className="px-5 py-2 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md transition-all hidden sm:inline-block"
+              >
+                {t.btnAudit}
+              </a>
+
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-lg lg:hidden focus:outline-none"
+              >
+                <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-6 h-6"></i>
+              </button>
+            </div>
+          </header>
+
+          {/* Mobile Dropdown Menu */}
+          {mobileMenuOpen && (
+            <div className={`fixed inset-x-0 top-20 z-40 p-6 shadow-2xl lg:hidden space-y-4 font-bold text-sm ${darkMode ? 'bg-[#14131B] border-b border-[#232230] text-white' : 'bg-white border-b border-marie-border text-[#121212]'}`}>
+              <div className="grid grid-cols-2 gap-3">
+                <a href="#about" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navAbout}</a>
+                <a href="#tv" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navTV}</a>
+                <a href="#book" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navBook}</a>
+                <a href="#programs" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navPrograms}</a>
+                <a href="#audit" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navAudit}</a>
+                <a href="#blog" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navBlog}</a>
+                <a href="#proof" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navProof}</a>
+                <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/5 hover:text-marie-gold">{t.navContact}</a>
+              </div>
+            </div>
+          )}
+
+          {/* HERO SECTION */}
+          <section className="py-20 px-6 sm:px-12 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              <div className="lg:col-span-7 space-y-6 reveal-on-scroll">
+                <div className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border ${darkMode ? 'bg-white/10 border-white/20 text-marie-gold' : 'bg-marie-goldSoft border-marie-goldBorder text-marie-goldHover'}`}>
+                  {t.badge}
+                </div>
+
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
+                  {t.heroGreeting}
+                </h1>
+
+                <p className={`text-lg sm:text-xl leading-relaxed font-normal ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                  {t.heroBio}
+                </p>
+
+                <div className="flex flex-wrap gap-4 pt-4">
+                  <a
+                    href="#audit"
+                    className="px-8 py-4 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-sm shadow-lg hover:scale-105 transition-all flex items-center gap-2"
+                  >
+                    <span>{t.btnAudit}</span>
+                    <i data-lucide="arrow-right" className="w-4 h-4"></i>
+                  </a>
+
+                  <a
+                    href="#programs"
+                    className={`px-8 py-4 rounded-full font-bold text-sm transition-all border-2 ${darkMode ? 'border-white text-white hover:bg-white hover:text-black' : 'border-marie-black text-black hover:bg-marie-black hover:text-white'}`}
+                  >
+                    Explore Masterclasses
+                  </a>
+                </div>
+
+                {/* Key Metrics */}
+                <div className={`pt-8 border-t grid grid-cols-4 gap-4 text-center sm:text-left ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+                  <div>
+                    <div className="text-3xl font-bold text-marie-gold">12+</div>
+                    <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{t.yearsExp}</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold">₹3Cr+</div>
+                    <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{t.monthlyRev}</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold">500+</div>
+                    <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{t.pressCov}</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold">15+</div>
+                    <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">{t.countries}</div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Hero Portrait Card */}
+              <div className="lg:col-span-5 flex justify-center reveal-on-scroll">
+                <div className="relative w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden group">
+                  <img
+                    src="yashdp.png"
+                    alt="Yash Agarwal"
+                    className="w-full h-auto max-h-[700px] object-cover rounded-3xl filter contrast-[1.03] transform group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* AS FEATURED IN MEDIA TICKER */}
+          <section className={`py-8 border-y ${darkMode ? 'bg-[#14131B] border-white/10' : 'bg-white border-marie-border'}`}>
+            <div className="max-w-7xl mx-auto px-6 text-center space-y-4">
+              <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest">AS FEATURED ACROSS NATIONAL PRESS & MEDIA</div>
+              <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-14 font-bold text-sm text-zinc-400 tracking-wider uppercase">
+                <span>BUSINESS STANDARD</span> • <span>FORBES INDIA</span> • <span>HINDUSTAN TIMES</span> • <span>THE WEEK</span> • <span>MID-DAY</span> • <span>ANI PRESS</span>
+              </div>
+            </div>
+          </section>
+
+          {/* "WHAT ARE YOU LOOKING TO BUILD?" PATH FINDER */}
+          <section className="py-20 px-6 sm:px-12 max-w-7xl mx-auto">
+            <div className="text-center max-w-3xl mx-auto space-y-4 mb-12 reveal-on-scroll">
+              <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">CHOOSE YOUR GROWTH PATH</div>
+              <h2 className="text-4xl sm:text-5xl font-bold">{t.pathTitle}</h2>
+              <p className={`text-base ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{t.pathSub}</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-on-scroll">
+              
+              <div
+                onClick={() => setUserGoal('revenue')}
+                className={`p-8 rounded-3xl cursor-pointer transition-all ${userGoal === 'revenue' ? 'border-2 border-marie-gold shadow-xl shadow-marie-gold/20' : cardClass}`}
+              >
+                <div className="w-12 h-12 rounded-full bg-marie-gold/20 text-marie-gold flex items-center justify-center font-bold text-xl mb-4">01</div>
+                <h3 className="text-xl font-bold">{t.p1Title}</h3>
+                <p className={`text-xs leading-relaxed mt-2 ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{t.p1Desc}</p>
+                <div className="mt-4 font-bold text-xs text-marie-gold">Explore Revenue Path →</div>
+              </div>
+
+              <div
+                onClick={() => setUserGoal('branding')}
+                className={`p-8 rounded-3xl cursor-pointer transition-all ${userGoal === 'branding' ? 'border-2 border-marie-gold shadow-xl shadow-marie-gold/20' : cardClass}`}
+              >
+                <div className="w-12 h-12 rounded-full bg-marie-gold/20 text-marie-gold flex items-center justify-center font-bold text-xl mb-4">02</div>
+                <h3 className="text-xl font-bold">{t.p2Title}</h3>
+                <p className={`text-xs leading-relaxed mt-2 ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{t.p2Desc}</p>
+                <div className="mt-4 font-bold text-xs text-marie-gold">Explore Branding Path →</div>
+              </div>
+
+              <div
+                onClick={() => setUserGoal('advisory')}
+                className={`p-8 rounded-3xl cursor-pointer transition-all ${userGoal === 'advisory' ? 'border-2 border-marie-gold shadow-xl shadow-marie-gold/20' : cardClass}`}
+              >
+                <div className="w-12 h-12 rounded-full bg-marie-gold/20 text-marie-gold flex items-center justify-center font-bold text-xl mb-4">03</div>
+                <h3 className="text-xl font-bold">{t.p3Title}</h3>
+                <p className={`text-xs leading-relaxed mt-2 ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{t.p3Desc}</p>
+                <div className="mt-4 font-bold text-xs text-marie-gold">Explore Advisory Path →</div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* MAY TV SHOWCASE SECTION */}
+          <section id="tv" className={`py-20 border-t ${darkMode ? 'bg-[#14131B] border-white/10' : 'bg-white border-marie-border'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 space-y-12">
+              
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 reveal-on-scroll">
+                <div>
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">WATCH & LISTEN</div>
+                  <h2 className="text-4xl sm:text-5xl font-bold mt-1">MAY TV & Audio Keynotes</h2>
+                </div>
+                <a href="#contact" className="text-xs font-bold text-marie-gold underline">View All Episodes →</a>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-on-scroll">
+                {tvEpisodes.map((ep) => (
+                  <div
+                    key={ep.id}
+                    onClick={() => { setSelectedVideo(ep); setActiveModal('tv'); }}
+                    className={`${cardClass} rounded-3xl overflow-hidden cursor-pointer flex flex-col justify-between group`}
+                  >
+                    <div>
+                      <div className="aspect-[16/10] overflow-hidden relative">
+                        <img src={ep.img} alt={ep.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/20 transition-colors">
+                          <div className="w-12 h-12 rounded-full bg-marie-gold text-black flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+                            <i data-lucide="play" className="w-5 h-5 fill-black"></i>
+                          </div>
+                        </div>
+                        <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-white uppercase">{ep.category}</span>
+                        <span className="absolute bottom-3 right-3 px-3 py-1 rounded-md bg-white text-black font-bold text-[10px]">{ep.duration}</span>
+                      </div>
+                      <div className="p-6 space-y-2">
+                        <div className="text-xs font-bold text-marie-gold">{ep.episode}</div>
+                        <h3 className="text-lg font-bold leading-snug group-hover:text-marie-gold transition-colors">{ep.title}</h3>
+                        <p className={`text-xs line-clamp-2 mt-2 ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{ep.desc}</p>
+                      </div>
+                    </div>
+                    <div className="px-6 pb-6 pt-2 text-xs font-bold text-marie-gold">Watch Episode →</div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+          </section>
+
+          {/* THE BOOK SHOWCASE SECTION */}
+          <section id="book" className={`py-20 border-t relative overflow-hidden ${darkMode ? 'bg-[#12111A] border-white/10' : 'bg-marie-goldSoft border-marie-border'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div className="lg:col-span-5 flex justify-center reveal-on-scroll">
+                  <div className={`relative w-64 sm:w-80 rounded-2xl p-2 border-2 shadow-2xl group hover:scale-105 transition-transform duration-500 ${darkMode ? 'bg-[#14131B] border-white/20' : 'bg-white border-marie-goldBorder'}`}>
+                    <img
+                      src="no godfather cover.png"
+                      alt="No Godfather by Yash Agarwal"
+                      className="w-full h-auto rounded-xl shadow-lg object-cover"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-7 space-y-6 text-left reveal-on-scroll">
+                  <div className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border ${darkMode ? 'bg-white/10 border-white/20 text-marie-gold' : 'bg-white border-marie-goldBorder text-marie-goldHover'}`}>
+                    {t.bookSubtitle}
+                  </div>
+
+                  <h2 className="text-4xl sm:text-6xl font-bold">
+                    "{t.bookTitle}"
+                  </h2>
+
+                  <p className={`text-base sm:text-lg leading-relaxed font-normal ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                    {t.bookDesc}
+                  </p>
+
+                  {waitlistSubmitted ? (
+                    <div className="p-4 rounded-2xl bg-marie-gold/20 border-2 border-marie-gold text-marie-gold font-bold text-xs">
+                      ✓ Thank you! You are officially on the early-access waitlist for 'No Godfather'.
+                    </div>
+                  ) : (
+                    <form onSubmit={handleWaitlistSubmit} className="flex flex-wrap gap-3">
+                      <input
+                        type="email"
+                        required
+                        placeholder="Enter your work email address"
+                        value={waitlistEmail}
+                        onChange={(e) => setWaitlistEmail(e.target.value)}
+                        className={`px-5 py-3.5 rounded-full border text-xs placeholder:text-zinc-400 focus:outline-none focus:border-marie-gold flex-1 min-w-[240px] ${darkMode ? 'bg-white/10 border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                      />
+                      <button type="submit" className="px-8 py-3.5 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md transition-all">
+                        Join Waitlist →
+                      </button>
+                    </form>
+                  )}
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* MASTERCLASSES & PROGRAMS SECTION */}
+          <section id="programs" className={`py-20 px-6 sm:px-12 max-w-7xl mx-auto border-t ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+            <div className="text-center max-w-3xl mx-auto space-y-4 mb-16 reveal-on-scroll">
+              <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">WORLD-CLASS TRAINING & COHORTS</div>
+              <h2 className="text-4xl sm:text-5xl font-bold">Masterclasses & Executive Programs</h2>
+              <p className={`text-base ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>High-impact programs designed for founders, CMOs, and growth leaders looking for outcome-driven systems.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-on-scroll">
+              {masterclasses.map((c) => (
+                <div key={c.id} className={`${cardClass} rounded-3xl overflow-hidden flex flex-col justify-between group`}>
+                  <div>
+                    <div className="aspect-[16/10] overflow-hidden relative">
+                      <img src={c.img} alt={c.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-marie-gold text-black font-bold text-[10px] uppercase">{c.badge}</span>
+                      <span className="absolute bottom-3 right-3 px-3 py-1 rounded-md bg-white text-black font-bold text-[10px]">{c.rating}</span>
+                    </div>
+                    <div className="p-6 space-y-3">
+                      <div className="text-xs font-bold text-zinc-400">{c.graduates}</div>
+                      <h3 className="text-xl font-bold group-hover:text-marie-gold transition-colors">{c.title}</h3>
+                      <div className="text-xs font-bold text-marie-gold">Target: {c.audience}</div>
+                      <p className={`text-xs leading-relaxed pt-2 ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{c.desc}</p>
+                    </div>
+                  </div>
+                  <div className="p-6 pt-0">
+                    <button
+                      onClick={() => { setSelectedCourse(c); setActiveModal('course'); }}
+                      className="w-full py-3 rounded-full bg-marie-gold text-black hover:bg-marie-goldHover font-bold text-xs transition-all shadow-md"
+                    >
+                      Request Program Invite →
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* FREE GROWTH AUDIT LEAD MAGNET SECTION */}
+          <section id="audit" className={`py-20 border-t ${darkMode ? 'bg-[#14131B] border-white/10' : 'bg-white border-marie-border'}`}>
+            <div className="max-w-4xl mx-auto px-6 text-center space-y-8 reveal-on-scroll">
+              
+              <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">FREE ENTERPRISE RESOURCE</div>
+              <h2 className="text-4xl sm:text-5xl font-bold">Get Your Free Growth Blueprint</h2>
+              <p className={`text-base max-w-xl mx-auto ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                Generate an immediate custom Growth Blueprint analyzing your current ad spend, media channels, and revenue scale bottlenecks.
+              </p>
+
+              <div className={`p-8 sm:p-10 rounded-3xl border-2 border-marie-gold text-left space-y-6 shadow-xl ${darkMode ? 'bg-[#0A090E]' : 'bg-marie-bg'}`}>
+                
+                {auditSubmitted ? (
+                  <div className="text-center space-y-4 py-8">
+                    <div className="text-3xl font-bold text-marie-gold">✓ Growth Blueprint Sent!</div>
+                    <p className={`text-xs max-w-md mx-auto ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                      Your customized 10-Point Enterprise Growth Blueprint is on its way to your inbox. You can also schedule an immediate 1-on-1 strategy call with Yash.
+                    </p>
+                    <a href="#contact" className="inline-block px-8 py-3.5 rounded-full bg-marie-gold text-black font-bold text-xs shadow-md">
+                      Schedule Strategy Call →
+                    </a>
+                  </div>
+                ) : (
+                  <form onSubmit={handleAuditSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold">Current Monthly Ad Spend:</label>
+                        <select
+                          value={auditSpend}
+                          onChange={(e) => setAuditSpend(e.target.value)}
+                          className={`w-full p-3.5 rounded-xl border text-xs font-medium focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-white/10 border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        >
+                          <option value="Under ₹10L/mo" className="bg-[#14131B]">Under ₹10L / mo ($12k/mo)</option>
+                          <option value="₹10L - ₹50L/mo" className="bg-[#14131B]">₹10L – ₹50L / mo ($60k/mo)</option>
+                          <option value="₹50L - ₹2Cr/mo" className="bg-[#14131B]">₹50L – ₹2Cr / mo ($250k/mo)</option>
+                          <option value="₹2Cr+/mo" className="bg-[#14131B]">₹2Cr+ / mo ($250k+/mo)</option>
+                        </select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold">Primary Scale Bottleneck:</label>
+                        <select
+                          value={auditGoal}
+                          onChange={(e) => setAuditGoal(e.target.value)}
+                          className={`w-full p-3.5 rounded-xl border text-xs font-medium focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-white/10 border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        >
+                          <option value="Scale Digital Revenue Past ₹3Cr" className="bg-[#14131B]">Scale Digital Revenue Past ₹3Cr/mo</option>
+                          <option value="High Customer Acquisition Cost (CAC)" className="bg-[#14131B]">High Customer Acquisition Cost (CAC)</option>
+                          <option value="Lack of Earned Press & Media Authority" className="bg-[#14131B]">Lack of Earned Press & Media Authority</option>
+                          <option value="Creative Ad Fatigue & Low Conversion" className="bg-[#14131B]">Creative Ad Fatigue & Low Conversion</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold">Your Work Email Address:</label>
+                      <div className="flex flex-wrap gap-3">
+                        <input
+                          type="email"
+                          required
+                          placeholder="e.g. founder@enterprise.com"
+                          value={auditEmail}
+                          onChange={(e) => setAuditEmail(e.target.value)}
+                          className={`flex-1 p-3.5 rounded-xl border text-xs placeholder:text-zinc-400 focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-white/10 border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        />
+                        <button type="submit" className="px-8 py-3.5 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md transition-all">
+                          Generate Growth Blueprint →
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                )}
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* CONTACT & FOOTER SIGNATURE BANNER */}
+          <section id="contact" className={`py-24 border-t text-center ${darkMode ? 'bg-[#12111A] border-white/10' : 'bg-marie-goldSoft border-marie-border'}`}>
+            <div className="max-w-4xl mx-auto px-6 space-y-8 reveal-on-scroll">
+              <span className="text-xs font-bold text-marie-gold uppercase tracking-widest">START A CONVERSATION</span>
+              <h2 className="text-4xl sm:text-6xl font-bold">Ready To Build A Growth Engine You Love?</h2>
+              <p className={`text-base max-w-xl mx-auto leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                For fractional CMO retainers, private executive advisory, speaking invitations, or press inquiries — reach out directly. Based in Mumbai, working globally.
+              </p>
+
+              <div className="flex flex-wrap justify-center gap-4 pt-4">
+                <a href="mailto:hello@meagarwalyash.com" className="px-8 py-4 rounded-full bg-marie-gold text-black font-bold text-sm hover:bg-marie-goldHover transition-all shadow-lg">
+                  EmailDirect: hello@meagarwalyash.com
+                </a>
+                <a href="https://linkedin.com/in/meagarwalyash" target="_blank" className={`px-8 py-4 rounded-full border font-bold text-sm transition-all ${darkMode ? 'border-white text-white hover:bg-white hover:text-black' : 'border-marie-border bg-white text-black hover:bg-marie-goldHover hover:text-white'}`}>
+                  Connect on LinkedIn →
+                </a>
+              </div>
+            </div>
+          </section>
+
+          {/* FOOTER */}
+          <footer className={`py-12 border-t text-center text-xs space-y-2 ${darkMode ? 'bg-black border-white/10 text-zinc-400' : 'bg-white border-marie-border text-zinc-500'}`}>
+            <div>© 2026 Yash Agarwal (@MeAgarwalYash). All Rights Reserved.</div>
+            <div className="text-marie-gold font-bold">MUMBAI, INDIA • LIVE IST: {currentTime || '12:00:00 AM'}</div>
+          </footer>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 </body>
 </html>
