@@ -705,16 +705,23 @@
         }
       }, []);
 
-      // REAL-TIME SYNC WITH ADMIN PANEL CHANGES ACROSS ALL TABS & WINDOWS
+      // REAL-TIME SYNC WITH ADMIN PANEL CHANGES ACROSS ALL TABS & WINDOWS + GLOBAL JSON FETCH
       useEffect(() => {
         const reloadCms = () => {
           const saved = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
           if (saved) {
             try {
               setCmsData(JSON.parse(saved));
+              return;
             } catch (e) {}
           }
+          fetch('cmsData.json')
+            .then(res => res.json())
+            .then(data => { if (data) setCmsData(data); })
+            .catch(() => {});
         };
+
+        reloadCms();
 
         const handleStorage = (e) => {
           if (e.key === 'MAY_WEBSITE_CMS_DATA' || !e.key) {

@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "badge": "✨ 12+ Years Executive Growth Architect & PR Leader",
+    "greeting": "Greetings, I'm",
+    "name": "Yash Agarwal",
+    "heroBio": "Head of Marketing at DR Choksey FinServ, former Head of Digital Marketing at Avant Garde Industries, and Founder of FMK Agency. I help ambitious founders & enterprise leaders scale multi-crore digital revenue engines and build unassailable brand authority.",
+    "announcement": "🔥 NEW: Read Yash's Latest Essay on Tier-1 PR Newsjacking • Join the Waitlist for 'No Godfather'",
+    "imageSrc": "yashdp.png",
+    "expYears": "12+",
+    "monthlyRevenue": "₹3Cr+",
+    "campaignsCount": "500+",
+    "brandsCount": "300+",
+    "countriesCount": "15+"
+  },
+  "book": {
+    "title": "No Godfather",
+    "subtitle": "FORTHCOMING DEBUT MASTERWORK",
+    "coverImg": "no godfather cover.png",
+    "description": "A definitive guide to building an empire and a personal brand from scratch — written from 12 years of first-hand experience across agency life, corporate marketing leadership, and scaling P&Ls without corporate patronage.",
+    "excerpt": "\"True leverage is built when your reputation precedes your entry into any room. In the modern digital economy, you do not need permission or corporate patronage; you need a strategic growth machine that consistently produces measurable enterprise impact...\""
+  }
+}
