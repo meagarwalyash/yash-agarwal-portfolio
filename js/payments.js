@@ -6,7 +6,7 @@
  * 3. Backend payment signature verification (/api/verify-payment)
  */
 
-window.RAZORPAY_KEY_ID = 'rzp_test_TIcKhGEt4zPejK';
+window.RAZORPAY_KEY_ID = 'rzp_live_TIch4JGGb5hd8u';
 
 window.MAY_PaymentEngine = {
   // Check if Razorpay Checkout SDK is loaded
@@ -89,7 +89,7 @@ window.MAY_PaymentEngine = {
     }
 
     const options = {
-      key: (orderData && orderData.key_id) || window.RAZORPAY_KEY_ID || 'rzp_test_TIcKhGEt4zPejK',
+      key: (orderData && orderData.key_id) || window.RAZORPAY_KEY_ID || 'rzp_live_TIch4JGGb5hd8u',
       amount: (orderData && orderData.amount) || amountInPaise,
       currency: (orderData && orderData.currency) || 'INR',
       name: 'Yash Agarwal (MeAgarwalYash.com)',
