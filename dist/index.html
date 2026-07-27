@@ -1269,49 +1269,33 @@
               </a>
 
               {/* RIGHT: Right-Aligned Text Navigation + Dropdowns + Pill CTA */}
-              <div className="hidden lg:flex items-center gap-7 xl:gap-9 font-bold text-base tracking-tight ml-auto">
+              <div className="hidden lg:flex items-center gap-6 xl:gap-8 font-bold text-base tracking-tight ml-auto">
                 
+                {/* Store Direct Link */}
+                <a href="store.html" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold flex items-center gap-1.5">
+                  <span className="text-brand-gold">🛍️</span>
+                  <span>Store</span>
+                </a>
+
+                {/* Free Resources Direct Link */}
+                <a href="resources.html" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold flex items-center gap-1.5">
+                  <span className="text-brand-gold">🎁</span>
+                  <span>Resources</span>
+                </a>
+
                 {/* Blog Link */}
                 <a href="blog.html" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
                   Blog
                 </a>
 
-                {/* Shop Dropdown */}
-                <div className="relative" onMouseEnter={() => setShopDropdownOpen(true)} onMouseLeave={() => setShopDropdownOpen(false)}>
-                  <button className="flex items-center gap-1.5 hover:text-marie-gold transition-colors whitespace-nowrap py-2 text-base font-bold">
-                    <span>Shop</span>
-                    <i data-lucide="chevron-down" className="w-4 h-4"></i>
-                  </button>
-
-                  {shopDropdownOpen && (
-                    <div
-                      style={{ backgroundColor: darkMode ? '#14131B' : '#FFFFFF', opacity: 1 }}
-                      className={`absolute top-full right-0 w-64 rounded-2xl p-3 shadow-2xl border z-50 animate-fadeIn ${darkMode ? 'border-white/20 text-white' : 'border-zinc-200 text-black'}`}
-                    >
-                      <a href="#store" className="block px-3.5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-marie-gold/20 hover:text-marie-gold transition-colors">
-                        🎓 Masterclasses & Courses
-                      </a>
-                      <a href="#store" className="block px-3.5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-marie-gold/20 hover:text-marie-gold transition-colors">
-                        📦 Digital SOPs & Prompt Packs
-                      </a>
-                      <a href="#store" className="block px-3.5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-marie-gold/20 hover:text-marie-gold transition-colors">
-                        💼 1-on-1 Consulting & Audits
-                      </a>
-                      <a href="#book" className="block px-3.5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-marie-gold/20 hover:text-marie-gold transition-colors">
-                        📖 "No Godfather" Book
-                      </a>
-                    </div>
-                  )}
-                </div>
+                {/* Consulting Link */}
+                <a href="speaking.html" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
+                  Consulting
+                </a>
 
                 {/* Videos / MarieTV Link */}
                 <a href="#tv" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
                   Videos
-                </a>
-
-                {/* Podcast Link */}
-                <a href="#tv" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
-                  Podcast
                 </a>
 
                 {/* About Link */}
@@ -1540,14 +1524,16 @@
             <div className={`fixed inset-x-0 top-[65px] z-40 p-6 shadow-2xl lg:hidden space-y-4 font-bold text-sm backdrop-blur-2xl transition-all ${darkMode ? 'bg-[#0A090E]/95 border-b border-white/10 text-white' : 'bg-white/95 border-b border-marie-border text-[#121212]'}`}>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                 {[
+                  ['store.html', '🛍️ Digital Store'],
+                  ['resources.html', '🎁 Free Resources'],
+                  ['blog.html', '✍️ Growth Blog'],
+                  ['speaking.html', '💼 Consulting'],
                   ['#impact', 'Impact'],
                   ['#journey', 'Journey'],
                   ['#brands', 'Brands'],
                   ['#media', 'Press & Media'],
                   ['#tv', 'Videos & Podcasts'],
-                  ['#speaking', 'Speaking'],
                   ['#testimonials', 'Reviews'],
-                  ['#programs', 'Work With Me'],
                   ['#book', 'Book'],
                   ['#audit', t.navAudit],
                   ['#contact', t.navContact],
@@ -1556,7 +1542,7 @@
                     key={href}
                     href={href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`p-3 rounded-2xl text-xs font-semibold flex items-center justify-between border transition-all ${darkMode ? 'bg-white/5 border-white/10 hover:border-marie-gold hover:text-marie-gold' : 'bg-black/5 border-black/10 hover:border-marie-gold hover:text-marie-gold'}`}
+                    className={`p-3 rounded-2xl text-xs font-bold flex items-center justify-between border transition-all ${darkMode ? 'bg-white/5 border-white/10 hover:border-marie-gold hover:text-marie-gold' : 'bg-black/5 border-black/10 hover:border-marie-gold hover:text-marie-gold'}`}
                   >
                     <span>{label}</span>
                     <i data-lucide="chevron-right" className="w-3.5 h-3.5 opacity-50"></i>
@@ -2087,106 +2073,218 @@
           </section>
 
           {/* ══════════════════════════════════════════════════════════
-               DIGITAL STORE & MASTERCLASSES STOREFRONT (v2.0 PLATFORM)
+               1. DIGITAL PRODUCTS STOREFRONT SECTION (CMS SYNCED)
           ══════════════════════════════════════════════════════════ */}
           <section id="store" className={`py-24 border-t relative overflow-hidden ${darkMode ? 'bg-[#0B0A11] border-white/10' : 'bg-white border-marie-border'}`}>
             <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10 space-y-12">
               
               <div className="text-center max-w-3xl mx-auto space-y-3 reveal-on-scroll">
                 <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-marie-gold/15 text-marie-gold border border-marie-gold/30">
-                  DIGITAL STOREFRONT & PLATFORM
+                  DIGITAL PRODUCTS & SOP MARKETPLACE
                 </span>
-                <h2 className="text-4xl sm:text-5xl font-bold">Executive Masterclasses, SOPs & Advisory</h2>
+                <h2 className="text-4xl sm:text-5xl font-bold">Executive Operating Systems, SOPs & Prompt Packs</h2>
                 <div className="section-divider mx-auto"></div>
                 <p className={`text-base ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
-                  Battle-tested operating systems, prompt packs, media buying SOPs, and executive 1-on-1 advisory sessions. Instant lifetime access.
+                  Battle-tested marketing blueprints, media buying calculators, PR newsjacking swipe files, and AI prompt packs. Instant lifetime digital access.
                 </p>
               </div>
 
-              {/* STORE GRID: COURSES & DIGITAL PRODUCTS */}
+              {/* PRODUCTS GRID */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-on-scroll">
-                
-                {/* Product 1: PR Masterclass */}
-                <div className={`${cardClass} rounded-3xl overflow-hidden p-6 flex flex-col justify-between group hover:border-marie-gold/60 transition-all gold-glow-sm`}>
-                  <div className="space-y-4">
-                    <div className="aspect-[16/10] rounded-2xl overflow-hidden relative">
-                      <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80" alt="Masterclass" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-marie-gold uppercase">BESTSELLER</span>
+                {((cmsData && cmsData.digitalProducts && cmsData.digitalProducts.length > 0) ? cmsData.digitalProducts.slice(0, 6) : [
+                  {
+                    id: "dp1",
+                    title: "The Executive PR & Newsjacking Swipe File",
+                    category: "E-books",
+                    price: 2999,
+                    discountPrice: 1499,
+                    badge: "BESTSELLER",
+                    thumbnail: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=600&q=80",
+                    desc: "50+ Battle-tested email pitches, journalist press release frameworks, and Tier-1 media pitch templates."
+                  },
+                  {
+                    id: "dp2",
+                    title: "100+ ChatGPT & Claude Prompts for Growth Marketers",
+                    category: "AI Prompt Packs",
+                    price: 1999,
+                    discountPrice: 999,
+                    badge: "HOT SELLER",
+                    thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+                    desc: "Copy-paste AI prompts for Meta ad copy generation, SEO topic clusters, and landing page wireframing."
+                  },
+                  {
+                    id: "dp3",
+                    title: "Multi-Crore Performance Media Buying SOPs",
+                    category: "SOP Libraries",
+                    price: 4999,
+                    discountPrice: 2499,
+                    badge: "HIGH ROAS",
+                    thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
+                    desc: "Media planning Excel sheets, CAC payback models & Meta creative testing frameworks."
+                  },
+                  {
+                    id: "dp4",
+                    title: "The Ultimate CMO Notion Operating System",
+                    category: "Notion Templates",
+                    price: 4999,
+                    discountPrice: 2999,
+                    badge: "FEATURED OS",
+                    thumbnail: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80",
+                    desc: "Complete growth dashboard, campaign tracker, unit economics calculator, and content engine."
+                  },
+                  {
+                    id: "dp5",
+                    title: "P&L & Marketing Unit Economics Calculator",
+                    category: "Excel Dashboards",
+                    price: 1999,
+                    discountPrice: 999,
+                    badge: "LIFETIME UPDATES",
+                    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
+                    desc: "Automated model to track daily ad spend, blended CAC, LTV cohort analysis, and net profit margins."
+                  },
+                  {
+                    id: "dp6",
+                    title: "Fractional CMO Growth Advisory Toolkit",
+                    category: "Digital Toolkits",
+                    price: 6999,
+                    discountPrice: 3999,
+                    badge: "COMPLETE SUITE",
+                    thumbnail: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80",
+                    desc: "Complete bundle including SOPs, Excel calculators, Canva templates, and pitch swipe files."
+                  }
+                ]).map((prod) => (
+                  <div key={prod.id} className={`${cardClass} rounded-3xl overflow-hidden p-6 flex flex-col justify-between group hover:border-marie-gold/60 transition-all gold-glow-sm`}>
+                    <div className="space-y-4">
+                      <div className="aspect-[16/10] rounded-2xl overflow-hidden relative">
+                        <img src={prod.thumbnail} alt={prod.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-marie-gold uppercase">
+                          {prod.badge || 'DIGITAL ASSET'}
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-bold text-marie-gold uppercase tracking-wider">{prod.category}</span>
+                        <h3 className="text-lg font-bold leading-snug">{prod.title}</h3>
+                        <p className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{prod.desc}</p>
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-marie-gold uppercase">ONLINE MASTERCLASS</span>
-                      <h3 className="text-xl font-bold leading-snug">The Personal Brand & Executive PR Masterclass</h3>
-                      <p className={`text-xs ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>6.5 Hours HD Video • Curriculum, PR Templates & Forbes pitch formula included.</p>
+                    <div className="pt-6 border-t border-white/10 flex items-center justify-between mt-4">
+                      <div>
+                        {prod.price && <span className="text-xs text-zinc-400 line-through mr-1.5">₹{prod.price.toLocaleString()}</span>}
+                        <span className="text-xl font-extrabold text-marie-gold">₹{(prod.discountPrice || prod.price).toLocaleString()}</span>
+                      </div>
+                      <a
+                        href={`checkout.html?id=${prod.id}&price=${prod.discountPrice || prod.price}&title=${encodeURIComponent(prod.title)}&type=product`}
+                        className="px-5 py-2.5 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs transition-all shadow-md gold-glow"
+                      >
+                        Buy Now →
+                      </a>
                     </div>
                   </div>
-                  <div className="pt-6 border-t border-white/10 flex items-center justify-between mt-4">
-                    <div>
-                      <span className="text-xs text-zinc-400 line-through">₹14,999</span>
-                      <div className="text-2xl font-bold text-marie-gold">₹9,999</div>
-                    </div>
-                    <a
-                      href="checkout.html?id=c1&price=9999&title=The%20Personal%20Brand%20%26%20Executive%20PR%20Masterclass&type=course"
-                      className="px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs transition-all shadow-md gold-glow"
-                    >
-                      Enroll Now →
-                    </a>
-                  </div>
-                </div>
+                ))}
+              </div>
 
-                {/* Product 2: Performance SOPs */}
-                <div className={`${cardClass} rounded-3xl overflow-hidden p-6 flex flex-col justify-between group hover:border-marie-gold/60 transition-all gold-glow-sm`}>
-                  <div className="space-y-4">
-                    <div className="aspect-[16/10] rounded-2xl overflow-hidden relative">
-                      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Performance SOPs" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-white uppercase">INSTANT DOWNLOAD</span>
-                    </div>
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-marie-gold uppercase">DIGITAL SOPs & CALCULATORS</span>
-                      <h3 className="text-xl font-bold leading-snug">Multi-Crore Performance Marketing SOPs</h3>
-                      <p className={`text-xs ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>Media planning Excel sheets, CAC payback models & Meta creative testing frameworks.</p>
-                    </div>
-                  </div>
-                  <div className="pt-6 border-t border-white/10 flex items-center justify-between mt-4">
-                    <div>
-                      <span className="text-xs text-zinc-400 line-through">₹4,999</span>
-                      <div className="text-2xl font-bold text-marie-gold">₹2,499</div>
-                    </div>
-                    <a
-                      href="checkout.html?id=dp2&price=2499&title=Multi-Crore%20Performance%20Marketing%20SOPs&type=product"
-                      className="px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs transition-all shadow-md gold-glow"
-                    >
-                      Buy Asset →
-                    </a>
-                  </div>
-                </div>
+              {/* View All Store Products CTA */}
+              <div className="text-center pt-6">
+                <a
+                  href="store.html"
+                  className="px-8 py-4 rounded-full bg-marie-gold text-black font-extrabold text-xs uppercase tracking-wider hover:bg-marie-goldHover transition-all shadow-xl gold-glow inline-flex items-center gap-2"
+                >
+                  <span>Browse All 15 Product Categories in Full Store</span>
+                  <i data-lucide="arrow-right" className="w-4 h-4"></i>
+                </a>
+              </div>
 
-                {/* Product 3: 1-on-1 Advisory Session */}
-                <div className={`${cardClass} rounded-3xl overflow-hidden p-6 flex flex-col justify-between group hover:border-marie-gold/60 transition-all gold-glow-sm`}>
-                  <div className="space-y-4">
-                    <div className="aspect-[16/10] rounded-2xl overflow-hidden relative">
-                      <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Advisory Call" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-[10px] font-bold text-marie-gold uppercase">1-ON-1 EXECUTIVE</span>
-                    </div>
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-marie-gold uppercase">CONSULTING ADVISORY</span>
-                      <h3 className="text-xl font-bold leading-snug">60-Min Deep-Dive Growth & Brand Audit</h3>
-                      <p className={`text-xs ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>Direct 1-on-1 strategy session with Yash Agarwal for acquisition, PR & brand scale.</p>
-                    </div>
-                  </div>
-                  <div className="pt-6 border-t border-white/10 flex items-center justify-between mt-4">
-                    <div>
-                      <span className="text-xs text-zinc-400 line-through">₹19,999</span>
-                      <div className="text-2xl font-bold text-marie-gold">₹14,999</div>
-                    </div>
-                    <a
-                      href="checkout.html?id=cs2&price=14999&title=60-Min%20Deep-Dive%20Growth%20%26%20Brand%20Audit&type=consulting"
-                      className="px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs transition-all shadow-md gold-glow"
-                    >
-                      Book Call →
-                    </a>
-                  </div>
-                </div>
+            </div>
+          </section>
 
+          {/* ══════════════════════════════════════════════════════════
+               2. FREE RESOURCES & LEAD MAGNET HUB SECTION (CMS SYNCED)
+          ══════════════════════════════════════════════════════════ */}
+          <section id="resources" className={`py-24 border-t relative overflow-hidden ${darkMode ? 'bg-[#0E0D16] border-white/10' : 'bg-[#FAF8F5] border-marie-border'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10 space-y-12">
+              
+              <div className="text-center max-w-3xl mx-auto space-y-3 reveal-on-scroll">
+                <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                  FREE EXECUTIVE DOWNLOADS
+                </span>
+                <h2 className="text-4xl sm:text-5xl font-bold">Free Growth Resources & Lead Magnets</h2>
+                <div className="section-divider mx-auto"></div>
+                <p className={`text-base ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                  Download battle-tested growth checklists, PR pitch frameworks, and Meta ad creative audit templates for free.
+                </p>
+              </div>
+
+              {/* FREE RESOURCES GRID */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal-on-scroll">
+                {((cmsData && cmsData.freeResources && cmsData.freeResources.length > 0) ? cmsData.freeResources : [
+                  {
+                    id: "fr1",
+                    title: "The Zero-Budget PR Audit Checklist",
+                    category: "PR & Media",
+                    desc: "Checklist to evaluate if your brand is ready for Tier-1 media pitches in Forbes, Business Standard & HT.",
+                    fileUrl: "resources.html",
+                    badge: "POPULAR"
+                  },
+                  {
+                    id: "fr2",
+                    title: "Performance Ad Creative Testing Framework",
+                    category: "Meta Ads",
+                    desc: "The exact hook matrix and ad variation testing framework for scaling Meta ad spend sustainably.",
+                    fileUrl: "resources.html",
+                    badge: "MUST HAVE"
+                  },
+                  {
+                    id: "fr3",
+                    title: "Executive LinkedIn Profile Optimization Guide",
+                    category: "Personal Branding",
+                    desc: "Turn your LinkedIn profile into a 24/7 lead generation and authority-building digital asset.",
+                    fileUrl: "resources.html",
+                    badge: "TOP RATED"
+                  },
+                  {
+                    id: "fr4",
+                    title: "50 High-Converting AI Prompts for Copywriters",
+                    category: "AI Copywriting",
+                    desc: "Copy-paste prompts for drafting headlines, subheads, and call-to-action buttons using ChatGPT.",
+                    fileUrl: "resources.html",
+                    badge: "NEW RELEASE"
+                  }
+                ]).map((res) => (
+                  <div key={res.id} className={`${cardClass} rounded-3xl p-6 flex flex-col justify-between group hover:border-emerald-500/60 transition-all gold-glow-sm`}>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-extrabold uppercase">
+                          {res.badge || 'FREE PDF'}
+                        </span>
+                        <span className="text-[10px] font-bold text-zinc-400 uppercase">{res.category}</span>
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="text-base font-bold leading-snug">{res.title}</h3>
+                        <p className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{res.desc}</p>
+                      </div>
+                    </div>
+                    <div className="pt-4 border-t border-white/10 flex items-center justify-between mt-4">
+                      <span className="text-sm font-extrabold text-emerald-400">FREE DOWNLOAD</span>
+                      <a
+                        href="resources.html"
+                        className="px-4 py-2 rounded-full bg-emerald-500 text-black font-extrabold text-xs hover:bg-emerald-400 transition-all"
+                      >
+                        Claim PDF →
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* View All Free Resources CTA */}
+              <div className="text-center pt-4">
+                <a
+                  href="resources.html"
+                  className="px-8 py-4 rounded-full bg-white/10 text-white font-extrabold text-xs uppercase tracking-wider hover:bg-white/20 transition-all border border-white/20 inline-flex items-center gap-2"
+                >
+                  <span>Explore Full Free Lead Magnet Hub & PDF Vault</span>
+                  <i data-lucide="download" className="w-4 h-4"></i>
+                </a>
               </div>
 
             </div>
@@ -2666,13 +2764,13 @@
                 {/* Sections */}
                 <div className="space-y-3">
                   <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Navigate</div>
-                  {[['#impact', 'Impact Dashboard'], ['#journey', 'My Journey'], ['#media', 'Press & Media'], ['#brands', 'Brands'], ['#speaking', 'Speaking']].map(([href, label]) => (
-                    <a key={href} href={href} className="block text-xs hover:text-marie-gold transition-colors">{label}</a>
+                  {[['store.html', '🛍️ Digital Store'], ['resources.html', '🎁 Free Resources'], ['blog.html', '✍️ Growth Essays'], ['speaking.html', '💼 Consulting'], ['dashboard.html', '👤 Customer Dashboard']].map(([href, label]) => (
+                    <a key={href} href={href} className="block text-xs hover:text-marie-gold transition-colors font-semibold">{label}</a>
                   ))}
                 </div>
                 <div className="space-y-3">
                   <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Work</div>
-                  {[['#programs', 'Work With Me'], ['#tv', 'Videos & Podcasts'], ['#book', 'No Godfather'], ['#audit', 'Growth Blueprint'], ['#newsletter', 'Newsletter']].map(([href, label]) => (
+                  {[['#impact', 'Impact Dashboard'], ['#journey', 'My Journey'], ['#media', 'Press & Media'], ['#tv', 'Videos & Podcasts'], ['#book', 'No Godfather Book']].map(([href, label]) => (
                     <a key={href} href={href} className="block text-xs hover:text-marie-gold transition-colors">{label}</a>
                   ))}
                 </div>
