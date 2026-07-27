@@ -1,112 +1,162 @@
 /**
  * MAY Platform — User Authentication & Session Engine (js/auth.js)
- * Manages user accounts, sessions, purchases, wishlist, and profile details.
+ * Production Customer Account Architecture:
+ * Supports Sign Up, Login, Logout, Forgot Password, Reset Password,
+ * Profile Management, and Session Sync.
+ * NO HARDCODED DEMO USERS.
  */
 
 window.MAY_AuthEngine = {
   SESSION_KEY: 'MAY_ACTIVE_USER_SESSION',
-  USERS_KEY: 'MAY_PLATFORM_USERS',
+  TOKEN_KEY: 'MAY_AUTH_TOKEN',
 
-  // Initialize or get currentUser session
+  // Get current authenticated user session
   getCurrentUser: function() {
     try {
       const active = localStorage.getItem(this.SESSION_KEY);
       if (active) return JSON.parse(active);
     } catch (e) {}
-
-    // Default demo session for immediate testing if desired
     return null;
   },
 
   // Save current active user session
   setCurrentUser: function(userObj) {
+    if (!userObj) {
+      localStorage.removeItem(this.SESSION_KEY);
+      localStorage.removeItem(this.TOKEN_KEY);
+      return;
+    }
     localStorage.setItem(this.SESSION_KEY, JSON.stringify(userObj));
-    this.updateUserInStore(userObj);
+    if (userObj.token) {
+      localStorage.setItem(this.TOKEN_KEY, userObj.token);
+    }
   },
 
   // Log Out current session
   logout: function() {
     localStorage.removeItem(this.SESSION_KEY);
+    localStorage.removeItem(this.TOKEN_KEY);
     window.location.reload();
   },
 
-  // Log In with Email & Password
-  login: function(email, password) {
-    const users = this.getAllUsers();
-    const found = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-
-    if (found) {
-      this.setCurrentUser(found);
-      return { success: true, user: found };
+  // Sign Up / Register new customer
+  register: async function(name, email, password, phone, gst) {
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, phone, gst })
+      });
+      const data = await res.json();
+      if (res.ok && data.status === 'success') {
+        this.setCurrentUser(data.user);
+        return { success: true, user: data.user };
+      } else {
+        return { success: false, message: data.message || 'Registration failed.' };
+      }
+    } catch (err) {
+      return { success: false, message: 'Server error during registration.' };
     }
-
-    // Auto-create user account on first login for friction-free UX
-    const newUser = {
-      id: 'usr_' + Math.random().toString(36).substring(2, 9),
-      name: email.split('@')[0].replace('.', ' '),
-      email: email,
-      phone: '',
-      gst: '',
-      memberTier: 'Free Insider',
-      purchasedCourses: ['c1'],
-      purchasedProducts: ['dp1'],
-      orders: [],
-      createdAt: new Date().toISOString()
-    };
-    this.setCurrentUser(newUser);
-    return { success: true, user: newUser, isNew: true };
   },
 
-  // Auto-Register user upon completed purchase
-  autoRegisterPurchaser: function(email, name, orderDetails) {
-    const users = this.getAllUsers();
-    let existing = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+  // Log In existing customer
+  login: async function(email, password) {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok && data.status === 'success') {
+        this.setCurrentUser(data.user);
+        return { success: true, user: data.user };
+      } else {
+        return { success: false, message: data.message || 'Login failed.' };
+      }
+    } catch (err) {
+      return { success: false, message: 'Server error during login.' };
+    }
+  },
 
-    if (!existing) {
-      existing = {
-        id: 'usr_' + Math.random().toString(36).substring(2, 9),
+  // Request Password Reset Link
+  forgotPassword: async function(email) {
+    try {
+      const res = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      return { success: res.ok, message: data.message };
+    } catch (err) {
+      return { success: false, message: 'Server error.' };
+    }
+  },
+
+  // Submit Password Reset
+  resetPassword: async function(resetToken, newPassword) {
+    try {
+      const res = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resetToken, newPassword })
+      });
+      const data = await res.json();
+      return { success: res.ok, message: data.message };
+    } catch (err) {
+      return { success: false, message: 'Server error.' };
+    }
+  },
+
+  // Update Profile Details
+  updateProfile: async function(name, phone, gst) {
+    const current = this.getCurrentUser();
+    if (!current) return { success: false, message: 'Not logged in' };
+
+    try {
+      const res = await fetch('/api/auth/update-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: current.email, name, phone, gst })
+      });
+      const data = await res.json();
+      if (res.ok && data.status === 'success') {
+        this.setCurrentUser(data.user);
+        return { success: true, user: data.user };
+      }
+      return { success: false, message: data.message };
+    } catch (err) {
+      return { success: false, message: 'Server error updating profile.' };
+    }
+  },
+
+  // Auto-register purchaser after successful payment if no account exists
+  autoRegisterPurchaser: function(email, name, orderDetails) {
+    let current = this.getCurrentUser();
+    if (!current || current.email.toLowerCase() !== email.toLowerCase()) {
+      current = {
+        id: 'usr_' + Date.now(),
         name: name || email.split('@')[0],
         email: email,
         phone: orderDetails.userPhone || '',
         gst: orderDetails.userGst || '',
         memberTier: 'Pro Growth Executive',
-        purchasedCourses: orderDetails.itemType === 'course' ? [orderDetails.itemId] : ['c1'],
-        purchasedProducts: orderDetails.itemType === 'product' ? [orderDetails.itemId] : ['dp1'],
+        purchasedCourses: orderDetails.itemType === 'course' ? [orderDetails.itemId] : [],
+        purchasedProducts: orderDetails.itemType === 'product' ? [orderDetails.itemId] : [orderDetails.itemId],
         orders: [orderDetails],
         createdAt: new Date().toISOString()
       };
     } else {
-      if (orderDetails.itemType === 'course' && !existing.purchasedCourses.includes(orderDetails.itemId)) {
-        existing.purchasedCourses.push(orderDetails.itemId);
+      if (orderDetails.itemType === 'course' && !current.purchasedCourses.includes(orderDetails.itemId)) {
+        current.purchasedCourses.push(orderDetails.itemId);
       }
-      if (orderDetails.itemType === 'product' && !existing.purchasedProducts.includes(orderDetails.itemId)) {
-        existing.purchasedProducts.push(orderDetails.itemId);
+      if (orderDetails.itemType === 'product' && !current.purchasedProducts.includes(orderDetails.itemId)) {
+        current.purchasedProducts.push(orderDetails.itemId);
       }
-      if (!existing.orders) existing.orders = [];
-      existing.orders.unshift(orderDetails);
+      if (!current.orders) current.orders = [];
+      current.orders.unshift(orderDetails);
     }
-
-    this.setCurrentUser(existing);
-  },
-
-  // Storage Helpers
-  getAllUsers: function() {
-    try {
-      const stored = localStorage.getItem(this.USERS_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch (e) {
-      return [];
-    }
-  },
-
-  updateUserInStore: function(userObj) {
-    let users = this.getAllUsers();
-    const idx = users.findIndex(u => u.email.toLowerCase() === userObj.email.toLowerCase());
-    if (idx >= 0) {
-      users[idx] = userObj;
-    } else {
-      users.push(userObj);
-    }
-    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+    this.setCurrentUser(current);
   }
 };

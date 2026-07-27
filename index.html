@@ -695,6 +695,35 @@
       const [countersVisible, setCountersVisible] = useState(false);
       const countersRef = useRef(null);
 
+      // 🎬 1 Minute Case Studies Shorts Embedded Links
+      const youtubeShorts = [
+        { id: 'W3MN5QfuQdk' },
+        { id: 'tcZitVesjCc' },
+        { id: 'LUxlc8EYIbI' },
+        { id: 'KV-u0fI1WSU' },
+        { id: 'VYBpjGQ0YLw' },
+        { id: 'kUOS4Ha7M6s' },
+        { id: 'FxBggKbE1_g' },
+        { id: 'wpgt3O8umK0' }
+      ];
+
+      const [shortsScrollIdx, setShortsScrollIdx] = useState(0);
+      const [shortsAutoPlay, setShortsAutoPlay] = useState(true);
+      const [mutedMap, setMutedMap] = useState({});
+
+      const toggleMuteShort = (shortId) => {
+        setMutedMap(prev => {
+          const isCurrentlyMuted = prev[shortId] !== false; // Default is muted (true)
+          const nextMuted = !isCurrentlyMuted;
+          const iframe = document.getElementById(`yt-short-iframe-${shortId}`);
+          if (iframe && iframe.contentWindow) {
+            const cmd = nextMuted ? 'mute' : 'unMute';
+            iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: cmd, args: '' }), '*');
+          }
+          return { ...prev, [shortId]: nextMuted };
+        });
+      };
+
       // Auto-scroll Videos Carousel every 3.5 seconds
       useEffect(() => {
         if (!videoAutoPlay || selectedVideo) return;
@@ -707,6 +736,15 @@
 
         return () => clearInterval(timer);
       }, [videoAutoPlay, selectedVideo, videoTab, tvEpisodes]);
+
+      // Auto-scroll 1-Min Case Studies Shorts Carousel when idle
+      useEffect(() => {
+        if (!shortsAutoPlay) return;
+        const timer = setInterval(() => {
+          setShortsScrollIdx((prev) => (prev + 1) % youtubeShorts.length);
+        }, 5000);
+        return () => clearInterval(timer);
+      }, [shortsAutoPlay, youtubeShorts]);
 
       // CMS DATA — Read from LocalStorage (synced from admin.html)
       const [cmsData, setCmsData] = useState(() => {
@@ -1831,6 +1869,163 @@
                   </div>
                 ))}
               </div>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════════════════
+               🎬 1 MINUTE CASE STUDIES — YOUTUBE SHORTS CAROUSEL
+          ══════════════════════════════════════════════════════════ */}
+          <section id="shorts" className={`py-24 border-t relative overflow-hidden ${darkMode ? 'bg-[#08070D] border-white/10' : 'bg-[#FAF8F5] border-marie-border'}`}>
+            {/* Ambient Background Glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-red-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+            <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-marie-gold/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10 space-y-10">
+              
+              {/* SECTION HEADER */}
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 reveal-on-scroll">
+                <div className="space-y-3 max-w-2xl">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest bg-red-600/15 text-red-500 border border-red-500/30">
+                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                    <span>YOUTUBE SHORTS • UNDER 60 SECONDS</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight">🎬 1 Minute Case Studies</h2>
+                  <div className="section-divider"></div>
+                  <p className={`text-base leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                    Real marketing strategies, growth breakdowns, and business insights explained in under 60 seconds.
+                  </p>
+                </div>
+
+                {/* COUNTERS & CAROUSEL CHEVRON CONTROLS */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  {/* Badges */}
+                  <div className="flex items-center gap-3">
+                    <div className={`px-3.5 py-2 rounded-2xl border text-xs font-bold flex items-center gap-1.5 ${darkMode ? 'bg-white/5 border-white/15 text-zinc-300' : 'bg-black/5 border-black/15 text-zinc-700'}`}>
+                      <i data-lucide="video" className="w-4 h-4 text-red-500"></i>
+                      <span>8 Shorts</span>
+                    </div>
+                    <div className={`px-3.5 py-2 rounded-2xl border text-xs font-bold flex items-center gap-1.5 ${darkMode ? 'bg-white/5 border-white/15 text-zinc-300' : 'bg-black/5 border-black/15 text-zinc-700'}`}>
+                      <i data-lucide="eye" className="w-4 h-4 text-marie-gold"></i>
+                      <span>500k+ Views</span>
+                    </div>
+                  </div>
+
+                  {/* Carousel Prev / Next Controls */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => {
+                        setShortsScrollIdx(prev => (prev - 1 + youtubeShorts.length) % youtubeShorts.length);
+                        const nextId = youtubeShorts[(shortsScrollIdx - 1 + youtubeShorts.length) % youtubeShorts.length].id;
+                        setActivePlayingShortId(nextId);
+                      }}
+                      className={`p-3 rounded-full border transition-all ${darkMode ? 'border-white/20 bg-white/5 hover:bg-white/15 text-white' : 'border-black/20 bg-black/5 hover:bg-black/10 text-black'}`}
+                      title="Previous Short"
+                    >
+                      <i data-lucide="chevron-left" className="w-4 h-4"></i>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShortsScrollIdx(prev => (prev + 1) % youtubeShorts.length);
+                        const nextId = youtubeShorts[(shortsScrollIdx + 1) % youtubeShorts.length].id;
+                        setActivePlayingShortId(nextId);
+                      }}
+                      className={`p-3 rounded-full border transition-all ${darkMode ? 'border-white/20 bg-white/5 hover:bg-white/15 text-white' : 'border-black/20 bg-black/5 hover:bg-black/10 text-black'}`}
+                      title="Next Short"
+                    >
+                      <i data-lucide="chevron-right" className="w-4 h-4"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* HORIZONTAL CAROUSEL TRACK */}
+              <div
+                className="overflow-hidden relative rounded-3xl py-2"
+                onMouseEnter={() => setShortsAutoPlay(false)}
+                onMouseLeave={() => setShortsAutoPlay(true)}
+              >
+                <div
+                  className="flex gap-6 transition-transform duration-700 ease-in-out"
+                  style={{ transform: `translateX(-${shortsScrollIdx * 310}px)` }}
+                >
+                  {youtubeShorts.map((short, idx) => {
+                    const isMuted = mutedMap[short.id] !== false; // Default muted true
+
+                    return (
+                      <div
+                        key={short.id}
+                        className={`w-[280px] sm:w-[300px] flex-shrink-0 aspect-[9/16] rounded-3xl overflow-hidden relative group border-2 transition-all duration-500 shadow-2xl ${shortsScrollIdx === idx ? 'border-marie-gold shadow-[0_0_30px_rgba(212,175,55,0.35)] scale-[1.02]' : (darkMode ? 'bg-[#14131B] border-white/10' : 'bg-white border-zinc-200')}`}
+                      >
+                        {/* FLOATING WORKING MUTE / UNMUTE BUTTON */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleMuteShort(short.id);
+                          }}
+                          className="absolute top-4 right-4 z-20 px-3.5 py-2 rounded-full bg-black/85 hover:bg-black text-white text-xs font-extrabold backdrop-blur-md border border-white/20 transition-all flex items-center gap-1.5 shadow-xl hover:scale-105"
+                          title={isMuted ? "Click to Unmute" : "Click to Mute"}
+                        >
+                          <i data-lucide={isMuted ? "volume-x" : "volume-2"} className="w-4 h-4 text-marie-gold"></i>
+                          <span>{isMuted ? "Unmute 🔊" : "Mute 🔇"}</span>
+                        </button>
+
+                        {/* DIRECT CLEAN YOUTUBE SHORTS EMBED (NO TEXT OVERLAYS) */}
+                        <iframe
+                          id={`yt-short-iframe-${short.id}`}
+                          src={`https://www.youtube.com/embed/${short.id}?enablejsapi=1&autoplay=1&mute=${isMuted ? '1' : '0'}&loop=1&playlist=${short.id}&controls=1&modestbranding=1&rel=0`}
+                          title={`YouTube Short ${short.id}`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="w-full h-full object-cover border-0"
+                          loading="lazy"
+                        ></iframe>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* PROGRESS BAR & CHANNEL ACTIONS */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 reveal-on-scroll">
+                
+                {/* Dots indicator */}
+                <div className="flex items-center gap-2">
+                  {youtubeShorts.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        setShortsScrollIdx(idx);
+                        setActivePlayingShortId(youtubeShorts[idx].id);
+                      }}
+                      className={`h-2 rounded-full transition-all duration-300 ${shortsScrollIdx === idx ? 'w-8 bg-red-500' : 'w-2 bg-white/20 hover:bg-white/40'}`}
+                    ></button>
+                  ))}
+                </div>
+
+                {/* External YouTube Channel CTAs */}
+                <div className="flex items-center gap-3">
+                  <a
+                    href="https://youtube.com/@meagarwalyash?sub_confirmation=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs shadow-lg transition-all flex items-center gap-2 gold-glow-sm"
+                  >
+                    <i data-lucide="youtube" className="w-4 h-4"></i>
+                    <span>Subscribe to Channel</span>
+                  </a>
+                  <a
+                    href="https://youtube.com/@meagarwalyash/shorts"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`px-6 py-3 rounded-full border text-xs font-extrabold transition-all flex items-center gap-1.5 ${darkMode ? 'border-white/20 text-white hover:bg-white/10' : 'border-black/20 text-black hover:bg-black/5'}`}
+                  >
+                    <span>View All Shorts on YouTube</span>
+                    <i data-lucide="external-link" className="w-3.5 h-3.5"></i>
+                  </a>
+                </div>
+
+              </div>
+
             </div>
           </section>
 

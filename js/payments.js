@@ -4,9 +4,10 @@
  * 1. Backend endpoint order creation (/api/create-order)
  * 2. Razorpay Checkout Modal UI with order_id
  * 3. Backend payment signature verification (/api/verify-payment)
+ * 4. Permanent DB recording & Email Automations (yash@meagarwalyash.com)
  */
 
-window.RAZORPAY_KEY_ID = 'rzp_live_TIcwck5n2wddpM';
+window.RAZORPAY_KEY_ID = 'rzp_test_TIcKhGEt4zPejK';
 
 window.MAY_PaymentEngine = {
   // Check if Razorpay Checkout SDK is loaded
@@ -59,7 +60,7 @@ window.MAY_PaymentEngine = {
       amountInPaise: amountInPaise,
       currency: 'INR',
       userEmail: userDetails.email,
-      userName: userDetails.name || 'Valued Growth Leader',
+      userName: userDetails.name || 'Valued Growth Executive',
       userPhone: userDetails.phone || '',
       userGst: userDetails.gst || '',
       timestamp: new Date().toISOString()
@@ -73,7 +74,9 @@ window.MAY_PaymentEngine = {
         body: JSON.stringify({
           amount: amountInPaise,
           currency: 'INR',
-          receipt: orderId
+          receipt: orderId,
+          userEmail: userDetails.email,
+          userName: userDetails.name
         })
       });
 
@@ -85,11 +88,11 @@ window.MAY_PaymentEngine = {
         }
       }
     } catch (e) {
-      console.warn('Backend API endpoint not available. Using direct Razorpay client checkout.');
+      console.warn('Backend API endpoint warning. Proceeding with client checkout fallback.');
     }
 
     const options = {
-      key: (orderData && orderData.key_id) || window.RAZORPAY_KEY_ID || 'rzp_live_TIcwck5n2wddpM',
+      key: (orderData && orderData.key_id) || window.RAZORPAY_KEY_ID || 'rzp_test_TIcKhGEt4zPejK',
       amount: (orderData && orderData.amount) || amountInPaise,
       currency: (orderData && orderData.currency) || 'INR',
       name: 'Yash Agarwal (MeAgarwalYash.com)',
@@ -104,31 +107,25 @@ window.MAY_PaymentEngine = {
         color: '#D4AF37'
       },
       handler: async function(response) {
-        if (orderData && orderData.order_id) {
-          try {
-            const verifyRes = await fetch('/api/verify-payment', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_signature: response.razorpay_signature
-              })
-            });
-            const contentType = verifyRes.headers.get('content-type') || '';
-            if (contentType.includes('application/json')) {
-              const verifyData = await verifyRes.json();
-              if (!verifyRes.ok || verifyData.status !== 'success') {
-                console.warn('Payment Verification Warning:', verifyData.message);
-              }
-            }
-          } catch (verifyErr) {}
-        }
-
         orderPayload.paymentId = response.razorpay_payment_id;
         orderPayload.razorpayOrderId = response.razorpay_order_id || orderId;
         orderPayload.razorpaySignature = response.razorpay_signature || 'client_verified';
         orderPayload.verified = true;
+
+        try {
+          await fetch('/api/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+              orderDetails: orderPayload
+            })
+          });
+        } catch (verifyErr) {
+          console.error('Verify payment endpoint error:', verifyErr);
+        }
 
         MAY_PaymentEngine.recordOrder(orderPayload);
         if (onSuccessCallback) onSuccessCallback(orderPayload);
