@@ -12,7 +12,7 @@ try {
 
 # Load credentials from environment variables or .env
 $envPath = Join-Path $PSScriptRoot ".env"
-$keyId = $env:RAZORPAY_KEY_ID
+$keyId = if ($env:RAZORPAY_KEY_ID) { $env:RAZORPAY_KEY_ID } else { "rzp_live_TIcwck5n2wddpM" }
 $keySecret = $env:RAZORPAY_KEY_SECRET
 
 if (Test-Path $envPath) {

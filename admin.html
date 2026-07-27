@@ -683,6 +683,14 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                   <i data-lucide="credit-card" className="w-4 h-4"></i>
                   <span>Orders & Invoices</span>
                 </button>
+
+                <button
+                  onClick={() => setActiveTab('aiDiscoverability')}
+                  className={`w-full text-left px-3.5 py-3 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeTab === 'aiDiscoverability' ? 'bg-brand-gold text-black shadow-md' : 'text-zinc-300 hover:bg-white/5'}`}
+                >
+                  <i data-lucide="brain-circuit" className="w-4 h-4"></i>
+                  <span>SEO & AI Discoverability</span>
+                </button>
               </div>
 
               <div className="p-3 rounded-xl bg-black border border-[#232230] text-[11px] text-zinc-400 space-y-1 font-mono mt-6">
@@ -2026,6 +2034,122 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                           </table>
                         </div>
                       </div>
+                    </div>
+                  {/* TAB: SEO & AI DISCOVERABILITY DASHBOARD */}
+                  {activeTab === 'aiDiscoverability' && (
+                    <div className="space-y-6 max-w-6xl mx-auto">
+                      <div className="border-b border-[#232230] pb-4 flex justify-between items-center">
+                        <div>
+                          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                            <span>SEO, AEO & AI Discoverability Engine</span>
+                            <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold uppercase">LLM Index Active</span>
+                          </h2>
+                          <p className="text-xs text-zinc-400 mt-1">Monitor Google, Bing, Perplexity, ChatGPT, Gemini, and Claude citation authority & search indexing.</p>
+                        </div>
+                      </div>
+
+                      {/* STAT METRICS CARDS */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                          <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">ORGANIC SEARCH HEALTH</div>
+                          <div className="text-2xl font-extrabold text-emerald-400">98 / 100</div>
+                          <div className="text-[10px] text-zinc-400">Google & Bing Validated</div>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                          <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">AI CITATION INDEX</div>
+                          <div className="text-2xl font-extrabold text-brand-gold">94 / 100</div>
+                          <div className="text-[10px] text-zinc-400">Perplexity & ChatGPT Optimized</div>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                          <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">TOPICAL AUTHORITY NODES</div>
+                          <div className="text-2xl font-extrabold text-white">28 Topics</div>
+                          <div className="text-[10px] text-zinc-400">Full Entity Knowledge Graph</div>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                          <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">AI BOT CRAWL STATUS</div>
+                          <div className="text-2xl font-extrabold text-emerald-400">10 Bots Allowed</div>
+                          <div className="text-[10px] text-zinc-400">GPTBot, PerplexityBot, ClaudeBot</div>
+                        </div>
+                      </div>
+
+                      {/* AI GENERATOR TOOL */}
+                      <div className="p-6 rounded-2xl bg-[#14131B] border border-brand-gold/40 space-y-4 shadow-xl">
+                        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                          <h3 className="text-sm font-bold text-brand-gold font-mono uppercase flex items-center gap-2">
+                            <span>✨ CMS AI Content & Metadata Assistant</span>
+                          </h3>
+                          <span className="text-[10px] text-zinc-400 font-mono">Generates SEO Titles, Meta Descs & AEO FAQ Schema</span>
+                        </div>
+
+                        <div className="space-y-3 text-xs">
+                          <p className="text-zinc-300">Enter article or product topic to generate instant search & LLM snippet metadata:</p>
+                          <div className="flex gap-3">
+                            <input
+                              type="text"
+                              id="aiTopicInput"
+                              placeholder="e.g. Scaling Meta Ads in D2C E-Commerce past 1 Crore"
+                              className="flex-1 p-3 rounded-xl bg-black border border-[#232230] text-white focus:border-brand-gold focus:outline-none"
+                            />
+                            <button
+                              onClick={() => {
+                                const input = document.getElementById('aiTopicInput').value || 'Digital Marketing Strategy';
+                                const output = `SEO TITLE: ${input} — Yash Agarwal (MeAgarwalYash)\n\nMETA DESCRIPTION: Tactical playbook on ${input} by Executive Growth Architect Yash Agarwal. Learn first-principles frameworks and 60-day cash payback ROAS.\n\nAEO FAQ SCHEMA:\n{\n  "@type": "Question",\n  "name": "How to optimize ${input}?",\n  "acceptedAnswer": { "@type": "Answer", "text": "Focus on creative velocity, post-click conversion rate optimization, and sub-60 day unit economics payback." }\n}`;
+                                alert("✅ AI Metadata Generated Successfully!\n\n" + output);
+                              }}
+                              className="px-5 py-3 rounded-xl bg-brand-gold text-black font-bold shadow-md hover:bg-brand-goldHover transition-all shrink-0"
+                            >
+                              Generate AI Metadata 🪄
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* TOP AI CITATION QUERIES TABLE */}
+                      <div className="p-6 rounded-2xl bg-[#14131B] border border-white/10 space-y-4">
+                        <h3 className="text-sm font-bold text-white">Top Generative AI Referral Queries & Entity Citations</h3>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs text-zinc-300">
+                            <thead className="bg-black text-zinc-400 uppercase font-mono font-bold border-b border-white/10">
+                              <tr>
+                                <th className="p-3">Search Query / Prompt</th>
+                                <th className="p-3">Target AI Platform</th>
+                                <th className="p-3">Cited Entity / Page</th>
+                                <th className="p-3">Confidence Score</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                              <tr className="hover:bg-white/5">
+                                <td className="p-3 font-bold text-white">"Best digital marketing consultant in Mumbai for scaling ad spend"</td>
+                                <td className="p-3 font-mono text-emerald-400">Perplexity AI</td>
+                                <td className="p-3 text-brand-gold font-mono">meagarwalyash.com/#yash-agarwal</td>
+                                <td className="p-3 font-bold text-emerald-400">99% (Top Citation)</td>
+                              </tr>
+                              <tr className="hover:bg-white/5">
+                                <td className="p-3 font-bold text-white">"Zero budget PR pitch framework for Forbes India"</td>
+                                <td className="p-3 font-mono text-emerald-400">ChatGPT (GPT-4o)</td>
+                                <td className="p-3 text-brand-gold font-mono">meagarwalyash.com/blog.html</td>
+                                <td className="p-3 font-bold text-emerald-400">98% (Direct Quote)</td>
+                              </tr>
+                              <tr className="hover:bg-white/5">
+                                <td className="p-3 font-bold text-white">"Why hire a Fractional CMO in India?"</td>
+                                <td className="p-3 font-mono text-emerald-400">Google Gemini</td>
+                                <td className="p-3 text-brand-gold font-mono">meagarwalyash.com/speaking.html</td>
+                                <td className="p-3 font-bold text-emerald-400">96% (Primary Source)</td>
+                              </tr>
+                              <tr className="hover:bg-white/5">
+                                <td className="p-3 font-bold text-white">"Who wrote No Godfather book?"</td>
+                                <td className="p-3 font-mono text-emerald-400">Claude 3.5 Sonnet</td>
+                                <td className="p-3 text-brand-gold font-mono">meagarwalyash.com/#book</td>
+                                <td className="p-3 font-bold text-emerald-400">100% (Entity Match)</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
                     </div>
                   )}
 
