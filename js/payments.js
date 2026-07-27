@@ -7,7 +7,7 @@
  * 4. Permanent DB recording & Email Automations (yash@meagarwalyash.com)
  */
 
-window.RAZORPAY_KEY_ID = 'rzp_test_TIcKhGEt4zPejK';
+window.RAZORPAY_KEY_ID = 'rzp_live_TIcwck5n2wddpM';
 
 window.MAY_PaymentEngine = {
   // Check if Razorpay Checkout SDK is loaded
@@ -92,7 +92,7 @@ window.MAY_PaymentEngine = {
     }
 
     const options = {
-      key: (orderData && orderData.key_id) || window.RAZORPAY_KEY_ID || 'rzp_test_TIcKhGEt4zPejK',
+      key: (orderData && orderData.key_id) || window.RAZORPAY_KEY_ID || 'rzp_live_TIcwck5n2wddpM',
       amount: (orderData && orderData.amount) || amountInPaise,
       currency: (orderData && orderData.currency) || 'INR',
       name: 'Yash Agarwal (MeAgarwalYash.com)',
