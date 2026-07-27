@@ -1,13 +1,20 @@
 # Dependencies
-node_modules
-.pnpm-store
+node_modules/
+.pnpm-store/
 
-# Environment & IDE
+# Environment & Secret Files (NEVER COMMIT SECRETS TO GIT)
 .env
+.env*
+*.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+*.secret
+*.pem
+*.key
+
+# IDE & Editor files
 .vscode/
 .idea/
 *.suo

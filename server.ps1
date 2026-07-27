@@ -10,10 +10,10 @@ try {
     Write-Host "Server already listening or port occupied."
 }
 
-# Load credentials from .env
+# Load credentials from environment variables or .env
 $envPath = Join-Path $PSScriptRoot ".env"
-$keyId = "rzp_test_TIcKhGEt4zPejK"
-$keySecret = "oifNrKdyrH9btKKUlgoJHvRv"
+$keyId = $env:RAZORPAY_KEY_ID
+$keySecret = $env:RAZORPAY_KEY_SECRET
 
 if (Test-Path $envPath) {
     Get-Content $envPath | ForEach-Object {

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRCV1573GQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DRCV1573GQ');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Press & Media Coverage — Yash Agarwal (@MeAgarwalYash)</title>
+  <meta name="description" content="Official press coverage and media features for Yash Agarwal across Business Standard, DNA India, The Week, ANI News, Forbes India, Asianet News, and The India Saga." />
+  <link rel="icon" type="image/png" href="maylogo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            marie: {
+              gold: '#D4AF37',
+              goldHover: '#B8860B',
+              goldSoft: '#FAF4E1',
+              goldBorder: '#EEDC9A',
+              bg: '#FAF8F5',
+              border: '#EBE5D8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; }
+    @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+    .animate-marquee { display: flex; width: 200%; animation: marquee 30s linear infinite; }
+    .animate-marquee:hover { animation-play-state: paused; }
+    .gold-glow { box-shadow: 0 0 24px rgba(212, 175, 55, 0.4); }
+  </style>
+</head>
+<body class="antialiased selection:bg-marie-gold selection:text-black">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function MediaPage() {
+      const [darkMode, setDarkMode] = useState(true);
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      const [filterCategory, setFilterCategory] = useState('all');
+
+      useEffect(() => {
+        if (darkMode) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }, [darkMode]);
+
+      useEffect(() => {
+        if (window.lucide) window.lucide.createIcons();
+      });
+
+      const pressArticles = [
+        {
+          id: 'p1',
+          publication: 'Business Standard',
+          pubLogo: 'business standard logo.png',
+          pubColor: '#1a1a2e',
+          headline: 'Yash Agarwal: The Highest-Paid Digital Marketing Expert of Uttar Pradesh',
+          date: 'October 2020',
+          category: 'MARKETING EXPERT',
+          img: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'Business Standard highlights Yash Agarwal\'s rapid rise as one of North India\'s most sought-after digital growth strategists and marketing leaders.',
+          url: 'https://www.business-standard.com/content/specials/yash-agarwal-the-highest-paid-digital-marketing-expert-of-uttar-pradesh-120100800881_1.html'
+        },
+        {
+          id: 'p2',
+          publication: 'DNA India',
+          pubLogo: null,
+          pubColor: '#f59e0b',
+          headline: 'Man with a Golden Heart: This Young Lad is Helping 100+ Slum Kids Get a Better Life',
+          date: 'January 2021',
+          category: 'SOCIAL IMPACT',
+          img: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'DNA India covers Yash Agarwal\'s philanthropic initiatives providing education, clothing, and digital literacy to underprivileged children in slum communities.',
+          url: 'https://www.dnaindia.com/india/report-man-with-a-golden-heart-this-young-lad-is-helping-100-slum-kids-to-get-a-better-life-2866037'
+        },
+        {
+          id: 'p3',
+          publication: 'The Week',
+          pubLogo: 'theWeek logo.png',
+          pubColor: '#003580',
+          headline: 'The Emerging Name in the Field of Modern Marketing in India: Yash Agarwal',
+          date: 'December 2020',
+          category: 'MODERN MARKETING',
+          img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'The Week profiles marketing architect Yash Agarwal on pioneering ROI-driven performance frameworks and brand positioning in India.',
+          url: 'https://www.theweek.in/news/biz-tech/2020/12/04/The-emerging-name-in-the-field-of-modern-marketing-in-India-Yash-garwal.html'
+        },
+        {
+          id: 'p4',
+          publication: 'Business Standard',
+          pubLogo: 'business standard logo.png',
+          pubColor: '#1a1a2e',
+          headline: 'DMMOI: The Best Institute for Digital Marketing in Kanpur',
+          date: 'February 2021',
+          category: 'EDUCATION & SKILLS',
+          img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'Featured across Business Standard for establishing DMMOI, empowering tier-2 and tier-3 city youth with practical digital skills.',
+          url: 'https://www.business-standard.com/content/press-releases-ani/dmmoi-the-best-institute-for-digital-marketing-in-kanpur-121021201608_1.html'
+        },
+        {
+          id: 'p5',
+          publication: 'ANI News',
+          pubLogo: 'Ani-news logo.png',
+          pubColor: '#C41E3A',
+          headline: 'DMMOI Recognized as Leading Digital Marketing Institute in Uttar Pradesh',
+          date: 'February 2021',
+          category: 'ENTERPRISE & MEDIA',
+          img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'ANI News feature on Yash Agarwal\'s mission to bridge the digital skills gap by training hundreds of aspiring marketers.',
+          url: 'https://www.aninews.in/news/business/business/dmmoi-the-best-institute-for-digital-marketing-in-kanpur20210212184726/'
+        },
+        {
+          id: 'p6',
+          publication: 'Asianet News',
+          pubLogo: null,
+          pubColor: '#e11d48',
+          headline: 'Kanpur Blood Donation Group Started by Yash Agarwal Becomes Key Covid Resource Group in India',
+          date: 'May 2021',
+          category: 'COVID RELIEF',
+          img: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'Asianet News reports on how Yash Agarwal mobilized emergency blood donations, plasma matching, and oxygen support during the pandemic.',
+          url: 'https://newsable.asianetnews.com/india/kanpur-blood-donation-group-started-by-yash-agarwal-becomes-the-most-active-covid-resource-group-in-india-vpn-qsdl8y'
+        },
+        {
+          id: 'p7',
+          publication: 'Forbes India',
+          pubLogo: 'Forbes-Logo.png',
+          pubColor: '#e3000b',
+          headline: 'KYE Global & FMK Marketing Announce VIP Members for 2020-2022',
+          date: 'December 2020',
+          category: 'BRAND CONNECT',
+          img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'Forbes India features FMK Marketing & PR Agency under Yash Agarwal\'s leadership for driving high-ticket brand positioning and PR equity.',
+          url: 'https://www.forbesindia.com/article/brand-connect/kye-global-fmk-marketing-announce-vip-members-for-20202022/65187/1'
+        },
+        {
+          id: 'p8',
+          publication: 'The India Saga',
+          pubLogo: null,
+          pubColor: '#059669',
+          headline: 'FMK Marketing & PR Agency by Yash Agarwal Assists Small Businesses During Economic Slowdown',
+          date: 'August 2020',
+          category: 'AGENCY & PR',
+          img: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80',
+          excerpt: 'The India Saga details how Yash Agarwal\'s FMK Marketing helped SMEs pivot to digital channels and sustain revenue.',
+          url: 'https://theindiasaga.com/saga-corner/fmk-marketing-pr-agency-by-yash-agarwal-assists-small-businesses/'
+        }
+      ];
+
+      const filteredArticles = pressArticles.filter(a => {
+        if (filterCategory === 'all') return true;
+        if (filterCategory === 'bs-forbes') return a.publication.includes('Business Standard') || a.publication.includes('Forbes');
+        if (filterCategory === 'impact') return a.category.includes('IMPACT') || a.category.includes('COVID');
+        if (filterCategory === 'marketing') return a.category.includes('MARKETING') || a.category.includes('AGENCY');
+        return true;
+      });
+
+      const cardClass = darkMode ? 'bg-[#14131B] border border-[#232230] text-white' : 'bg-white border border-marie-border text-black';
+      const bgClass = darkMode ? 'bg-[#0A090E] text-white' : 'bg-[#FAF8F5] text-[#121212]';
+
+      return (
+        <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
+          
+          {/* TOP ANNOUNCEMENT BAR */}
+          <div className="bg-[#08070D] border-b border-marie-gold/30 text-marie-gold py-2.5 overflow-hidden whitespace-nowrap relative flex items-center shadow-md">
+            <div className="inline-flex items-center gap-16 animate-marquee font-bold text-xs tracking-wider">
+              <span className="flex items-center gap-2">
+                <span>🔥 NEW: Read Yash's Latest Essay on Tier-1 PR Newsjacking • Join the Waitlist for 'No Godfather'</span>
+                <a href="index.html#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+              <span className="flex items-center gap-2">
+                <span>🔥 NEW: Read Yash's Latest Essay on Tier-1 PR Newsjacking • Join the Waitlist for 'No Godfather'</span>
+                <a href="index.html#book" className="underline hover:text-white transition-colors font-extrabold text-white ml-2">Learn More →</a>
+              </span>
+            </div>
+          </div>
+
+          {/* EXACT SAME HEADER DOCK BAR AS INDEX.HTML */}
+          <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${darkMode ? 'bg-[#0A090E]/90 border-b border-white/10 text-white' : 'bg-[#FAF8F5]/90 border-b border-marie-border text-black'} backdrop-blur-xl py-3 px-4 sm:px-8 shadow-xl`}>
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+              
+              {/* Logo Brand */}
+              <a href="index.html" className="flex items-center group relative z-10 flex-shrink-0">
+                <img
+                  src="maylogo.png"
+                  alt="MAY Executive Logo"
+                  className="h-40 sm:h-52 md:h-60 w-auto object-contain -my-14 sm:-my-20 translate-y-4 transition-transform duration-300 group-hover:scale-105 brightness-150 contrast-125 filter drop-shadow-[0_0_24px_rgba(212,175,55,0.9)]"
+                />
+              </a>
+
+              {/* Central Floating Navigation Pill */}
+              <nav className={`hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full border transition-all ${darkMode ? 'bg-white/5 border-white/10 text-zinc-300' : 'bg-black/5 border-black/10 text-zinc-700'}`}>
+                {[
+                  ['index.html#impact', 'Impact'],
+                  ['index.html#journey', 'Journey'],
+                  ['media.html', 'Press'],
+                  ['index.html#tv', 'Videos'],
+                  ['speaking.html', 'Speaking'],
+                  ['index.html#testimonials', 'Reviews'],
+                  ['index.html#programs', 'Work With Me'],
+                  ['index.html#book', 'Book'],
+                  ['index.html#contact', 'Contact'],
+                ].map(([href, label]) => (
+                  <a
+                    key={href}
+                    href={href}
+                    className={`px-2.5 py-1 rounded-full text-[11px] xl:text-xs font-bold tracking-wide whitespace-nowrap transition-all ${label === 'Press' ? 'text-marie-gold bg-marie-gold/10' : (darkMode ? 'hover:text-marie-gold hover:bg-white/10' : 'hover:text-marie-goldHover hover:bg-black/5')}`}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </nav>
+
+              {/* Right Action Controls */}
+              <div className="flex items-center gap-2.5 flex-shrink-0">
+                
+                {/* Theme Toggle Button */}
+                <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  className={`p-2 rounded-full border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-marie-gold hover:bg-white/15' : 'border-black/15 bg-black/5 text-marie-goldHover hover:bg-black/10'}`}
+                  title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                >
+                  <i data-lucide={darkMode ? "sun" : "moon"} className="w-4 h-4"></i>
+                </button>
+
+                {/* Growth Blueprint CTA Button */}
+                <a
+                  href="index.html#audit"
+                  className="px-5 py-2 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md transition-all hover:scale-105 hidden sm:flex items-center gap-1.5 gold-glow-sm"
+                >
+                  <span>Free Audit</span>
+                  <i data-lucide="arrow-right" className="w-3.5 h-3.5"></i>
+                </a>
+
+                {/* Mobile Menu Toggle Button */}
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className={`p-2 rounded-xl lg:hidden border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-white' : 'border-black/15 bg-black/5 text-black'}`}
+                >
+                  <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-5 h-5"></i>
+                </button>
+              </div>
+
+            </div>
+          </header>
+
+          {/* Mobile Dropdown Menu */}
+          {mobileMenuOpen && (
+            <div className={`fixed inset-x-0 top-[65px] z-40 p-6 shadow-2xl lg:hidden space-y-4 font-bold text-sm backdrop-blur-2xl transition-all ${darkMode ? 'bg-[#0A090E]/95 border-b border-white/10 text-white' : 'bg-white/95 border-b border-marie-border text-[#121212]'}`}>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                {[
+                  ['index.html#impact', 'Impact'],
+                  ['index.html#journey', 'Journey'],
+                  ['media.html', 'Press & Media'],
+                  ['index.html#tv', 'Videos & Podcasts'],
+                  ['speaking.html', 'Speaking'],
+                  ['index.html#testimonials', 'Reviews'],
+                  ['index.html#programs', 'Work With Me'],
+                  ['index.html#book', 'Book'],
+                  ['index.html#audit', 'Growth Audit'],
+                  ['index.html#contact', 'Contact'],
+                ].map(([href, label]) => (
+                  <a
+                    key={href}
+                    href={href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`p-3 rounded-2xl text-xs font-semibold flex items-center justify-between border transition-all ${darkMode ? 'bg-white/5 border-white/10 hover:border-marie-gold hover:text-marie-gold' : 'bg-black/5 border-black/10 hover:border-marie-gold hover:text-marie-gold'}`}
+                  >
+                    <span>{label}</span>
+                    <i data-lucide="chevron-right" className="w-3.5 h-3.5 opacity-50"></i>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* PAGE HERO */}
+          <main className="max-w-7xl mx-auto px-6 sm:px-12 py-16 space-y-12">
+            <div className="text-center space-y-4">
+              <div className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-marie-gold/10 border border-marie-gold/20 text-marie-gold">
+                8 AUTHENTIC NATIONAL PRESS ARTICLES
+              </div>
+              <h1 className="text-4xl sm:text-6xl font-bold tracking-tight">Press & Media Archive</h1>
+              <p className={`text-base sm:text-lg max-w-2xl mx-auto leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                Full repository of national press coverage, leadership profiles, philanthropic features, and marketing case studies published across India's premier media houses.
+              </p>
+
+              {/* Filter Tabs */}
+              <div className="flex flex-wrap justify-center gap-2 pt-4">
+                {[
+                  { id: 'all', label: 'All Articles (8)' },
+                  { id: 'bs-forbes', label: 'Forbes & Business Standard' },
+                  { id: 'marketing', label: 'Marketing & PR' },
+                  { id: 'impact', label: 'Social Impact & Covid Relief' },
+                ].map(t => (
+                  <button
+                    key={t.id}
+                    onClick={() => setFilterCategory(t.id)}
+                    className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${filterCategory === t.id ? 'bg-marie-gold text-black shadow-md' : (darkMode ? 'bg-white/10 text-zinc-300 hover:bg-white/20' : 'bg-black/5 text-zinc-700 hover:bg-black/10')}`}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* ARTICLES GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredArticles.map((article) => (
+                <a
+                  key={article.id}
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${cardClass} rounded-3xl overflow-hidden group flex flex-col justify-between hover:border-marie-gold/60 transition-all duration-300 shadow-xl`}
+                >
+                  <div>
+                    {/* Thumbnail */}
+                    <div className="aspect-[16/9] overflow-hidden relative">
+                      <img src={article.img} alt={article.headline} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                      
+                      {/* Category Badge */}
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-bold text-white bg-black/70 backdrop-blur-sm border border-white/20 uppercase">
+                        {article.category}
+                      </span>
+
+                      {/* Publication Logo Overlay */}
+                      <div className="absolute bottom-3 left-3 flex items-center gap-2">
+                        {article.pubLogo ? (
+                          <img
+                            src={article.pubLogo}
+                            alt={article.publication}
+                            className="h-6 w-auto object-contain brightness-150 drop-shadow-md"
+                          />
+                        ) : (
+                          <div className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white uppercase" style={{ background: article.pubColor }}>
+                            {article.publication}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Body */}
+                    <div className="p-6 space-y-3">
+                      <div className={`text-[11px] font-bold ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
+                        {article.publication.toUpperCase()} • {article.date}
+                      </div>
+                      <h3 className="text-lg font-bold leading-snug group-hover:text-marie-gold transition-colors">
+                        {article.headline}
+                      </h3>
+                      <p className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                        {article.excerpt}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* External Link Action */}
+                  <div className="px-6 pb-6 pt-2 flex items-center justify-between border-t border-white/5 text-xs font-bold text-marie-gold">
+                    <span>Read Full Article</span>
+                    <i data-lucide="external-link" className="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </main>
+
+          {/* EXACT SAME FOOTER AS INDEX.HTML */}
+          <footer className={`border-t ${darkMode ? 'bg-black border-white/10 text-zinc-400' : 'bg-white border-marie-border text-zinc-500'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 py-14">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
+                {/* Brand */}
+                <div className="col-span-2 sm:col-span-1 space-y-3">
+                  <img src="maylogo.png" alt="MAY Logo" className="h-10 w-auto object-contain brightness-150 contrast-125 filter drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]" />
+                  <p className="text-xs leading-relaxed">Executive Growth Architect. Author. CMO. Speaker. Built on first principles, not favours.</p>
+                  <div className="flex gap-2">
+                    {['linkedin', 'instagram', 'youtube', 'twitter'].map(icon => (
+                      <a key={icon} href={`https://${icon}.com/meagarwalyash`} target="_blank"
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all hover:text-marie-gold ${darkMode ? 'bg-white/5 hover:bg-white/10' : 'bg-zinc-100 hover:bg-zinc-200'}`}
+                      >
+                        <i data-lucide={icon} className="w-3.5 h-3.5"></i>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sections */}
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Navigate</div>
+                  {[['index.html#impact', 'Impact Dashboard'], ['index.html#journey', 'My Journey'], ['media.html', 'Press & Media'], ['index.html#brands', 'Brands'], ['speaking.html', 'Speaking']].map(([href, label]) => (
+                    <a key={href} href={href} className="block text-xs hover:text-marie-gold transition-colors">{label}</a>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Work</div>
+                  {[['index.html#programs', 'Work With Me'], ['index.html#tv', 'Videos & Podcasts'], ['index.html#book', 'No Godfather'], ['index.html#audit', 'Growth Blueprint'], ['index.html#newsletter', 'Newsletter']].map(([href, label]) => (
+                    <a key={href} href={href} className="block text-xs hover:text-marie-gold transition-colors">{label}</a>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">Contact</div>
+                  <a href="mailto:yash@meagarwalyash.com" className="block text-xs hover:text-marie-gold transition-colors">yash@meagarwalyash.com</a>
+                  <a href="https://linkedin.com/in/meagarwalyash" target="_blank" className="block text-xs hover:text-marie-gold transition-colors">LinkedIn</a>
+                  <a href="https://instagram.com/meagarwalyash" target="_blank" className="block text-xs hover:text-marie-gold transition-colors">Instagram</a>
+                  <a href="https://youtube.com/@meagarwalyash" target="_blank" className="block text-xs hover:text-marie-gold transition-colors">YouTube Channel</a>
+                  <div className={`text-xs mt-2 ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>Mumbai, India 🇮🇳</div>
+                </div>
+              </div>
+
+              {/* Bottom bar */}
+              <div className={`pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-2 text-xs ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+                <div>© 2026 Yash Agarwal (@MeAgarwalYash). All Rights Reserved.</div>
+                <div className="text-marie-gold font-bold">MUMBAI, INDIA • LIVE IST</div>
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<MediaPage />);
+  </script>
+</body>
+</html>

@@ -16,8 +16,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const KEY_ID = process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_TIch4JGGb5hd8u';
-const KEY_SECRET = process.env.RAZORPAY_KEY_SECRET || 'UTUNQVotxJgwZXSI3plFgjP5';
+const KEY_ID = process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_TIcwck5n2wddpM';
+const KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 
 /**
  * STEP 1: BACKEND - Create Order
