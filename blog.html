@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRCV1573GQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DRCV1573GQ');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Blog — Yash Agarwal (MeAgarwalYash) | Digital Growth & Authority Essays</title>
+  <meta name="description" content="Read tactical essays, zero-budget PR frameworks, unit economics breakdowns, and executive growth playbooks by Yash Agarwal (MeAgarwalYash)." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="maylogo.png" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            marie: {
+              bg: '#FAF8F5',
+              white: '#FFFFFF',
+              black: '#121212',
+              card: '#FFFFFF',
+              gold: '#D4AF37',
+              goldHover: '#B8860B',
+              goldSoft: '#FDF8EC',
+              goldBorder: '#E6D298',
+              muted: '#666666',
+              border: '#EAE6DF'
+            },
+            darkMarie: {
+              bg: '#0A090E',
+              card: '#14131B',
+              border: '#232230',
+              goldSoft: '#1F1B10'
+            }
+          },
+          fontFamily: {
+            sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+            serif: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- React 18 & Babel CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin></script>
+
+  <style>
+    * {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    }
+    body {
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+  </style>
+</head>
+<body class="bg-[#FAF8F5] text-[#121212] antialiased min-h-screen">
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const blogPosts = [
+      {
+        id: 'post-1',
+        title: 'How to Scale Digital Revenue Past ₹3Cr in ANY Economy with First-Principles Marketing',
+        category: 'MONEY & REVENUE',
+        catColor: '#D4AF37',
+        catBg: 'rgba(212,175,55,0.15)',
+        date: 'July 2026',
+        readTime: '7 min read',
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80',
+        featured: true,
+        excerpt: 'Why traditional ad agency models break down, and how mastering unit economics, conversion velocity, and ROAS optimization allows self-made founders to out-scale funded competitors.',
+        content: `
+          <p class="text-lg leading-relaxed mb-6 font-medium">Most digital marketing strategies fail because they rely on vanity metrics—likes, clicks, and impressions—rather than raw unit economics. When scaling digital revenue past ₹3 Crore, every dollar or rupee spent on performance media must have a predictable, profitable yield.</p>
+          
+          <h3 class="text-2xl font-serif font-bold mt-8 mb-4">1. The First-Principles Growth Equation</h3>
+          <p class="leading-relaxed mb-6">At DR Choksey FinServ and FMK Agency, we break digital revenue down to three fundamental levers: Customer Acquisition Cost (CAC), Average Order Value (AOV), and Lifetime Value (LTV). If your LTV to CAC ratio is greater than 4:1, you don't have a marketing budget problem—you have a capital deployment strategy.</p>
+          
+          <h3 class="text-2xl font-serif font-bold mt-8 mb-4">2. Cutting Wasted Ad Spend</h3>
+          <p class="leading-relaxed mb-6">Stop running generic broad campaigns without custom custom-audience exclusion lists. Leverage Meta Advantage+ and Google PMax with tight first-party data signals to reach high-net-worth buyers.</p>
+        `
+      },
+      {
+        id: 'post-2',
+        title: 'The Zero-Budget PR Framework: Winning Tier-1 Media Coverage Without $50k Retainers',
+        category: 'PR & BRAND AUTHORITY',
+        catColor: '#A8426C',
+        catBg: 'rgba(168,66,108,0.15)',
+        date: 'June 2026',
+        readTime: '9 min read',
+        image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80',
+        featured: false,
+        excerpt: 'Step-by-step newsjacking SOP used by FMK Agency to secure features in Business Standard, Forbes India, and DNA India without spending a rupee on PR retainers.',
+        content: `
+          <p class="text-lg leading-relaxed mb-6 font-medium">Getting featured in top national publications isn't reserved for massive conglomerates with $50,000 monthly PR agency retainers. By mastering newsjacking—aligning your brand's core message with breaking national news—you can earn top-tier media coverage for free.</p>
+          <h3 class="text-2xl font-serif font-bold mt-8 mb-4">The 3-Step Newsjacking Protocol</h3>
+          <p class="leading-relaxed mb-6">1. Monitor trending industry headlines at 8:00 AM daily.<br/>2. Draft a authoritative 250-word expert opinion or counter-narrative.<br/>3. Pitch key editors directly via personalized LinkedIn messages or Twitter DMs with a ready-to-publish quote.</p>
+        `
+      },
+      {
+        id: 'post-3',
+        title: 'From ₹12,000 Salary to Multi-Crore CMO: Building Executive Equity Without Corporate Patronage',
+        category: 'CAREER & LEADERSHIP',
+        catColor: '#2E7D32',
+        catBg: 'rgba(46,125,50,0.15)',
+        date: 'May 2026',
+        readTime: '12 min read',
+        image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
+        featured: false,
+        excerpt: 'The unfiltered career architecture for marketers moving from entry-level execution to Head of Marketing and CMO roles.',
+        content: `
+          <p class="text-lg leading-relaxed mb-6 font-medium">Starting my career at ₹12,000/month taught me one eternal rule: Nobody is coming to save you. You must build your own reputation, document your results publicly, and command your own worth.</p>
+        `
+      },
+      {
+        id: 'post-4',
+        title: 'Building Brand Equity Without Corporate Patronage: The Executive Blueprint',
+        category: 'EXECUTIVE BRANDING',
+        catColor: '#D96B27',
+        catBg: 'rgba(217,107,39,0.15)',
+        date: 'April 2026',
+        readTime: '6 min read',
+        image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80',
+        featured: false,
+        excerpt: 'How founders and senior professionals convert individual expertise into high-ticket inbound advisory opportunities.',
+        content: `
+          <p class="text-lg leading-relaxed mb-6 font-medium">Your personal brand is the ultimate moat. When prospects trust you individually, sales friction drops by 80% and high-ticket consulting deals close effortlessly.</p>
+        `
+      },
+      {
+        id: 'post-5',
+        title: 'Conversational Commerce: How Meta WhatsApp Automation Drives 40%+ SME Conversions',
+        category: 'AI & MARKETING TECH',
+        catColor: '#0284C7',
+        catBg: 'rgba(2,132,199,0.15)',
+        date: 'March 2026',
+        readTime: '8 min read',
+        image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
+        featured: false,
+        excerpt: 'Why email open rates are dropping while WhatsApp Business API automations deliver 98% open rates and immediate revenue.',
+        content: `
+          <p class="text-lg leading-relaxed mb-6 font-medium">WhatsApp is no longer just a messaging app—it is the highest-converting sales funnel in modern digital commerce across India and emerging markets.</p>
+        `
+      },
+      {
+        id: 'post-6',
+        title: 'The ₹100Cr Performance Marketing Stack: PMax, Meta Advantage+ & CRO',
+        category: 'PERFORMANCE MARKETING',
+        catColor: '#8B5CF6',
+        catBg: 'rgba(139,92,246,0.15)',
+        date: 'February 2026',
+        readTime: '10 min read',
+        image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80',
+        featured: false,
+        excerpt: 'An insider look at the tech tools, ad creatives, landing page structures, and tracking setups used for enterprise growth.',
+        content: `
+          <p class="text-lg leading-relaxed mb-6 font-medium">Deploying ad budgets over ₹1 Crore per month requires extreme precision. Here is the breakdown of our attribution setup, landing page templates, and offer design.</p>
+        `
+      }
+    ];
+
+    function BlogApp() {
+      const [darkMode, setDarkMode] = useState(() => {
+        return localStorage.getItem('may_theme') === 'dark';
+      });
+      const [selectedCategory, setSelectedCategory] = useState('ALL');
+      const [searchQuery, setSearchQuery] = useState('');
+      const [activePost, setActivePost] = useState(null);
+      const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
+
+      useEffect(() => {
+        if (darkMode) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('may_theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('may_theme', 'light');
+        }
+      }, [darkMode]);
+
+      useEffect(() => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      }, [selectedCategory, activePost, moreDropdownOpen]);
+
+      const categories = ['ALL', 'MONEY & REVENUE', 'PR & BRAND AUTHORITY', 'CAREER & LEADERSHIP', 'EXECUTIVE BRANDING', 'AI & MARKETING TECH', 'PERFORMANCE MARKETING'];
+
+      const filteredPosts = blogPosts.filter(post => {
+        const matchesCategory = selectedCategory === 'ALL' || post.category === selectedCategory;
+        const matchesSearch = searchQuery === '' || 
+          post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+      });
+
+      const featuredPost = blogPosts.find(p => p.featured) || blogPosts[0];
+
+      return (
+        <div style={{ backgroundColor: darkMode ? '#0A090E' : '#FAF8F5', color: darkMode ? '#FFFFFF' : '#121212' }} className="min-h-screen transition-colors duration-300">
+          
+          {/* ANNOUNCEMENT TOP BAR */}
+          <div className="bg-gradient-to-r from-[#D4AF37] via-[#B8860B] to-[#9A6B00] text-black text-xs sm:text-sm font-extrabold py-2.5 px-4 text-center tracking-wide shadow-sm flex items-center justify-center gap-2">
+            <span>🔥 READ YASH'S LATEST ESSAY: How to Scale Digital Revenue Past ₹3Cr in ANY Economy</span>
+            <button onClick={() => setActivePost(featuredPost)} className="underline font-black hover:opacity-80 transition-opacity">Read Now →</button>
+          </div>
+
+          {/* EXECUTIVE DOCK HEADER BAR */}
+          <header className={`sticky top-0 z-50 w-full relative transition-all duration-300 ${darkMode ? 'bg-[#0A090E] border-b border-white/10 text-white' : 'bg-white border-zinc-200 text-black'} py-3 px-4 sm:px-8 shadow-sm`}>
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
+              
+              {/* Logo */}
+              <a href="index.html" className="flex items-center group flex-shrink-0">
+                <img
+                  src="maylogo.png"
+                  alt="MAY Executive Logo"
+                  className="h-36 sm:h-44 md:h-52 w-auto object-contain -my-10 brightness-150 contrast-125 filter drop-shadow-[0_0_24px_rgba(212,175,55,0.9)]"
+                />
+              </a>
+
+              {/* Navigation Items */}
+              <div className="hidden lg:flex items-center gap-7 xl:gap-9 font-bold text-base tracking-tight ml-auto">
+                <a href="blog.html" className="text-marie-gold font-extrabold border-b-2 border-marie-gold pb-0.5">Blog</a>
+                <a href="index.html#store" className="hover:text-marie-gold transition-colors">Shop</a>
+                <a href="index.html#tv" className="hover:text-marie-gold transition-colors">Videos</a>
+                <a href="index.html#tv" className="hover:text-marie-gold transition-colors">Podcast</a>
+                <a href="new-here.html" className="hover:text-marie-gold transition-colors">New Here?</a>
+                <a href="index.html#journey" className="hover:text-marie-gold transition-colors">About</a>
+                
+                {/* Home Link */}
+                <a href="index.html" className="hover:text-marie-gold transition-colors flex items-center gap-1">
+                  <span>Home</span>
+                  <i data-lucide="arrow-up-right" className="w-4 h-4"></i>
+                </a>
+
+                {/* Controls */}
+                <div className="flex items-center gap-2 pl-2 border-l border-white/10">
+                  <button
+                    onClick={() => setDarkMode(!darkMode)}
+                    className={`p-2 rounded-full border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-marie-gold' : 'border-black/15 bg-black/5 text-marie-goldHover'}`}
+                  >
+                    <i data-lucide={darkMode ? "sun" : "moon"} className="w-3.5 h-3.5"></i>
+                  </button>
+                  <a
+                    href="dashboard.html"
+                    className={`px-3.5 py-1.5 rounded-full border text-xs font-bold transition-all flex items-center gap-1 ${darkMode ? 'border-marie-gold/40 text-marie-gold hover:bg-marie-gold/20' : 'border-black/20 text-black hover:bg-black/5'}`}
+                  >
+                    <i data-lucide="user" className="w-3.5 h-3.5"></i>
+                    <span>Account</span>
+                  </a>
+                </div>
+
+                {/* Pill CTA */}
+                <a
+                  href="index.html#audit"
+                  className="px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-[#E2F16D] text-black border border-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none whitespace-nowrap"
+                >
+                  Free Audit ✦
+                </a>
+              </div>
+            </div>
+          </header>
+
+          {/* BLOG HERO HEADER SECTION */}
+          <section className="py-16 sm:py-20 px-6 sm:px-12 max-w-7xl mx-auto text-center border-b border-zinc-200 dark:border-white/10">
+            <div className="max-w-4xl mx-auto space-y-6">
+              <span className="px-4 py-1.5 rounded-full border border-marie-gold/40 bg-marie-gold/10 text-marie-gold text-xs font-black uppercase tracking-widest inline-block">
+                ✦ Tactical Essays & Playbooks by Yash Agarwal
+              </span>
+              
+              <h1 style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="font-serif text-4xl sm:text-6xl font-black leading-tight tracking-tight">
+                The Yash Agarwal Blog
+              </h1>
+
+              <p style={{ color: darkMode ? '#E4E4E7' : '#4B5563' }} className="text-lg sm:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+                Unfiltered strategic writing on scaling digital revenue past ₹3Cr+, zero-budget PR frameworks, unit economics, and building self-made executive equity.
+              </p>
+
+              {/* Search Bar Input */}
+              <div className="pt-4 max-w-md mx-auto relative">
+                <input
+                  type="text"
+                  placeholder="Search articles & topics..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className={`w-full pl-12 pr-6 py-4 rounded-full border font-bold text-sm focus:outline-none focus:ring-2 focus:ring-marie-gold ${darkMode ? 'bg-[#14131B] border-white/20 text-white' : 'bg-white border-zinc-300 text-black'}`}
+                />
+                <i data-lucide="search" className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-marie-gold"></i>
+              </div>
+            </div>
+
+            {/* Category Filter Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-12 pt-8 border-t border-zinc-200 dark:border-white/10">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  style={{
+                    backgroundColor: selectedCategory === cat ? (darkMode ? '#D4AF37' : '#D4AF37') : (darkMode ? '#14131B' : '#FFFFFF'),
+                    color: selectedCategory === cat ? '#000000' : (darkMode ? '#FFFFFF' : '#121212'),
+                    borderColor: selectedCategory === cat ? '#D4AF37' : (darkMode ? 'rgba(255,255,255,0.2)' : '#EAE6DF')
+                  }}
+                  className="px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-wider border transition-all hover:scale-105"
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          {/* FEATURED HERO POST BANNER */}
+          {selectedCategory === 'ALL' && !searchQuery && featuredPost && (
+            <section className="py-16 px-6 sm:px-12 max-w-7xl mx-auto">
+              <div
+                onClick={() => setActivePost(featuredPost)}
+                style={{ backgroundColor: darkMode ? '#14131B' : '#FFFFFF', borderColor: darkMode ? 'rgba(255,255,255,0.15)' : '#EAE6DF' }}
+                className="rounded-3xl border-2 p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center cursor-pointer group hover:border-marie-gold transition-all duration-300 shadow-2xl"
+              >
+                <div className="lg:col-span-7 space-y-5 text-left">
+                  <div className="flex items-center gap-3">
+                    <span
+                      style={{ color: featuredPost.catColor, backgroundColor: featuredPost.catBg }}
+                      className="px-3 py-1 rounded-full text-xs font-black tracking-widest uppercase"
+                    >
+                      FEATURED ARTICLE • {featuredPost.category}
+                    </span>
+                    <span className="text-xs font-bold text-zinc-500">{featuredPost.readTime}</span>
+                  </div>
+
+                  <h2 style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="font-serif text-3xl sm:text-5xl font-black leading-tight group-hover:text-marie-gold transition-colors">
+                    {featuredPost.title}
+                  </h2>
+
+                  <p style={{ color: darkMode ? '#D4D4D8' : '#4B5563' }} className="text-base sm:text-lg font-medium leading-relaxed">
+                    {featuredPost.excerpt}
+                  </p>
+
+                  <div className="flex items-center gap-4 pt-4 border-t border-zinc-200 dark:border-white/10">
+                    <img
+                      src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=150&q=80"
+                      alt="Yash Agarwal"
+                      className="w-12 h-12 rounded-full object-cover border-2 border-marie-gold"
+                    />
+                    <div>
+                      <div style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="text-sm font-black">Yash Agarwal</div>
+                      <div className="text-xs text-marie-gold font-bold">{featuredPost.date}</div>
+                    </div>
+                    <div className="ml-auto text-xs font-black uppercase tracking-widest text-marie-gold group-hover:translate-x-2 transition-transform flex items-center gap-1">
+                      <span>Read Full Essay</span>
+                      <i data-lucide="arrow-right" className="w-4 h-4"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5">
+                  <img
+                    src={featuredPost.image}
+                    alt={featuredPost.title}
+                    className="w-full h-[360px] object-cover rounded-2xl border-2 border-marie-gold/30 shadow-lg group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* MAIN ESSAYS GRID + SIDEBAR SECTION */}
+          <section className="py-12 px-6 sm:px-12 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 text-left">
+              
+              {/* Left 8 Cols: Blog Grid */}
+              <div className="lg:col-span-8 space-y-8">
+                
+                <h3 style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="font-serif text-2xl font-black border-b-2 border-marie-gold/40 pb-3">
+                  {selectedCategory === 'ALL' ? 'All Recent Essays' : `Category: ${selectedCategory}`}
+                </h3>
+
+                {filteredPosts.length === 0 ? (
+                  <div className="py-16 text-center text-zinc-500 font-bold">
+                    No articles found matching your criteria. Try adjusting your search query or category.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {filteredPosts.map((post) => (
+                      <div
+                        key={post.id}
+                        onClick={() => setActivePost(post)}
+                        style={{ backgroundColor: darkMode ? '#14131B' : '#FFFFFF', borderColor: darkMode ? 'rgba(255,255,255,0.15)' : '#EAE6DF' }}
+                        className="p-6 rounded-3xl border-2 flex flex-col justify-between cursor-pointer group hover:border-marie-gold transition-all duration-300 shadow-md hover:-translate-y-1.5"
+                      >
+                        <div>
+                          <div className="overflow-hidden rounded-2xl mb-5">
+                            <img
+                              src={post.image}
+                              alt={post.title}
+                              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+
+                          <div className="flex items-center gap-2 mb-3">
+                            <span
+                              style={{ color: post.catColor, backgroundColor: post.catBg }}
+                              className="px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest uppercase"
+                            >
+                              {post.category}
+                            </span>
+                            <span className="text-[11px] font-bold text-zinc-500 ml-auto">{post.readTime}</span>
+                          </div>
+
+                          <h4 style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="font-serif text-xl font-bold leading-snug group-hover:text-marie-gold transition-colors mb-3">
+                            {post.title}
+                          </h4>
+
+                          <p style={{ color: darkMode ? '#A1A1AA' : '#6B7280' }} className="text-xs sm:text-sm font-medium leading-relaxed line-clamp-3">
+                            {post.excerpt}
+                          </p>
+                        </div>
+
+                        <div className="pt-5 mt-5 border-t border-zinc-200 dark:border-white/10 flex items-center justify-between text-xs font-black">
+                          <span className="text-zinc-500">{post.date}</span>
+                          <span className="text-marie-gold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                            <span>Read Article</span>
+                            <i data-lucide="arrow-right" className="w-3.5 h-3.5"></i>
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Right 4 Cols: Sidebar Widgets */}
+              <div className="lg:col-span-4 space-y-8">
+                
+                {/* WIDGET 1: NEWSLETTER OPT-IN */}
+                <div className={`p-8 rounded-3xl border-2 text-center shadow-xl ${darkMode ? 'bg-[#181624] border-white/20' : 'bg-[#FFF9F3] border-[#F5D8C7]'}`}>
+                  <span className="text-2xl">📬</span>
+                  <h4 style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="font-serif text-2xl font-black mt-2">
+                    Get Yash's Weekly Growth Letter
+                  </h4>
+                  <p style={{ color: darkMode ? '#D4D4D8' : '#4B5563' }} className="text-xs font-medium mt-2 leading-relaxed">
+                    Join 10,000+ ambitious marketers receiving Yash's breakdown on unit economics, zero-budget PR, and executive branding every Tuesday.
+                  </p>
+                  <form onSubmit={(e) => { e.preventDefault(); alert('Subscribed to Yash Agarwal Growth Letter!'); }} className="mt-5 space-y-3">
+                    <input
+                      type="email"
+                      placeholder="Enter your work email"
+                      required
+                      className={`w-full px-4 py-3 rounded-full border text-xs font-bold focus:outline-none ${darkMode ? 'bg-[#0A090E] border-white/20 text-white' : 'bg-white border-zinc-300 text-black'}`}
+                    />
+                    <button
+                      type="submit"
+                      className="w-full py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black text-xs font-black uppercase tracking-widest transition-all shadow-md"
+                    >
+                      Subscribe Free →
+                    </button>
+                  </form>
+                </div>
+
+                {/* WIDGET 2: FEATURED BOOK */}
+                <div className={`p-8 rounded-3xl border-2 text-center shadow-xl ${darkMode ? 'bg-[#14131B] border-white/20' : 'bg-[#FAF8F5] border-zinc-200'}`}>
+                  <span className="text-xs font-black text-[#D96B27] bg-[#D96B27]/15 px-3 py-1 rounded-full uppercase">
+                    FEATURED BOOK
+                  </span>
+                  <h4 style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="font-serif text-xl font-black mt-3">
+                    "No Godfather"
+                  </h4>
+                  <p className="text-xs text-zinc-500 font-bold mt-1">By Yash Agarwal</p>
+                  <img src="no godfather cover.png" alt="No Godfather Book" className="h-36 mx-auto my-4 object-contain filter drop-shadow-xl" />
+                  <a
+                    href="index.html#book"
+                    className="inline-block w-full py-3 rounded-full bg-[#A8426C] text-white text-xs font-black uppercase tracking-widest shadow-md hover:scale-105 transition-all"
+                  >
+                    Get Early Access →
+                  </a>
+                </div>
+
+                {/* WIDGET 3: TOP READ ESSAYS LIST */}
+                <div className={`p-8 rounded-3xl border-2 ${darkMode ? 'bg-[#14131B] border-white/20' : 'bg-white border-zinc-200'}`}>
+                  <h4 style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="font-serif text-xl font-black border-b-2 border-marie-gold/40 pb-3 mb-5">
+                    🔥 Most Read Essays
+                  </h4>
+                  <div className="space-y-4">
+                    {blogPosts.slice(0, 4).map((post, idx) => (
+                      <div
+                        key={post.id}
+                        onClick={() => setActivePost(post)}
+                        className="flex items-start gap-4 cursor-pointer group"
+                      >
+                        <span className="text-2xl font-serif font-black text-marie-gold opacity-80">0{idx + 1}</span>
+                        <div>
+                          <div style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="text-xs font-bold leading-snug group-hover:text-marie-gold transition-colors">
+                            {post.title}
+                          </div>
+                          <div className="text-[10px] text-zinc-500 font-bold mt-1">{post.readTime}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* ESSAY READING MODAL */}
+          {activePost && (
+            <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8 animate-fadeIn">
+              <div
+                style={{ backgroundColor: darkMode ? '#0F0E17' : '#FFFFFF', color: darkMode ? '#FFFFFF' : '#121212' }}
+                className="max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-3xl p-8 sm:p-12 border-2 border-marie-gold shadow-2xl relative text-left"
+              >
+                {/* Close Button */}
+                <button
+                  onClick={() => setActivePost(null)}
+                  className="absolute top-6 right-6 p-2 rounded-full bg-marie-gold/20 text-marie-gold hover:bg-marie-gold hover:text-black transition-all"
+                >
+                  <i data-lucide="x" className="w-6 h-6"></i>
+                </button>
+
+                <div className="space-y-6">
+                  <div className="flex items-center gap-3">
+                    <span
+                      style={{ color: activePost.catColor, backgroundColor: activePost.catBg }}
+                      className="px-3 py-1 rounded-full text-xs font-black tracking-widest uppercase"
+                    >
+                      {activePost.category}
+                    </span>
+                    <span className="text-xs font-bold text-zinc-500">{activePost.readTime} • {activePost.date}</span>
+                  </div>
+
+                  <h1 style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="font-serif text-3xl sm:text-5xl font-black leading-tight">
+                    {activePost.title}
+                  </h1>
+
+                  <div className="flex items-center gap-4 py-4 border-y border-zinc-200 dark:border-white/10">
+                    <img
+                      src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=150&q=80"
+                      alt="Yash Agarwal"
+                      className="w-12 h-12 rounded-full object-cover border-2 border-marie-gold"
+                    />
+                    <div>
+                      <div style={{ color: darkMode ? '#FFFFFF' : '#121212' }} className="text-sm font-black">Yash Agarwal</div>
+                      <div className="text-xs text-marie-gold font-bold">Executive Growth Architect & Author</div>
+                    </div>
+                  </div>
+
+                  <img
+                    src={activePost.image}
+                    alt={activePost.title}
+                    className="w-full h-80 object-cover rounded-2xl border border-zinc-200 dark:border-white/10"
+                  />
+
+                  <div
+                    dangerouslySetInnerHTML={{ __html: activePost.content }}
+                    className="prose dark:prose-invert max-w-none text-base sm:text-lg leading-relaxed pt-4"
+                  />
+
+                  <div className="pt-8 border-t border-zinc-200 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
+                    <button
+                      onClick={() => setActivePost(null)}
+                      className="px-8 py-3 rounded-full bg-marie-gold text-black text-xs font-black uppercase tracking-widest hover:scale-105 transition-all"
+                    >
+                      ← Back To All Essays
+                    </button>
+                    <a
+                      href="index.html#audit"
+                      className="px-8 py-3 rounded-full bg-[#E2F16D] text-black text-xs font-black uppercase tracking-widest border border-black"
+                    >
+                      Get Free Audit ✦
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* FOOTER */}
+          <footer className={`py-12 px-6 sm:px-12 border-t text-center text-xs font-bold ${darkMode ? 'border-white/10 text-zinc-400' : 'border-zinc-300 text-zinc-600'}`}>
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>© 2026 Yash Agarwal (@MeAgarwalYash). All Rights Reserved.</div>
+              <div className="flex items-center gap-6">
+                <a href="index.html" className="hover:text-marie-gold">Home</a>
+                <a href="blog.html" className="hover:text-marie-gold">Blog</a>
+                <a href="new-here.html" className="hover:text-marie-gold">New Here?</a>
+                <a href="index.html#store" className="hover:text-marie-gold">Shop</a>
+                <a href="index.html#contact" className="hover:text-marie-gold">Contact</a>
+                <a href="dashboard.html" className="hover:text-marie-gold">Login</a>
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<BlogApp />);
+  </script>
+</body>
+</html>
