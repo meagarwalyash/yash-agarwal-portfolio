@@ -822,6 +822,25 @@
       // Onboarding Wizard & Pricing Modal States
       const [showOnboardingModal, setShowOnboardingModal] = useState(false);
       const [onboardingStep, setOnboardingStep] = useState(1);
+
+      // 📍 Handle Hash Navigation & Mobile Smooth Scrolling (e.g. #pricing, #store, #resources, #programs)
+      useEffect(() => {
+        const handleHashScroll = () => {
+          const hash = window.location.hash;
+          if (hash) {
+            setTimeout(() => {
+              const targetEl = document.querySelector(hash);
+              if (targetEl) {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 100);
+          }
+        };
+
+        handleHashScroll();
+        window.addEventListener('hashchange', handleHashScroll);
+        return () => window.removeEventListener('hashchange', handleHashScroll);
+      }, []);
       const [selectedPackage, setSelectedPackage] = useState({
         id: 'pkg_scale',
         name: 'Scale Package',
@@ -1808,6 +1827,7 @@
                 {[
                   ['store.html', '🛍️ Digital Store'],
                   ['resources.html', '🎁 Free Resources'],
+                  ['#pricing', '💳 Packages & Pricing'],
                   ['blog.html', '✍️ Growth Blog'],
                   ['speaking.html', '💼 Consulting'],
                   ['#impact', 'Impact'],
@@ -1823,7 +1843,17 @@
                   <a
                     key={href}
                     href={href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      if (href.startsWith('#')) {
+                        const targetEl = document.querySelector(href);
+                        if (targetEl) {
+                          e.preventDefault();
+                          window.history.pushState(null, '', href);
+                          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }
+                    }}
                     className={`p-3 rounded-2xl text-xs font-bold flex items-center justify-between border transition-all ${darkMode ? 'bg-white/5 border-white/10 hover:border-marie-gold hover:text-marie-gold' : 'bg-black/5 border-black/10 hover:border-marie-gold hover:text-marie-gold'}`}
                   >
                     <span>{label}</span>
@@ -2782,8 +2812,9 @@
             </div>
           </section>
 
-          {/* MASTERCLASSES & PROGRAMS SECTION */}
-          <section id="programs" className={`py-20 px-6 sm:px-12 max-w-7xl mx-auto border-t ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+          {/* MASTERCLASSES & PROGRAMS & PRICING SECTION */}
+          <section id="pricing" className={`py-20 px-6 sm:px-12 max-w-7xl mx-auto border-t ${darkMode ? 'border-white/10' : 'border-marie-border'}`}>
+            <div id="programs"></div>
             <div className="text-center max-w-3xl mx-auto space-y-4 mb-16 reveal-on-scroll">
               <div className="text-xs font-bold text-marie-gold uppercase tracking-widest">WORLD-CLASS TRAINING & COHORTS</div>
               <h2 className="text-4xl sm:text-5xl font-bold">Masterclasses & Executive Programs</h2>
