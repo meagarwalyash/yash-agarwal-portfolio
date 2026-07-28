@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRCV1573GQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DRCV1573GQ');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1230021023248251"
+     crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Products Store & SOP Marketplace — Yash Agarwal (MeAgarwalYash)</title>
+  <meta name="description" content="Premium digital products marketplace by Yash Agarwal: E-books, AI Prompt Packs, Notion OS Templates, Canva Kits, SOP Libraries, Excel Dashboards, and Growth Playbooks." />
+  <link rel="canonical" href="https://meagarwalyash.com/store.html" />
+
+  <!-- OpenGraph & Twitter Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Yash Agarwal (MeAgarwalYash)" />
+  <meta property="og:title" content="Digital Products Store & SOP Marketplace — Yash Agarwal" />
+  <meta property="og:description" content="Premium digital products marketplace: E-books, AI Prompt Packs, Notion OS Templates, Canva Kits, SOP Libraries, Excel Dashboards, and Growth Playbooks." />
+  <meta property="og:url" content="https://meagarwalyash.com/store.html" />
+  <meta property="og:image" content="https://meagarwalyash.com/yashdp.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@meagarwalyash" />
+
+  <!-- JSON-LD SCHEMA FOR STORE & PRODUCTS -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://meagarwalyash.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Store", "item": "https://meagarwalyash.com/store.html" }
+        ]
+      },
+      {
+        "@type": "Store",
+        "@id": "https://meagarwalyash.com/store.html#store",
+        "name": "Yash Agarwal Digital Growth Marketplace",
+        "url": "https://meagarwalyash.com/store.html",
+        "description": "Executive growth tools, PR swipe files, performance media calculators, and AI marketing prompt packs.",
+        "currenciesAccepted": "INR",
+        "priceRange": "₹499 - ₹4999"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#D4AF37',
+              goldHover: '#B5942B',
+              dark: '#0A090E',
+              darkCard: '#14131B',
+              border: 'rgba(212, 175, 55, 0.25)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & Babel CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Razorpay Checkout SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <!-- Platform Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/payments.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .gold-glow { box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
+    .glass-dark { background: rgba(20, 19, 27, 0.85); backdrop-filter: blur(16px); }
+  </style>
+</head>
+<body class="bg-[#0A090E] text-white min-h-screen antialiased flex flex-col justify-between">
+
+  <div id="root"></div>
+
+  <!-- Load AI Assistant Widget -->
+  <script src="js/ai-assistant.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const CATEGORIES = [
+      "All Products",
+      "E-books",
+      "AI Prompt Packs",
+      "Marketing Templates",
+      "Canva Templates",
+      "Notion Templates",
+      "SOP Libraries",
+      "Marketing Playbooks",
+      "Checklists",
+      "Swipe Files",
+      "Digital Toolkits",
+      "Automation Blueprints",
+      "Google Sheets Templates",
+      "Excel Dashboards",
+      "Media Kits",
+      "Brand Assets"
+    ];
+
+    function StoreApp() {
+      const [products, setProducts] = useState([]);
+      const [selectedCategory, setSelectedCategory] = useState("All Products");
+      const [searchQuery, setSearchQuery] = useState("");
+      const [sortBy, setSortBy] = useState("bestseller");
+      const [activeModalProduct, setActiveModalProduct] = useState(null);
+      const [notifyProduct, setNotifyProduct] = useState(null);
+      const [notifyEmail, setNotifyEmail] = useState("");
+      const [notifyName, setNotifyName] = useState("");
+      const [notifyMsg, setNotifyMsg] = useState("");
+      const [pdfPreviewProduct, setPdfPreviewProduct] = useState(null);
+
+      useEffect(() => {
+        let savedData = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
+        if (savedData) {
+          try {
+            let cms = JSON.parse(savedData);
+            if (cms.digitalProducts) setProducts(cms.digitalProducts);
+          } catch(e) {}
+        } else {
+          fetch('cmsData.json')
+            .then(res => res.json())
+            .then(data => {
+              if (data.digitalProducts) setProducts(data.digitalProducts);
+            });
+        }
+
+        const currentUser = window.MAY_AuthEngine ? window.MAY_AuthEngine.getCurrentUser() : null;
+        if (currentUser) {
+          setNotifyEmail(currentUser.email || "");
+          setNotifyName(currentUser.name || "");
+        }
+
+        if (window.lucide) setTimeout(() => window.lucide.createIcons(), 100);
+      }, []);
+
+      const filteredProducts = products.filter(p => {
+        const matchesCategory = selectedCategory === "All Products" || p.category === selectedCategory;
+        const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                              p.desc.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+      }).sort((a, b) => {
+        if (sortBy === "price-low") return a.discountPrice - b.discountPrice;
+        if (sortBy === "price-high") return b.discountPrice - a.discountPrice;
+        if (sortBy === "rating") return (b.rating || 0) - (a.rating || 0);
+        return 0;
+      });
+
+      const handleBuyNow = (product) => {
+        if (product.isComingSoon) {
+          setNotifyProduct(product);
+          return;
+        }
+
+        const user = window.MAY_AuthEngine ? window.MAY_AuthEngine.getCurrentUser() : null;
+        const userDetails = {
+          name: user ? user.name : 'Growth Leader',
+          email: user ? user.email : '',
+          phone: user ? user.phone : ''
+        };
+
+        const checkoutItem = {
+          id: product.id,
+          title: product.title,
+          price: product.discountPrice,
+          type: 'digital_product'
+        };
+
+        window.MAY_PaymentEngine.processCheckout(
+          checkoutItem,
+          userDetails,
+          (orderResult) => {
+            alert(`Payment Success! Product "${product.title}" added to your Dashboard.`);
+            window.location.href = 'dashboard.html';
+          },
+          (error) => {
+            console.log('Payment cancelled or failed', error);
+          }
+        );
+      };
+
+      const handleNotifySubmit = async (e) => {
+        e.preventDefault();
+        if (!notifyEmail || !notifyProduct) return;
+
+        try {
+          const r = await fetch('/api/waitlist/join', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              productId: notifyProduct.id,
+              productName: notifyProduct.title,
+              email: notifyEmail,
+              customerName: notifyName
+            })
+          });
+          const resData = await r.json();
+          setNotifyMsg(resData.message || 'Successfully joined launch waitlist!');
+          setTimeout(() => {
+            setNotifyMsg('');
+            setNotifyProduct(null);
+          }, 2500);
+        } catch(err) {
+          setNotifyMsg('Joined VIP waitlist locally!');
+          setTimeout(() => {
+            setNotifyMsg('');
+            setNotifyProduct(null);
+          }, 2500);
+        }
+      };
+
+      const handleDownloadPdf = (product) => {
+        const user = window.MAY_AuthEngine ? window.MAY_AuthEngine.getCurrentUser() : null;
+        const emailQuery = user ? `?email=${encodeURIComponent(user.email)}` : '?email=guest@meagarwalyash.com';
+        const downloadUrl = `/api/download/${product.id}${emailQuery}`;
+        window.open(downloadUrl, '_blank');
+      };
+
+      return (
+        <div className="min-h-screen flex flex-col justify-between">
+          {/* Main Navigation */}
+          <header className="sticky top-0 z-40 glass-dark border-b border-white/10 px-4 sm:px-8 py-4">
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
+              <a href="index.html" className="flex items-center gap-3">
+                <img src="maylogo.png" alt="MAY Logo" className="h-9 w-auto brightness-150 drop-shadow-md" />
+                <span className="text-xs font-bold text-brand-gold uppercase tracking-widest hidden sm:inline">Store & SOP Marketplace</span>
+              </a>
+              
+              <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-zinc-300">
+                <a href="index.html" className="hover:text-brand-gold transition-colors">Home</a>
+                <a href="store.html" className="text-brand-gold font-bold">Digital Store</a>
+                <a href="blog.html" className="hover:text-brand-gold transition-colors">Blog</a>
+                <a href="resources.html" className="hover:text-brand-gold transition-colors">Free Resources</a>
+                <a href="speaking.html" className="hover:text-brand-gold transition-colors">Consulting</a>
+                <a href="dashboard.html" className="hover:text-brand-gold transition-colors">My Dashboard</a>
+              </nav>
+
+              <div className="flex items-center gap-3">
+                <a href="dashboard.html" className="px-5 py-2.5 rounded-full bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover transition-all gold-glow">
+                  Customer Portal →
+                </a>
+              </div>
+            </div>
+          </header>
+
+          {/* Hero Banner */}
+          <section className="relative py-16 px-4 sm:px-8 overflow-hidden bg-gradient-to-b from-brand-darkCard to-[#0A090E] border-b border-white/10">
+            <div className="max-w-5xl mx-auto text-center space-y-4 relative z-10">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-brand-gold/10 text-brand-gold text-xs font-bold uppercase tracking-widest border border-brand-gold/20">
+                ✨ Verified Battle-Tested Growth Assets
+              </span>
+              <h1 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+                Digital Products, E-Books & SOP Marketplace
+              </h1>
+              <p className="text-zinc-400 text-sm sm:text-base max-w-2xl mx-auto">
+                Direct access to the exact e-books, Notion operating systems, PR pitch swipe files, and performance calculators used to scale multi-crore digital revenue engines.
+              </p>
+
+              {/* Search & Filter Control */}
+              <div className="max-w-2xl mx-auto pt-4 flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <input 
+                    type="text"
+                    placeholder="Search templates, prompt packs, SOPs..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full px-5 py-3.5 rounded-2xl bg-black/60 border border-white/15 text-white text-sm focus:outline-none focus:border-brand-gold transition-all"
+                  />
+                  {searchQuery && (
+                    <button onClick={() => setSearchQuery("")} className="absolute right-4 top-3.5 text-zinc-400 hover:text-white">✕</button>
+                  )}
+                </div>
+                <select 
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="px-4 py-3.5 rounded-2xl bg-black/60 border border-white/15 text-white text-xs font-bold outline-none focus:border-brand-gold cursor-pointer"
+                >
+                  <option value="bestseller">Sort by: Bestseller</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="rating">Highest Rated</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          {/* Category Chips Bar */}
+          <section className="px-4 sm:px-8 py-6 border-b border-white/10 bg-[#0A090E] sticky top-[73px] z-30 glass-dark">
+            <div className="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+              {CATEGORIES.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+                    selectedCategory === cat 
+                      ? 'bg-brand-gold text-black shadow-lg shadow-brand-gold/20' 
+                      : 'bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:border-white/20'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          {/* Product Grid */}
+          <main className="max-w-7xl mx-auto w-full px-4 sm:px-8 py-12 flex-1">
+            <div className="flex justify-between items-center mb-8">
+              <span className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-widest">
+                Showing {filteredProducts.length} Assets in {selectedCategory}
+              </span>
+            </div>
+
+            {filteredProducts.length === 0 ? (
+              <div className="text-center py-20 bg-brand-darkCard rounded-3xl border border-white/10 space-y-4">
+                <div className="text-4xl">🔍</div>
+                <h3 className="text-lg font-bold text-white">No products found</h3>
+                <p className="text-xs text-zinc-400">Try selecting a different category or clearing your search term.</p>
+                <button onClick={() => { setSelectedCategory("All Products"); setSearchQuery(""); }} className="px-6 py-2.5 rounded-full bg-brand-gold text-black font-bold text-xs">Reset Filters</button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProducts.map(product => {
+                  const isComingSoon = product.isComingSoon || (!product.isAvailable && product.id !== 'dp_pr_checklist');
+
+                  return (
+                    <div key={product.id} className="bg-brand-darkCard rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between hover:border-brand-gold/50 transition-all duration-300 group hover:-translate-y-1 gold-glow relative">
+                      
+                      {/* COMING SOON OVERLAY FOR UNPUBLISHED PRODUCTS */}
+                      {isComingSoon && (
+                        <div className="absolute inset-0 z-20 bg-black/85 backdrop-blur-md p-6 flex flex-col justify-between items-center text-center transition-all duration-300 group-hover:bg-black/90">
+                          <div className="w-12 h-12 rounded-full bg-brand-gold/20 text-brand-gold border border-brand-gold/40 flex items-center justify-center text-xl shadow-lg mt-4 animate-pulse">
+                            🔒
+                          </div>
+                          <div className="space-y-2">
+                            <span className="px-3.5 py-1 rounded-full bg-brand-gold text-black text-[10px] font-extrabold uppercase tracking-widest shadow-md">
+                              🔒 COMING SOON
+                            </span>
+                            <h4 className="text-sm font-bold text-white leading-tight">{product.title}</h4>
+                            <p className="text-[11px] text-zinc-400 leading-relaxed max-w-xs">Join VIP waitlist to receive instant launch notifications & 30% early bird discount.</p>
+                          </div>
+                          <button
+                            onClick={() => setNotifyProduct(product)}
+                            className="w-full py-3 rounded-xl bg-brand-gold text-black font-extrabold text-xs hover:bg-brand-goldHover transition-all shadow-xl gold-glow flex items-center justify-center gap-1.5"
+                          >
+                            <span>Notify Me 🔔</span>
+                          </button>
+                        </div>
+                      )}
+
+                      <div>
+                        {/* Thumbnail Cover */}
+                        <div className="relative aspect-[3/4] overflow-hidden bg-black cursor-pointer" onClick={() => setActiveModalProduct(product)}>
+                          <img src={product.thumbnail} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-brand-gold border border-brand-gold/30">
+                            {product.category}
+                          </div>
+                          {product.badge && (
+                            <div className="absolute top-3 right-3 bg-brand-gold text-black px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider shadow-md">
+                              {product.badge}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-6 space-y-4">
+                          <div className="flex items-center gap-2 text-xs text-zinc-400">
+                            <span className="text-amber-400 font-bold">★ {product.rating || '4.9'}</span>
+                            <span>({product.reviewsCount || 124} ratings)</span>
+                            <span>•</span>
+                            <span className="font-mono text-[10px] text-brand-gold font-bold">{product.downloadsCount || product.fileType}</span>
+                          </div>
+
+                          <h3 
+                            onClick={() => setActiveModalProduct(product)}
+                            className="text-base font-bold text-white group-hover:text-brand-gold transition-colors cursor-pointer leading-snug line-clamp-2"
+                          >
+                            {product.title}
+                          </h3>
+
+                          <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                            {product.desc}
+                          </p>
+
+                          {/* REAL PDF PREVIEW CARD FOR FIRST E-BOOK */}
+                          {product.id === 'dp_pr_checklist' && (
+                            <div className="p-3.5 rounded-2xl bg-black/70 border border-brand-gold/40 space-y-2 font-mono text-[11px] mt-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-brand-gold font-bold flex items-center gap-1">📄 MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf</span>
+                              </div>
+                              <div className="flex items-center justify-between text-[10px] text-zinc-400">
+                                <span>Size: 23.3 MB</span>
+                                <span>Length: 18 Pages</span>
+                              </div>
+                              <div className="flex gap-2 pt-1">
+                                <button
+                                  onClick={() => setPdfPreviewProduct(product)}
+                                  className="flex-1 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-[10px] text-center border border-white/10"
+                                >
+                                  Preview PDF 👁️
+                                </button>
+                                <button
+                                  onClick={() => handleDownloadPdf(product)}
+                                  className="flex-1 py-2 rounded-xl bg-brand-gold text-black hover:bg-brand-goldHover font-extrabold text-[10px] text-center shadow-md"
+                                >
+                                  Download PDF ⬇️
+                                </button>
+                              </div>
+                            </div>
+                          )}
+
+                        </div>
+                      </div>
+
+                      {/* Footer Actions */}
+                      <div className="p-6 pt-0 border-t border-white/5 mt-4 flex items-center justify-between">
+                        <div>
+                          <div className="text-[10px] text-zinc-500 line-through">₹{product.price.toLocaleString()}</div>
+                          <div className="text-lg font-extrabold text-white">
+                            {product.discountPrice === 0 ? <span className="text-emerald-400 font-black">FREE PDF</span> : `₹${product.discountPrice.toLocaleString()}`}
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2">
+                          <button 
+                            onClick={() => setActiveModalProduct(product)}
+                            className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-colors"
+                          >
+                            Details
+                          </button>
+                          <button 
+                            onClick={() => handleDownloadPdf(product)}
+                            className="px-4 py-2 rounded-xl bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover transition-colors shadow-md"
+                          >
+                            {product.discountPrice === 0 ? 'Download PDF ⬇️' : 'Buy Now'}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </main>
+
+          {/* NOTIFY ME / WAITLIST MODAL */}
+          {notifyProduct && (
+            <div className="fixed inset-0 z-50 glass-dark flex items-center justify-center p-4">
+              <div className="bg-brand-darkCard border border-brand-gold/40 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 text-white relative shadow-2xl animate-fadeIn">
+                <button 
+                  onClick={() => setNotifyProduct(null)}
+                  className="absolute top-6 right-6 text-zinc-400 hover:text-white p-1 text-xl font-bold"
+                >
+                  ✕
+                </button>
+
+                <div className="text-center space-y-2">
+                  <div className="w-12 h-12 rounded-full bg-brand-gold/20 text-brand-gold border border-brand-gold/40 flex items-center justify-center mx-auto text-xl">
+                    🔔
+                  </div>
+                  <span className="text-[10px] font-mono text-brand-gold font-bold uppercase tracking-widest">VIP LAUNCH WAITLIST</span>
+                  <h3 className="text-xl font-bold">{notifyProduct.title}</h3>
+                  <p className="text-xs text-zinc-400">Be first to access this asset when it launches + get an exclusive 30% early bird code.</p>
+                </div>
+
+                {notifyMsg ? (
+                  <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold text-center">
+                    ✓ {notifyMsg}
+                  </div>
+                ) : (
+                  <form onSubmit={handleNotifySubmit} className="space-y-4 text-xs">
+                    <div>
+                      <label className="block text-zinc-300 font-bold mb-1">Your Name</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Vikram Sharma"
+                        value={notifyName}
+                        onChange={(e) => setNotifyName(e.target.value)}
+                        className="w-full p-3 rounded-xl bg-black border border-white/20 text-white focus:border-brand-gold focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-zinc-300 font-bold mb-1">Work Email Address *</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="you@company.com"
+                        value={notifyEmail}
+                        onChange={(e) => setNotifyEmail(e.target.value)}
+                        className="w-full p-3 rounded-xl bg-black border border-white/20 text-white focus:border-brand-gold focus:outline-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-3.5 rounded-full bg-brand-gold hover:bg-brand-goldHover text-black font-extrabold text-xs transition-all gold-glow shadow-xl"
+                    >
+                      Join Launch Waitlist →
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* PDF PREVIEW MODAL */}
+          {pdfPreviewProduct && (
+            <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col justify-between p-4 sm:p-8">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-xl">📄</span>
+                  <div>
+                    <h3 className="text-base font-bold text-white">{pdfPreviewProduct.title}</h3>
+                    <p className="text-xs text-zinc-400">Official PDF Preview • 18 Pages • 23.3 MB</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => handleDownloadPdf(pdfPreviewProduct)}
+                    className="px-5 py-2.5 rounded-full bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover"
+                  >
+                    Download Full PDF ⬇️
+                  </button>
+                  <button
+                    onClick={() => setPdfPreviewProduct(null)}
+                    className="p-2 text-zinc-400 hover:text-white text-xl font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex-1 my-4 bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 flex items-center justify-center">
+                <iframe
+                  src={`/api/download/${pdfPreviewProduct.id}?preview=true`}
+                  className="w-full h-full border-none rounded-2xl"
+                  title="PDF Preview"
+                ></iframe>
+              </div>
+            </div>
+          )}
+
+          {/* Product Details Drawer Modal */}
+          {activeModalProduct && (
+            <div className="fixed inset-0 z-50 glass-dark flex items-center justify-center p-4 overflow-y-auto">
+              <div className="bg-brand-darkCard border border-brand-gold/40 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 text-white my-8 relative shadow-2xl animate-fadeIn">
+                <button 
+                  onClick={() => setActiveModalProduct(null)}
+                  className="absolute top-6 right-6 text-zinc-400 hover:text-white p-2 text-xl font-bold"
+                >
+                  ✕
+                </button>
+
+                <div className="flex flex-col sm:flex-row gap-6 items-start border-b border-white/10 pb-6">
+                  <img src={activeModalProduct.thumbnail} alt={activeModalProduct.title} className="w-full sm:w-48 aspect-[3/4] object-cover rounded-2xl border border-white/10" />
+                  <div className="space-y-2 flex-1">
+                    <span className="px-3 py-1 rounded-full bg-brand-gold/10 text-brand-gold text-[10px] font-bold uppercase border border-brand-gold/20">
+                      {activeModalProduct.category}
+                    </span>
+                    <h2 className="text-xl sm:text-2xl font-bold">{activeModalProduct.title}</h2>
+                    <div className="flex items-center gap-3 text-xs text-zinc-400">
+                      <span className="text-amber-400">★ {activeModalProduct.rating || '4.9'} ({activeModalProduct.reviewsCount || 50} ratings)</span>
+                      <span>Version: {activeModalProduct.version || 'v2.5'}</span>
+                    </div>
+
+                    {activeModalProduct.id === 'dp_pr_checklist' && (
+                      <div className="p-3 rounded-xl bg-black border border-brand-gold/30 font-mono text-xs space-y-1 text-zinc-300 my-2">
+                        <div className="text-brand-gold font-bold flex items-center gap-1">📄 MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf</div>
+                        <div>File Size: 23.3 MB • Pages: 18 Pages</div>
+                      </div>
+                    )}
+
+                    <div className="text-2xl font-extrabold text-brand-gold pt-2">
+                      {activeModalProduct.discountPrice === 0 ? 'FREE PDF' : `₹${activeModalProduct.discountPrice.toLocaleString()}`}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-widest">Product Description</h4>
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">{activeModalProduct.desc}</p>
+                </div>
+
+                {activeModalProduct.whatsIncluded && (
+                  <div className="space-y-3 bg-black/40 p-4 rounded-2xl border border-white/10">
+                    <h4 className="text-xs font-bold text-white uppercase tracking-wider">What's Included</h4>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-zinc-300">
+                      {activeModalProduct.whatsIncluded.map((item, idx) => (
+                        <li key={idx} className="flex items-center gap-2">
+                          <span className="text-brand-gold font-bold">✓</span> {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="text-xs text-zinc-400">
+                    🔒 Instant PDF Download • 256-Bit SSL Encrypted
+                  </div>
+                  <div className="flex gap-3 w-full sm:w-auto">
+                    <button 
+                      onClick={() => setActiveModalProduct(null)} 
+                      className="flex-1 sm:flex-none px-6 py-3 rounded-full bg-white/10 text-xs font-bold text-white hover:bg-white/20"
+                    >
+                      Close
+                    </button>
+                    <button 
+                      onClick={() => { setActiveModalProduct(null); handleDownloadPdf(activeModalProduct); }}
+                      className="flex-1 sm:flex-none px-8 py-3 rounded-full bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover gold-glow"
+                    >
+                      Instant Download PDF ⬇️
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* EXPANDED FOOTER */}
+          <footer className="border-t border-white/10 bg-black text-zinc-400">
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 py-14">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10 text-left">
+                {/* Brand */}
+                <div className="col-span-2 sm:col-span-1 space-y-3">
+                  <img src="maylogo.png" alt="MAY Logo" className="h-10 w-auto object-contain brightness-150 contrast-125 filter drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]" />
+                  <p className="text-xs leading-relaxed">Executive Growth Architect. Author. CMO. Speaker. Built on first principles, not favours.</p>
+                  <div className="flex gap-2">
+                    {['linkedin', 'instagram', 'youtube', 'twitter'].map(icon => (
+                      <a key={icon} href={`https://${icon}.com/meagarwalyash`} target="_blank"
+                        className="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all hover:text-brand-gold bg-white/5 hover:bg-white/10"
+                      >
+                        <i data-lucide={icon} className="w-3.5 h-3.5"></i>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sections */}
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-brand-gold uppercase tracking-widest">Navigate</div>
+                  {[['store.html', '🛍️ Digital Store'], ['resources.html', '🎁 Free Resources'], ['blog.html', '✍️ Growth Essays'], ['speaking.html', '💼 Consulting'], ['dashboard.html', '👤 Customer Dashboard']].map(([href, label]) => (
+                    <a key={href} href={href} className="block text-xs hover:text-brand-gold transition-colors font-semibold">{label}</a>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-brand-gold uppercase tracking-widest">Work</div>
+                  {[['index.html#impact', 'Impact Dashboard'], ['index.html#journey', 'My Journey'], ['media.html', 'Press & Media'], ['index.html#tv', 'Videos & Podcasts'], ['index.html#book', 'No Godfather Book']].map(([href, label]) => (
+                    <a key={href} href={href} className="block text-xs hover:text-brand-gold transition-colors">{label}</a>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-brand-gold uppercase tracking-widest">Contact</div>
+                  <a href="mailto:yash@meagarwalyash.com" className="block text-xs hover:text-brand-gold transition-colors">yash@meagarwalyash.com</a>
+                  <a href="https://linkedin.com/in/meagarwalyash" target="_blank" className="block text-xs hover:text-brand-gold transition-colors">LinkedIn</a>
+                  <a href="https://instagram.com/meagarwalyash" target="_blank" className="block text-xs hover:text-brand-gold transition-colors">Instagram</a>
+                  <a href="https://youtube.com/@meagarwalyash" target="_blank" className="block text-xs hover:text-brand-gold transition-colors">YouTube Channel</a>
+                  <div className="text-xs mt-2 text-zinc-500">Mumbai, India 🇮🇳</div>
+                </div>
+              </div>
+
+              {/* Bottom bar */}
+              <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+                <div>© 2026 Yash Agarwal (@MeAgarwalYash). All Rights Reserved.</div>
+                <div className="text-brand-gold font-bold">MUMBAI, INDIA • LIVE IST</div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<StoreApp />);
+  </script>
+</body>
+</html>

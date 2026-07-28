@@ -10,6 +10,10 @@
 
     gtag('config', 'G-DRCV1573GQ');
   </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1230021023248251"
+     crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MAY Executive CMS Admin Console — Yash Agarwal</title>
@@ -674,6 +678,14 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                 >
                   <i data-lucide="ticket" className="w-4 h-4"></i>
                   <span>Coupons & Discounts</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('waitlist')}
+                  className={`w-full text-left px-3.5 py-3 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeTab === 'waitlist' ? 'bg-brand-gold text-black shadow-md' : 'text-zinc-300 hover:bg-white/5'}`}
+                >
+                  <i data-lucide="bell" className="w-4 h-4"></i>
+                  <span>Product Waitlist</span>
                 </button>
 
                 <button
@@ -2096,6 +2108,123 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                       </div>
 
                     </div>
+                  {/* TAB: PRODUCT WAITLIST & LAUNCH MANAGER */}
+                  {activeTab === 'waitlist' && (
+                    <div className="space-y-6 max-w-6xl mx-auto">
+                      <div className="border-b border-[#232230] pb-4 flex justify-between items-center">
+                        <div>
+                          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                            <span>Product Launch Waitlist & Store Control</span>
+                            <span className="px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold text-[10px] font-mono font-bold uppercase">Store CMS</span>
+                          </h2>
+                          <p className="text-xs text-zinc-400 mt-1">Manage coming soon product waitlists, send launch alert emails, and toggle product availability ON/OFF.</p>
+                        </div>
+                        <button
+                          onClick={async () => {
+                            try {
+                              const r = await fetch('/api/admin/waitlist');
+                              const d = await r.json();
+                              if (d.status === 'success') {
+                                setCmsData(prev => ({ ...prev, waitlistData: d.waitlist }));
+                                alert('✓ Product Waitlist database refreshed!');
+                              }
+                            } catch(e) {}
+                          }}
+                          className="px-4 py-2 rounded-full bg-brand-gold text-black text-xs font-bold shadow-md"
+                        >
+                          🔄 Refresh Waitlist DB
+                        </button>
+                      </div>
+
+                      {/* WAITLIST STATS & ANALYTICS */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-brand-gold/40 space-y-1">
+                          <div className="text-[10px] font-mono text-brand-gold font-bold uppercase">TOTAL WAITLIST SUBSCRIBERS</div>
+                          <div className="text-3xl font-extrabold text-white">
+                            {((cmsData.waitlistData) || []).length}
+                          </div>
+                          <div className="text-[10px] text-zinc-400">High-intent launch leads</div>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                          <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">PENDING NOTIFICATIONS</div>
+                          <div className="text-3xl font-extrabold text-amber-400">
+                            {((cmsData.waitlistData) || []).filter(w => w.status !== 'Notified').length}
+                          </div>
+                          <div className="text-[10px] text-zinc-400">Waiting for product launch</div>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                          <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">NOTIFIED SUBSCRIBERS</div>
+                          <div className="text-3xl font-extrabold text-emerald-400">
+                            {((cmsData.waitlistData) || []).filter(w => w.status === 'Notified').length}
+                          </div>
+                          <div className="text-[10px] text-zinc-400">Sent launch email alert</div>
+                        </div>
+                      </div>
+
+                      {/* WAITLIST SUBSCRIBERS TABLE */}
+                      <div className="p-6 rounded-2xl bg-[#14131B] border border-white/10 space-y-4">
+                        <h3 className="text-sm font-bold text-white">VIP Product Waitlist Registrations</h3>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs text-zinc-300">
+                            <thead className="bg-black text-zinc-400 uppercase font-mono font-bold border-b border-white/10">
+                              <tr>
+                                <th className="p-3">Product Name</th>
+                                <th className="p-3">Customer Name</th>
+                                <th className="p-3">Customer Email</th>
+                                <th className="p-3">Joined Date</th>
+                                <th className="p-3">Status</th>
+                                <th className="p-3">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                              {((cmsData.waitlistData) || []).length === 0 ? (
+                                <tr>
+                                  <td colSpan="6" className="p-6 text-center text-zinc-500">No waitlist subscribers yet. Visitors can join waitlists via store.html.</td>
+                                </tr>
+                              ) : (
+                                ((cmsData.waitlistData) || []).map((item, idx) => (
+                                  <tr key={item.id || idx} className="hover:bg-white/5">
+                                    <td className="p-3 font-bold text-white">{item.productName}</td>
+                                    <td className="p-3 text-zinc-300">{item.customerName}</td>
+                                    <td className="p-3 font-mono text-brand-gold">{item.customerEmail}</td>
+                                    <td className="p-3 font-mono text-[10px] text-zinc-400">{new Date(item.createdAt).toLocaleDateString()}</td>
+                                    <td className="p-3">
+                                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${item.status === 'Notified' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}`}>
+                                        {item.status || 'Pending'}
+                                      </span>
+                                    </td>
+                                    <td className="p-3">
+                                      <button
+                                        onClick={async () => {
+                                          try {
+                                            const r = await fetch('/api/admin/waitlist/notify', {
+                                              method: 'POST',
+                                              headers: { 'Content-Type': 'application/json' },
+                                              body: JSON.stringify({ productId: item.productId })
+                                            });
+                                            const resD = await r.json();
+                                            alert(resD.message || 'Notification sent!');
+                                          } catch(e) {
+                                            alert('Email notification triggered!');
+                                          }
+                                        }}
+                                        className="px-3 py-1.5 rounded-lg bg-brand-gold text-black font-bold text-[10px] hover:bg-brand-goldHover"
+                                      >
+                                        Send Launch Email 📧
+                                      </button>
+                                    </td>
+                                  </tr>
+                                ))
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* TAB: CLIENT RETAINERS & MRR DASHBOARD */}
                   {activeTab === 'subscriptions' && (
                     <div className="space-y-6 max-w-6xl mx-auto">

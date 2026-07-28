@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRCV1573GQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DRCV1573GQ');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1230021023248251"
+     crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LMS Course Player — Yash Agarwal (MeAgarwalYash)</title>
+  <meta name="description" content="Distraction-free Apple-inspired LMS course player for MAY Executive Masterclasses." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#D4AF37',
+              goldHover: '#B5942B',
+              dark: '#0A090E',
+              darkCard: '#14131B',
+              border: 'rgba(212, 175, 55, 0.25)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & Babel CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .gold-glow { box-shadow: 0 0 30px rgba(212, 175, 55, 0.25); }
+    .glass-dark { background: rgba(20, 19, 27, 0.95); backdrop-filter: blur(16px); }
+  </style>
+</head>
+<body class="bg-[#0A090E] text-white min-h-screen antialiased">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function CoursePlayerApp() {
+      const [currentLesson, setCurrentLesson] = useState({
+        id: 'm1-l1',
+        title: 'The First Principles of Executive Brand Equity',
+        duration: '18:40',
+        type: 'video',
+        youtubeId: 'uSxtRz8vJm4',
+        resources: ['Executive_Brand_Blueprint.pdf']
+      });
+
+      const [completedLessons, setCompletedLessons] = useState(['m1-l1']);
+      const [activeTab, setActiveTab] = useState('notes'); // 'notes' | 'transcript' | 'resources' | 'discussion'
+      const [notes, setNotes] = useState('');
+      const [notesSaved, setNotesSaved] = useState(false);
+
+      const courseData = {
+        title: 'The Personal Brand & Executive PR Masterclass',
+        instructor: 'Yash Agarwal',
+        curriculum: [
+          {
+            moduleTitle: 'Module 1: Executive Positioning & Narrative Arc',
+            lessons: [
+              { id: 'm1-l1', title: 'The First Principles of Executive Brand Equity', duration: '18:40', type: 'video', youtubeId: 'uSxtRz8vJm4' },
+              { id: 'm1-l2', title: 'Crafting Your Unfair Advantage & Positioning Matrix', duration: '24:15', type: 'video', youtubeId: 'RhOz54pb-Ss' }
+            ]
+          },
+          {
+            moduleTitle: 'Module 2: The Zero-Retainer Newsjacking Engine',
+            lessons: [
+              { id: 'm2-l1', title: 'How to Pitch Forbes, Business Standard & DNA India', duration: '32:10', type: 'video', youtubeId: '63K2FQLeUoE' },
+              { id: 'm2-l2', title: 'Turning Proprietary Data into Viral Press Reports', duration: '28:45', type: 'video', youtubeId: 'laLO0o1MjjY' }
+            ]
+          }
+        ]
+      };
+
+      useEffect(() => {
+        if (window.lucide) window.lucide.createIcons();
+      }, []);
+
+      const toggleLessonCompletion = (lessonId) => {
+        if (completedLessons.includes(lessonId)) {
+          setCompletedLessons(completedLessons.filter(id => id !== lessonId));
+        } else {
+          setCompletedLessons([...completedLessons, lessonId]);
+        }
+      };
+
+      const handleSaveNotes = (e) => {
+        e.preventDefault();
+        setNotesSaved(true);
+        setTimeout(() => setNotesSaved(false), 2500);
+      };
+
+      return (
+        <div className="h-screen flex flex-col overflow-hidden bg-[#0A090E]">
+          {/* Top Bar Header */}
+          <header className="h-16 border-b border-white/10 px-6 flex items-center justify-between glass-dark z-20 flex-shrink-0">
+            <div className="flex items-center gap-4">
+              <a href="dashboard.html" className="text-zinc-400 hover:text-white transition-colors text-xs font-bold flex items-center gap-1">
+                ← Exit to Dashboard
+              </a>
+              <div className="h-4 w-px bg-white/20"></div>
+              <a href="store.html" className="text-zinc-300 hover:text-brand-gold text-xs font-bold">Store</a>
+              <a href="resources.html" className="text-zinc-300 hover:text-brand-gold text-xs font-bold">Free Resources</a>
+              <div className="h-4 w-px bg-white/20"></div>
+              <h1 className="text-sm font-bold truncate max-w-md hidden md:inline">{courseData.title}</h1>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-brand-gold">
+                <span>{completedLessons.length} / 4 Lessons Completed</span>
+              </div>
+              <a
+                href="dashboard.html"
+                className="px-4 py-2 rounded-full bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover transition-all"
+              >
+                My Account
+              </a>
+            </div>
+          </header>
+
+          {/* Main LMS Workspace */}
+          <div className="flex-1 flex overflow-hidden">
+            
+            {/* Left Sidebar: Curriculum Modules Tree */}
+            <aside className="w-80 border-r border-white/10 bg-[#12111A] flex flex-col overflow-y-auto flex-shrink-0 hidden md:flex">
+              <div className="p-4 border-b border-white/10 font-bold text-xs text-brand-gold uppercase tracking-widest">
+                COURSE CURRICULUM
+              </div>
+              <div className="p-2 space-y-4">
+                {courseData.curriculum.map((mod, i) => (
+                  <div key={i} className="space-y-1">
+                    <div className="px-3 py-2 text-xs font-bold text-zinc-300">
+                      {mod.moduleTitle}
+                    </div>
+                    {mod.lessons.map((les) => {
+                      const isActive = les.id === currentLesson.id;
+                      const isDone = completedLessons.includes(les.id);
+                      return (
+                        <div
+                          key={les.id}
+                          onClick={() => setCurrentLesson(les)}
+                          className={`px-3 py-2.5 rounded-xl cursor-pointer text-xs flex items-center justify-between transition-all ${isActive ? 'bg-brand-gold/20 text-brand-gold font-bold border border-brand-gold/40' : 'text-zinc-400 hover:bg-white/5 hover:text-white'}`}
+                        >
+                          <div className="flex items-center gap-2.5 line-clamp-1">
+                            <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold ${isDone ? 'bg-emerald-500 text-black' : 'bg-white/10 text-zinc-400'}`}>
+                              {isDone ? '✓' : '▶'}
+                            </span>
+                            <span className="truncate">{les.title}</span>
+                          </div>
+                          <span className="text-[10px] opacity-70 flex-shrink-0 ml-2">{les.duration}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </aside>
+
+            {/* Right Viewport: Video & Workspace Tabs */}
+            <main className="flex-1 flex flex-col overflow-y-auto bg-black">
+              
+              {/* Video Player Frame */}
+              <div className="relative aspect-video w-full max-h-[60vh] bg-black flex-shrink-0">
+                <iframe
+                  src={`https://www.youtube.com/embed/${currentLesson.youtubeId}?autoplay=1&rel=0`}
+                  title={currentLesson.title}
+                  className="w-full h-full border-0 absolute inset-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+
+              {/* Lesson Controls & Header */}
+              <div className="p-6 border-b border-white/10 bg-[#14131B] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 flex-shrink-0">
+                <div>
+                  <span className="text-[10px] font-bold text-brand-gold uppercase tracking-widest">ACTIVE LESSON</span>
+                  <h2 className="text-xl font-bold mt-0.5">{currentLesson.title}</h2>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => toggleLessonCompletion(currentLesson.id)}
+                    className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-2 ${completedLessons.includes(currentLesson.id) ? 'bg-emerald-600 text-white' : 'bg-white/10 hover:bg-white/20 text-white'}`}
+                  >
+                    <span>{completedLessons.includes(currentLesson.id) ? '✓ Completed' : 'Mark as Complete'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Student Workspace Tabs */}
+              <div className="p-6 space-y-4 flex-1 bg-[#0A090E]">
+                <div className="flex border-b border-white/10 gap-6 text-xs font-bold">
+                  {[
+                    { id: 'notes', label: 'My Lesson Notes' },
+                    { id: 'transcript', label: 'Video Transcript' },
+                    { id: 'resources', label: 'Downloadable Resources' },
+                    { id: 'discussion', label: 'Q&A Discussion' }
+                  ].map(tab => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`pb-3 transition-all border-b-2 ${activeTab === tab.id ? 'border-brand-gold text-brand-gold' : 'border-transparent text-zinc-400 hover:text-white'}`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* NOTES TAB */}
+                {activeTab === 'notes' && (
+                  <form onSubmit={handleSaveNotes} className="space-y-3 max-w-3xl">
+                    <textarea
+                      rows="5"
+                      placeholder="Write your executive notes for this lesson..."
+                      value={notes}
+                      onChange={e => setNotes(e.target.value)}
+                      className="w-full p-4 rounded-xl bg-white/5 border border-white/15 text-sm text-white focus:outline-none focus:border-brand-gold placeholder:text-zinc-500"
+                    ></textarea>
+                    <div className="flex items-center gap-3">
+                      <button type="submit" className="px-6 py-2.5 rounded-full bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover transition-all">
+                        Save Notes
+                      </button>
+                      {notesSaved && <span className="text-xs text-emerald-400 font-bold">✓ Notes saved successfully!</span>}
+                    </div>
+                  </form>
+                )}
+
+                {/* TRANSCRIPT TAB */}
+                {activeTab === 'transcript' && (
+                  <div className="text-xs leading-relaxed text-zinc-300 max-w-3xl space-y-3">
+                    <p><strong>[00:00]</strong> Welcome to this masterclass lesson on Executive Personal Brand Equity. When positioning yourself for high-stakes advisory or press, clarity precedes momentum.</p>
+                    <p><strong>[05:30]</strong> Journalists do not cover feature lists; they cover macroeconomic narratives and non-obvious industry commentary.</p>
+                  </div>
+                )}
+
+                {/* RESOURCES TAB */}
+                {activeTab === 'resources' && (
+                  <div className="space-y-3 max-w-xl">
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between text-xs">
+                      <span className="font-bold text-white">Executive_Brand_Blueprint.pdf</span>
+                      <button onClick={() => alert('Downloading PDF...')} className="px-3 py-1.5 rounded-lg bg-brand-gold text-black font-bold">Download PDF</button>
+                    </div>
+                  </div>
+                )}
+
+                {/* DISCUSSION TAB */}
+                {activeTab === 'discussion' && (
+                  <div className="text-xs text-zinc-400 space-y-2">
+                    <p>Ask a question or discuss this lesson with fellow growth leaders.</p>
+                    <input type="text" placeholder="Type your comment..." className="w-full max-w-md p-3 rounded-xl bg-white/5 border border-white/15 text-white" />
+                  </div>
+                )}
+              </div>
+
+            </main>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<CoursePlayerApp />);
+  </script>
+</body>
+</html>

@@ -10,6 +10,10 @@
 
     gtag('config', 'G-DRCV1573GQ');
   </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1230021023248251"
+     crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Executive Customer Portal — Yash Agarwal (MeAgarwalYash)</title>
@@ -574,38 +578,65 @@
               </div>
             )}
 
-            {/* TAB 2: DOWNLOADS */}
+            {/* TAB 2: DIGITAL STORE DOWNLOADS */}
             {activeTab === 'downloads' && (
               <div className="space-y-6">
-                <h2 className="text-xl font-bold">Digital Store Downloads & Access Keys</h2>
+                <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                  <h2 className="text-xl font-bold">Digital Store Downloads & Access Keys</h2>
+                  <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xs">Verified Access</span>
+                </div>
 
-                {userProducts.length === 0 ? (
-                  <div className="glass-dark p-10 rounded-3xl border border-white/10 text-center space-y-4">
-                    <div className="text-4xl">📥</div>
-                    <h3 className="text-lg font-bold">No Digital Downloads Available</h3>
-                    <p className="text-xs text-zinc-400 max-w-md mx-auto">Purchased e-books, prompt packs, and SOP swipe files will appear here instantly for secure download.</p>
-                    <a href="store.html" className="inline-block px-6 py-3 rounded-full bg-brand-gold text-black font-bold text-xs">Browse Digital Store →</a>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {userProducts.map((pId) => (
-                      <div key={pId} className="glass-dark p-6 rounded-3xl border border-white/10 space-y-4 flex flex-col justify-between">
-                        <div className="space-y-2">
-                          <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">VERIFIED DIGITAL ASSET</span>
-                          <h3 className="text-base font-bold">Digital Product Asset #{pId}</h3>
-                          <p className="text-xs text-zinc-400">Authorized lifetime download granted for {user.email}.</p>
-                        </div>
-                        <a
-                          href={`/api/download/${pId}?email=${encodeURIComponent(user.email)}`}
-                          download
-                          className="inline-block w-full py-3 text-center rounded-xl bg-white/10 hover:bg-white/20 text-brand-gold font-bold text-xs border border-brand-gold/30 transition-all"
-                        >
-                          Secure Download File 📥
-                        </a>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Featured Free Asset Card: Zero-Budget PR Audit Checklist */}
+                  <div className="glass-dark p-6 rounded-3xl border border-brand-gold/40 space-y-4 flex flex-col justify-between gold-glow relative">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold text-brand-gold uppercase tracking-wider bg-brand-gold/10 px-2.5 py-1 rounded-full border border-brand-gold/20">🔥 FEATURED E-BOOK</span>
+                        <span className="text-[10px] font-mono text-zinc-400">18 Pages • 23.3 MB</span>
                       </div>
-                    ))}
+                      <h3 className="text-base font-bold text-white">The Zero-Budget PR Audit Checklist</h3>
+                      <p className="text-xs text-zinc-400">Checklist to evaluate if your brand is ready for Tier-1 media pitches in Forbes, Business Standard & HT.</p>
+                      
+                      <div className="p-3 rounded-xl bg-black/60 border border-white/10 font-mono text-[11px] space-y-1 text-zinc-300">
+                        <div className="text-brand-gold font-bold flex items-center gap-1">📄 MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf</div>
+                        <div className="text-[10px] text-zinc-500">Format: High-Res 3D E-Book Payload</div>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2 pt-2">
+                      <button
+                        onClick={() => window.open(`/api/download/dp_pr_checklist?email=${encodeURIComponent(user.email)}&preview=true`, '_blank')}
+                        className="flex-1 py-2.5 text-center rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition-all"
+                      >
+                        Preview PDF 👁️
+                      </button>
+                      <a
+                        href={`/api/download/dp_pr_checklist?email=${encodeURIComponent(user.email)}`}
+                        download
+                        className="flex-1 py-2.5 text-center rounded-xl bg-brand-gold hover:bg-brand-goldHover text-black font-extrabold text-xs transition-all shadow-md gold-glow"
+                      >
+                        Download PDF ⬇️
+                      </a>
+                    </div>
                   </div>
-                )}
+
+                  {userProducts.filter(pId => pId !== 'dp_pr_checklist').map((pId) => (
+                    <div key={pId} className="glass-dark p-6 rounded-3xl border border-white/10 space-y-4 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">VERIFIED DIGITAL ASSET</span>
+                        <h3 className="text-base font-bold">Digital Product Asset #{pId}</h3>
+                        <p className="text-xs text-zinc-400">Authorized lifetime download granted for {user.email}.</p>
+                      </div>
+                      <a
+                        href={`/api/download/${pId}?email=${encodeURIComponent(user.email)}`}
+                        download
+                        className="inline-block w-full py-3 text-center rounded-xl bg-white/10 hover:bg-white/20 text-brand-gold font-bold text-xs border border-brand-gold/30 transition-all"
+                      >
+                        Secure Download File 📥
+                      </a>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 

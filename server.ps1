@@ -213,6 +213,80 @@ while ($listener.IsListening) {
             continue
         }
 
+        # 3. API Endpoint: Join Launch Waitlist (POST /api/waitlist/join)
+        if ($localPath -eq "/api/waitlist/join" -and $request.HttpMethod -eq "POST") {
+            $reader = New-Object System.IO.StreamReader($request.InputStream, $request.ContentEncoding)
+            $bodyText = $reader.ReadToEnd()
+            $json = ConvertFrom-Json $bodyText
+            
+            $dbPath = Join-Path $PSScriptRoot "database.json"
+            $db = Get-Content $dbPath -Raw | ConvertFrom-Json
+            if (-not $db.productWaitlist) { $db | Add-Member -NotePropertyName "productWaitlist" -NotePropertyValue @() }
+            
+            $normalizedEmail = $json.email.ToString().ToLower().Trim()
+            $existing = $db.productWaitlist | Where-Object { $_.productId -eq $json.productId -and $_.customerEmail -eq $normalizedEmail }
+            
+            if ($existing) {
+                $response.StatusCode = 200
+                $response.ContentType = "application/json"
+                $resObj = @{ status = "info"; message = "You are already registered on the VIP launch waitlist for this product!" } | ConvertTo-Json
+                $resBytes = [System.Text.Encoding]::UTF8.GetBytes($resObj)
+                $response.OutputStream.Write($resBytes, 0, $resBytes.Length)
+            } else {
+                $waitlistEntry = @{
+                    id = "wl_" + [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+                    productId = $json.productId
+                    productName = if ($json.productName) { $json.productName } else { "Digital Product" }
+                    customerName = if ($json.customerName) { $json.customerName } else { $normalizedEmail.Split('@')[0] }
+                    customerEmail = $normalizedEmail
+                    createdAt = [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+                    status = "Pending"
+                }
+                $db.productWaitlist = @($waitlistEntry) + $db.productWaitlist
+                $db | ConvertTo-Json -Depth 10 | Set-Content $dbPath -Encoding UTF8
+                
+                $response.StatusCode = 200
+                $response.ContentType = "application/json"
+                $resObj = @{ status = "success"; message = "Successfully joined the VIP launch waitlist!"; entry = $waitlistEntry } | ConvertTo-Json
+                $resBytes = [System.Text.Encoding]::UTF8.GetBytes($resObj)
+                $response.OutputStream.Write($resBytes, 0, $resBytes.Length)
+            }
+            $response.Close()
+            continue
+        }
+
+        # 4. API Endpoint: Get Waitlist (GET /api/admin/waitlist)
+        if ($localPath -eq "/api/admin/waitlist" -and $request.HttpMethod -eq "GET") {
+            $dbPath = Join-Path $PSScriptRoot "database.json"
+            $db = Get-Content $dbPath -Raw | ConvertFrom-Json
+            $waitlist = if ($db.productWaitlist) { $db.productWaitlist } else { @() }
+            $resObj = @{ status = "success"; waitlist = $waitlist } | ConvertTo-Json -Depth 10
+            $resBytes = [System.Text.Encoding]::UTF8.GetBytes($resObj)
+            $response.StatusCode = 200
+            $response.ContentType = "application/json"
+            $response.OutputStream.Write($resBytes, 0, $resBytes.Length)
+            $response.Close()
+            continue
+        }
+
+        # 5. API Endpoint: Download PDF (/api/download/...)
+        if ($localPath.StartsWith("/api/download/")) {
+            $pdfPath = Join-Path $PSScriptRoot "EBOOKS\MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf"
+            if (Test-Path $pdfPath) {
+                $bytes = [System.IO.File]::ReadAllBytes($pdfPath)
+                $response.ContentType = "application/pdf"
+                if ($request.QueryString["preview"] -eq "true") {
+                    $response.AddHeader("Content-Disposition", "inline; filename=`"MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf`"")
+                } else {
+                    $response.AddHeader("Content-Disposition", "attachment; filename=`"MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf`"")
+                }
+                $response.ContentLength64 = $bytes.Length
+                $response.OutputStream.Write($bytes, 0, $bytes.Length)
+                $response.Close()
+                continue
+            }
+        }
+
         # Static File Serving
         if ($localPath -eq "/") { $localPath = "/index.html" }
         $filePath = Join-Path $PSScriptRoot $localPath.TrimStart('/')

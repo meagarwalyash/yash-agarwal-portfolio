@@ -603,6 +603,44 @@
   ],
   "digitalProducts": [
     {
+      "id": "dp_pr_checklist",
+      "title": "The Zero-Budget PR Audit Checklist",
+      "category": "PR & Media",
+      "price": 1499,
+      "discountPrice": 0,
+      "currency": "INR",
+      "fileType": "PDF (18 Pages)",
+      "badge": "✓ Instant PDF Access",
+      "downloadsCount": "🔥 1240+ Downloads",
+      "thumbnail": "EBOOKS/Zero_Budget_PR_Audit_Checklist_Cover.jpg",
+      "desc": "Checklist to evaluate if your brand is ready for Tier-1 media pitches in Forbes, Business Standard & HT.",
+      "downloadUrl": "EBOOKS/MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf",
+      "pdfDetails": {
+        "fileName": "MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf",
+        "fileSize": "23.3 MB",
+        "pages": "18 Pages",
+        "downloadUrl": "EBOOKS/MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf"
+      },
+      "whatsIncluded": [
+        "50+ Media Readiness Checkpoints",
+        "Media Readiness Scorecard",
+        "Journalist Pitching Formula",
+        "Tier-1 Press Contact Checklist"
+      ],
+      "learningOutcomes": [
+        "Audit brand PR readiness in sub-60 minutes",
+        "Craft pitches section editors actually open",
+        "Secure organic coverage in Forbes and Business Standard"
+      ],
+      "rating": 4.98,
+      "reviewsCount": 124,
+      "readingTime": "18 Pages",
+      "version": "v2.5",
+      "lastUpdated": "2026-07-28",
+      "isAvailable": true,
+      "isComingSoon": false
+    },
+    {
       "id": "dp1",
       "title": "The Executive PR & Newsjacking Swipe File",
       "category": "E-books",
@@ -611,6 +649,8 @@
       "currency": "INR",
       "fileType": "PDF + DOCX",
       "badge": "BESTSELLER",
+      "isAvailable": false,
+      "isComingSoon": true,
       "thumbnail": "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=600&q=80",
       "desc": "50+ Battle-tested email pitches, journalist press release frameworks, and Tier-1 media pitch templates for Forbes, Business Standard & HT.",
       "downloadUrl": "resources/PR_Newsjacking_Swipe_File_2026.pdf",

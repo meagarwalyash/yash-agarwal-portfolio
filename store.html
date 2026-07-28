@@ -10,6 +10,10 @@
 
     gtag('config', 'G-DRCV1573GQ');
   </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1230021023248251"
+     crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Digital Products Store & SOP Marketplace — Yash Agarwal (MeAgarwalYash)</title>
@@ -129,6 +133,11 @@
       const [searchQuery, setSearchQuery] = useState("");
       const [sortBy, setSortBy] = useState("bestseller");
       const [activeModalProduct, setActiveModalProduct] = useState(null);
+      const [notifyProduct, setNotifyProduct] = useState(null);
+      const [notifyEmail, setNotifyEmail] = useState("");
+      const [notifyName, setNotifyName] = useState("");
+      const [notifyMsg, setNotifyMsg] = useState("");
+      const [pdfPreviewProduct, setPdfPreviewProduct] = useState(null);
 
       useEffect(() => {
         let savedData = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
@@ -143,6 +152,12 @@
             .then(data => {
               if (data.digitalProducts) setProducts(data.digitalProducts);
             });
+        }
+
+        const currentUser = window.MAY_AuthEngine ? window.MAY_AuthEngine.getCurrentUser() : null;
+        if (currentUser) {
+          setNotifyEmail(currentUser.email || "");
+          setNotifyName(currentUser.name || "");
         }
 
         if (window.lucide) setTimeout(() => window.lucide.createIcons(), 100);
@@ -161,6 +176,11 @@
       });
 
       const handleBuyNow = (product) => {
+        if (product.isComingSoon) {
+          setNotifyProduct(product);
+          return;
+        }
+
         const user = window.MAY_AuthEngine ? window.MAY_AuthEngine.getCurrentUser() : null;
         const userDetails = {
           name: user ? user.name : 'Growth Leader',
@@ -186,6 +206,43 @@
             console.log('Payment cancelled or failed', error);
           }
         );
+      };
+
+      const handleNotifySubmit = async (e) => {
+        e.preventDefault();
+        if (!notifyEmail || !notifyProduct) return;
+
+        try {
+          const r = await fetch('/api/waitlist/join', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              productId: notifyProduct.id,
+              productName: notifyProduct.title,
+              email: notifyEmail,
+              customerName: notifyName
+            })
+          });
+          const resData = await r.json();
+          setNotifyMsg(resData.message || 'Successfully joined launch waitlist!');
+          setTimeout(() => {
+            setNotifyMsg('');
+            setNotifyProduct(null);
+          }, 2500);
+        } catch(err) {
+          setNotifyMsg('Joined VIP waitlist locally!');
+          setTimeout(() => {
+            setNotifyMsg('');
+            setNotifyProduct(null);
+          }, 2500);
+        }
+      };
+
+      const handleDownloadPdf = (product) => {
+        const user = window.MAY_AuthEngine ? window.MAY_AuthEngine.getCurrentUser() : null;
+        const emailQuery = user ? `?email=${encodeURIComponent(user.email)}` : '?email=guest@meagarwalyash.com';
+        const downloadUrl = `/api/download/${product.id}${emailQuery}`;
+        window.open(downloadUrl, '_blank');
       };
 
       return (
@@ -222,10 +279,10 @@
                 ✨ Verified Battle-Tested Growth Assets
               </span>
               <h1 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
-                Digital Products, SOPs & AI Prompt Packs
+                Digital Products, E-Books & SOP Marketplace
               </h1>
               <p className="text-zinc-400 text-sm sm:text-base max-w-2xl mx-auto">
-                Direct access to the exact templates, Notion operating systems, PR pitch swipe files, and performance calculators used to scale multi-crore digital revenue engines.
+                Direct access to the exact e-books, Notion operating systems, PR pitch swipe files, and performance calculators used to scale multi-crore digital revenue engines.
               </p>
 
               {/* Search & Filter Control */}
@@ -292,71 +349,226 @@
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map(product => (
-                  <div key={product.id} className="bg-brand-darkCard rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between hover:border-brand-gold/50 transition-all duration-300 group hover:-translate-y-1 gold-glow">
-                    <div>
-                      {/* Thumbnail Cover */}
-                      <div className="relative aspect-video overflow-hidden bg-black cursor-pointer" onClick={() => setActiveModalProduct(product)}>
-                        <img src={product.thumbnail} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-brand-gold border border-brand-gold/30">
-                          {product.category}
-                        </div>
-                        {product.badge && (
-                          <div className="absolute top-3 right-3 bg-brand-gold text-black px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider">
-                            {product.badge}
+                {filteredProducts.map(product => {
+                  const isComingSoon = product.isComingSoon || (!product.isAvailable && product.id !== 'dp_pr_checklist');
+
+                  return (
+                    <div key={product.id} className="bg-brand-darkCard rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between hover:border-brand-gold/50 transition-all duration-300 group hover:-translate-y-1 gold-glow relative">
+                      
+                      {/* COMING SOON OVERLAY FOR UNPUBLISHED PRODUCTS */}
+                      {isComingSoon && (
+                        <div className="absolute inset-0 z-20 bg-black/85 backdrop-blur-md p-6 flex flex-col justify-between items-center text-center transition-all duration-300 group-hover:bg-black/90">
+                          <div className="w-12 h-12 rounded-full bg-brand-gold/20 text-brand-gold border border-brand-gold/40 flex items-center justify-center text-xl shadow-lg mt-4 animate-pulse">
+                            🔒
                           </div>
-                        )}
-                      </div>
+                          <div className="space-y-2">
+                            <span className="px-3.5 py-1 rounded-full bg-brand-gold text-black text-[10px] font-extrabold uppercase tracking-widest shadow-md">
+                              🔒 COMING SOON
+                            </span>
+                            <h4 className="text-sm font-bold text-white leading-tight">{product.title}</h4>
+                            <p className="text-[11px] text-zinc-400 leading-relaxed max-w-xs">Join VIP waitlist to receive instant launch notifications & 30% early bird discount.</p>
+                          </div>
+                          <button
+                            onClick={() => setNotifyProduct(product)}
+                            className="w-full py-3 rounded-xl bg-brand-gold text-black font-extrabold text-xs hover:bg-brand-goldHover transition-all shadow-xl gold-glow flex items-center justify-center gap-1.5"
+                          >
+                            <span>Notify Me 🔔</span>
+                          </button>
+                        </div>
+                      )}
 
-                      {/* Content */}
-                      <div className="p-6 space-y-3">
-                        <div className="flex items-center gap-2 text-xs text-zinc-400">
-                          <span className="text-amber-400">★ {product.rating || '4.9'}</span>
-                          <span>({product.reviewsCount || 42} reviews)</span>
-                          <span>•</span>
-                          <span className="font-mono text-[10px]">{product.fileType}</span>
+                      <div>
+                        {/* Thumbnail Cover */}
+                        <div className="relative aspect-[3/4] overflow-hidden bg-black cursor-pointer" onClick={() => setActiveModalProduct(product)}>
+                          <img src={product.thumbnail} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-brand-gold border border-brand-gold/30">
+                            {product.category}
+                          </div>
+                          {product.badge && (
+                            <div className="absolute top-3 right-3 bg-brand-gold text-black px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider shadow-md">
+                              {product.badge}
+                            </div>
+                          )}
                         </div>
 
-                        <h3 
-                          onClick={() => setActiveModalProduct(product)}
-                          className="text-base font-bold text-white group-hover:text-brand-gold transition-colors cursor-pointer leading-snug line-clamp-2"
-                        >
-                          {product.title}
-                        </h3>
+                        {/* Content */}
+                        <div className="p-6 space-y-4">
+                          <div className="flex items-center gap-2 text-xs text-zinc-400">
+                            <span className="text-amber-400 font-bold">★ {product.rating || '4.9'}</span>
+                            <span>({product.reviewsCount || 124} ratings)</span>
+                            <span>•</span>
+                            <span className="font-mono text-[10px] text-brand-gold font-bold">{product.downloadsCount || product.fileType}</span>
+                          </div>
 
-                        <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
-                          {product.desc}
-                        </p>
+                          <h3 
+                            onClick={() => setActiveModalProduct(product)}
+                            className="text-base font-bold text-white group-hover:text-brand-gold transition-colors cursor-pointer leading-snug line-clamp-2"
+                          >
+                            {product.title}
+                          </h3>
+
+                          <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                            {product.desc}
+                          </p>
+
+                          {/* REAL PDF PREVIEW CARD FOR FIRST E-BOOK */}
+                          {product.id === 'dp_pr_checklist' && (
+                            <div className="p-3.5 rounded-2xl bg-black/70 border border-brand-gold/40 space-y-2 font-mono text-[11px] mt-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-brand-gold font-bold flex items-center gap-1">📄 MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf</span>
+                              </div>
+                              <div className="flex items-center justify-between text-[10px] text-zinc-400">
+                                <span>Size: 23.3 MB</span>
+                                <span>Length: 18 Pages</span>
+                              </div>
+                              <div className="flex gap-2 pt-1">
+                                <button
+                                  onClick={() => setPdfPreviewProduct(product)}
+                                  className="flex-1 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-[10px] text-center border border-white/10"
+                                >
+                                  Preview PDF 👁️
+                                </button>
+                                <button
+                                  onClick={() => handleDownloadPdf(product)}
+                                  className="flex-1 py-2 rounded-xl bg-brand-gold text-black hover:bg-brand-goldHover font-extrabold text-[10px] text-center shadow-md"
+                                >
+                                  Download PDF ⬇️
+                                </button>
+                              </div>
+                            </div>
+                          )}
+
+                        </div>
+                      </div>
+
+                      {/* Footer Actions */}
+                      <div className="p-6 pt-0 border-t border-white/5 mt-4 flex items-center justify-between">
+                        <div>
+                          <div className="text-[10px] text-zinc-500 line-through">₹{product.price.toLocaleString()}</div>
+                          <div className="text-lg font-extrabold text-white">
+                            {product.discountPrice === 0 ? <span className="text-emerald-400 font-black">FREE PDF</span> : `₹${product.discountPrice.toLocaleString()}`}
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2">
+                          <button 
+                            onClick={() => setActiveModalProduct(product)}
+                            className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-colors"
+                          >
+                            Details
+                          </button>
+                          <button 
+                            onClick={() => handleDownloadPdf(product)}
+                            className="px-4 py-2 rounded-xl bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover transition-colors shadow-md"
+                          >
+                            {product.discountPrice === 0 ? 'Download PDF ⬇️' : 'Buy Now'}
+                          </button>
+                        </div>
                       </div>
                     </div>
-
-                    {/* Footer Actions */}
-                    <div className="p-6 pt-0 border-t border-white/5 mt-4 flex items-center justify-between">
-                      <div>
-                        <div className="text-[10px] text-zinc-500 line-through">₹{product.price.toLocaleString()}</div>
-                        <div className="text-lg font-extrabold text-white">₹{product.discountPrice.toLocaleString()}</div>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <button 
-                          onClick={() => setActiveModalProduct(product)}
-                          className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-colors"
-                        >
-                          Details
-                        </button>
-                        <button 
-                          onClick={() => handleBuyNow(product)}
-                          className="px-4 py-2 rounded-xl bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover transition-colors shadow-md"
-                        >
-                          Buy Now
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </main>
+
+          {/* NOTIFY ME / WAITLIST MODAL */}
+          {notifyProduct && (
+            <div className="fixed inset-0 z-50 glass-dark flex items-center justify-center p-4">
+              <div className="bg-brand-darkCard border border-brand-gold/40 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 text-white relative shadow-2xl animate-fadeIn">
+                <button 
+                  onClick={() => setNotifyProduct(null)}
+                  className="absolute top-6 right-6 text-zinc-400 hover:text-white p-1 text-xl font-bold"
+                >
+                  ✕
+                </button>
+
+                <div className="text-center space-y-2">
+                  <div className="w-12 h-12 rounded-full bg-brand-gold/20 text-brand-gold border border-brand-gold/40 flex items-center justify-center mx-auto text-xl">
+                    🔔
+                  </div>
+                  <span className="text-[10px] font-mono text-brand-gold font-bold uppercase tracking-widest">VIP LAUNCH WAITLIST</span>
+                  <h3 className="text-xl font-bold">{notifyProduct.title}</h3>
+                  <p className="text-xs text-zinc-400">Be first to access this asset when it launches + get an exclusive 30% early bird code.</p>
+                </div>
+
+                {notifyMsg ? (
+                  <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold text-center">
+                    ✓ {notifyMsg}
+                  </div>
+                ) : (
+                  <form onSubmit={handleNotifySubmit} className="space-y-4 text-xs">
+                    <div>
+                      <label className="block text-zinc-300 font-bold mb-1">Your Name</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Vikram Sharma"
+                        value={notifyName}
+                        onChange={(e) => setNotifyName(e.target.value)}
+                        className="w-full p-3 rounded-xl bg-black border border-white/20 text-white focus:border-brand-gold focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-zinc-300 font-bold mb-1">Work Email Address *</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="you@company.com"
+                        value={notifyEmail}
+                        onChange={(e) => setNotifyEmail(e.target.value)}
+                        className="w-full p-3 rounded-xl bg-black border border-white/20 text-white focus:border-brand-gold focus:outline-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-3.5 rounded-full bg-brand-gold hover:bg-brand-goldHover text-black font-extrabold text-xs transition-all gold-glow shadow-xl"
+                    >
+                      Join Launch Waitlist →
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* PDF PREVIEW MODAL */}
+          {pdfPreviewProduct && (
+            <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col justify-between p-4 sm:p-8">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-xl">📄</span>
+                  <div>
+                    <h3 className="text-base font-bold text-white">{pdfPreviewProduct.title}</h3>
+                    <p className="text-xs text-zinc-400">Official PDF Preview • 18 Pages • 23.3 MB</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => handleDownloadPdf(pdfPreviewProduct)}
+                    className="px-5 py-2.5 rounded-full bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover"
+                  >
+                    Download Full PDF ⬇️
+                  </button>
+                  <button
+                    onClick={() => setPdfPreviewProduct(null)}
+                    className="p-2 text-zinc-400 hover:text-white text-xl font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex-1 my-4 bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 flex items-center justify-center">
+                <iframe
+                  src={`/api/download/${pdfPreviewProduct.id}?preview=true`}
+                  className="w-full h-full border-none rounded-2xl"
+                  title="PDF Preview"
+                ></iframe>
+              </div>
+            </div>
+          )}
 
           {/* Product Details Drawer Modal */}
           {activeModalProduct && (
@@ -370,7 +582,7 @@
                 </button>
 
                 <div className="flex flex-col sm:flex-row gap-6 items-start border-b border-white/10 pb-6">
-                  <img src={activeModalProduct.thumbnail} alt={activeModalProduct.title} className="w-full sm:w-48 aspect-video sm:aspect-square object-cover rounded-2xl border border-white/10" />
+                  <img src={activeModalProduct.thumbnail} alt={activeModalProduct.title} className="w-full sm:w-48 aspect-[3/4] object-cover rounded-2xl border border-white/10" />
                   <div className="space-y-2 flex-1">
                     <span className="px-3 py-1 rounded-full bg-brand-gold/10 text-brand-gold text-[10px] font-bold uppercase border border-brand-gold/20">
                       {activeModalProduct.category}
@@ -378,11 +590,18 @@
                     <h2 className="text-xl sm:text-2xl font-bold">{activeModalProduct.title}</h2>
                     <div className="flex items-center gap-3 text-xs text-zinc-400">
                       <span className="text-amber-400">★ {activeModalProduct.rating || '4.9'} ({activeModalProduct.reviewsCount || 50} ratings)</span>
-                      <span>Version: {activeModalProduct.version || 'v2.0'}</span>
-                      <span>Updated: {activeModalProduct.lastUpdated || '2026-07'}</span>
+                      <span>Version: {activeModalProduct.version || 'v2.5'}</span>
                     </div>
+
+                    {activeModalProduct.id === 'dp_pr_checklist' && (
+                      <div className="p-3 rounded-xl bg-black border border-brand-gold/30 font-mono text-xs space-y-1 text-zinc-300 my-2">
+                        <div className="text-brand-gold font-bold flex items-center gap-1">📄 MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf</div>
+                        <div>File Size: 23.3 MB • Pages: 18 Pages</div>
+                      </div>
+                    )}
+
                     <div className="text-2xl font-extrabold text-brand-gold pt-2">
-                      ₹{activeModalProduct.discountPrice.toLocaleString()} <span className="text-xs text-zinc-500 line-through font-normal">₹{activeModalProduct.price.toLocaleString()}</span>
+                      {activeModalProduct.discountPrice === 0 ? 'FREE PDF' : `₹${activeModalProduct.discountPrice.toLocaleString()}`}
                     </div>
                   </div>
                 </div>
@@ -405,22 +624,9 @@
                   </div>
                 )}
 
-                {activeModalProduct.learningOutcomes && (
-                  <div className="space-y-3">
-                    <h4 className="text-xs font-bold text-white uppercase tracking-wider">Key Outcomes</h4>
-                    <ul className="space-y-1 text-xs text-zinc-300">
-                      {activeModalProduct.learningOutcomes.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <span className="text-brand-gold font-bold">•</span> {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
                 <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="text-xs text-zinc-400">
-                    🔒 Instant Secure Download • 256-Bit SSL Encrypted • GST Invoice Included
+                    🔒 Instant PDF Download • 256-Bit SSL Encrypted
                   </div>
                   <div className="flex gap-3 w-full sm:w-auto">
                     <button 
@@ -430,10 +636,10 @@
                       Close
                     </button>
                     <button 
-                      onClick={() => { setActiveModalProduct(null); handleBuyNow(activeModalProduct); }}
+                      onClick={() => { setActiveModalProduct(null); handleDownloadPdf(activeModalProduct); }}
                       className="flex-1 sm:flex-none px-8 py-3 rounded-full bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover gold-glow"
                     >
-                      Instant Buy Now →
+                      Instant Download PDF ⬇️
                     </button>
                   </div>
                 </div>

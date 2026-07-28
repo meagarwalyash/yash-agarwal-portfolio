@@ -648,15 +648,39 @@ app.post('/api/verify-payment', (req, res) => {
 app.get('/api/download/:productId', (req, res) => {
   try {
     const { productId } = req.params;
-    const { email } = req.query;
+    const { email, preview } = req.query;
+
+    const db = getDB();
+
+    // Check if real PDF exists for this product (Zero-Budget PR Audit Checklist)
+    if (productId === 'dp_pr_checklist' || productId === 'fr1' || productId === 'sample') {
+      const realPdfPath = path.join(__dirname, 'EBOOKS', 'MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf');
+      if (fs.existsSync(realPdfPath)) {
+        if (email) {
+          db.downloads.unshift({
+            id: 'dl_evt_' + Date.now(),
+            itemId: productId,
+            customerEmail: email,
+            timestamp: new Date().toISOString()
+          });
+          saveDB(db);
+        }
+
+        res.setHeader('Content-Type', 'application/pdf');
+        if (preview === 'true') {
+          res.setHeader('Content-Disposition', 'inline; filename="MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf"');
+        } else {
+          res.setHeader('Content-Disposition', 'attachment; filename="MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf"');
+        }
+        return res.sendFile(realPdfPath);
+      }
+    }
 
     if (!email) {
       return res.status(401).send('<h1>Access Denied</h1><p>Email parameter required for secure download verification.</p>');
     }
 
-    const db = getDB();
     const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
-
     if (!user) {
       return res.status(403).send('<h1>Access Denied</h1><p>Customer record not found.</p>');
     }
@@ -680,6 +704,95 @@ app.get('/api/download/:productId', (req, res) => {
     res.send(`OFFICIAL MAY EXECUTIVE PRODUCT PAYLOAD FOR ${productId}.\nCustomer: ${email}\nGenerated IST 2026.`);
   } catch (err) {
     res.status(500).send('Download error: ' + err.message);
+  }
+});
+
+// ==========================================
+// 3B. PRODUCT WAITLIST & NOTIFY ME API
+// ==========================================
+
+// POST /api/waitlist/join
+app.post('/api/waitlist/join', (req, res) => {
+  try {
+    const { productId, productName, email, customerName } = req.body;
+    if (!email || !productId) {
+      return res.status(400).json({ status: 'error', message: 'Email and Product ID are required.' });
+    }
+
+    const db = getDB();
+    if (!db.productWaitlist) db.productWaitlist = [];
+
+    const normalizedEmail = email.toLowerCase().trim();
+    const existing = db.productWaitlist.find(w => w.productId === productId && w.customerEmail.toLowerCase() === normalizedEmail);
+
+    if (existing) {
+      return res.status(200).json({ status: 'info', message: 'You are already registered on the VIP launch waitlist for this product!' });
+    }
+
+    const waitlistEntry = {
+      id: 'wl_' + Date.now(),
+      productId,
+      productName: productName || 'Digital Product',
+      customerName: customerName || normalizedEmail.split('@')[0],
+      customerEmail: normalizedEmail,
+      createdAt: new Date().toISOString(),
+      status: 'Pending'
+    };
+
+    db.productWaitlist.unshift(waitlistEntry);
+    saveDB(db);
+
+    // Send confirmation email
+    sendEmail({
+      to: normalizedEmail,
+      subject: `🔒 VIP Launch Waitlist Confirmed: ${waitlistEntry.productName}`,
+      html: `<p>Hi ${waitlistEntry.customerName},</p><p>You are officially registered on the VIP launch waitlist for <strong>${waitlistEntry.productName}</strong>.</p><p>You will receive an exclusive launch discount code when this product goes live!</p>`,
+      emailType: 'Waitlist Confirmation',
+      customerEmail: normalizedEmail
+    });
+
+    return res.status(200).json({ status: 'success', message: 'Successfully joined the VIP launch waitlist!', entry: waitlistEntry });
+  } catch (err) {
+    return res.status(500).json({ status: 'error', message: err.message });
+  }
+});
+
+// GET /api/admin/waitlist
+app.get('/api/admin/waitlist', (req, res) => {
+  try {
+    const db = getDB();
+    return res.status(200).json({ status: 'success', waitlist: db.productWaitlist || [] });
+  } catch (err) {
+    return res.status(500).json({ status: 'error', message: err.message });
+  }
+});
+
+// POST /api/admin/waitlist/notify
+app.post('/api/admin/waitlist/notify', (req, res) => {
+  try {
+    const { productId } = req.body;
+    const db = getDB();
+    if (!db.productWaitlist) db.productWaitlist = [];
+
+    const subscribers = db.productWaitlist.filter(w => w.productId === productId && w.status !== 'Notified');
+    let notifiedCount = 0;
+
+    subscribers.forEach(sub => {
+      sub.status = 'Notified';
+      notifiedCount++;
+      sendEmail({
+        to: sub.customerEmail,
+        subject: `🚀 LAUNCH ALERT: ${sub.productName} is NOW LIVE!`,
+        html: `<p>Hi ${sub.customerName},</p><p>Great news! <strong>${sub.productName}</strong> is officially LIVE in the MAY Digital Store.</p><p><a href="https://meagarwalyash.com/store.html">Get Instant Access Now →</a></p>`,
+        emailType: 'Waitlist Launch Alert',
+        customerEmail: sub.customerEmail
+      });
+    });
+
+    saveDB(db);
+    return res.status(200).json({ status: 'success', message: `Launch notification emails sent to ${notifiedCount} waitlist subscribers!`, count: notifiedCount });
+  } catch (err) {
+    return res.status(500).json({ status: 'error', message: err.message });
   }
 });
 
