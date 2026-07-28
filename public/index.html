@@ -249,6 +249,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin></script>
 
+  <!-- Razorpay Checkout SDK & MAY Platform Authentication & Payment Engines -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/payments.js"></script>
+
   <!-- Google Translate Element Script (Async & Non-blocking) -->
   <script type="text/javascript">
     function googleTranslateElementInit() {
@@ -913,14 +918,28 @@
           onboarding: obData
         };
 
+        const itemDetails = {
+          id: selectedPackage.id,
+          title: `${selectedPackage.name} - Executive Growth Package`,
+          price: totalAmount,
+          type: 'package'
+        };
+
+        const userDetails = {
+          name: obData.fullName,
+          email: obData.email,
+          phone: obData.phone,
+          gst: obData.gstNumber
+        };
+
         if (window.MAY_PaymentEngine) {
           window.MAY_PaymentEngine.processCheckout(
-            totalAmount,
-            orderDetails,
+            itemDetails,
+            userDetails,
             (res) => {
               setOnboardingCompletedOrder({
-                orderId: orderDetails.orderId,
-                paymentId: res.razorpay_payment_id || 'pay_live_verified',
+                orderId: res.orderId || orderDetails.orderId,
+                paymentId: res.paymentId || res.razorpay_payment_id || 'pay_live_verified',
                 packageName: selectedPackage.name,
                 amountPaid: totalAmount,
                 customerEmail: obData.email,
@@ -929,11 +948,13 @@
               setOnboardingStep(4);
             },
             (err) => {
-              alert('Payment Error: ' + (err.message || 'Transaction could not be completed. Please try again.'));
+              if (err && err.message !== 'Payment cancelled by user') {
+                alert('Payment Notice: ' + (err.message || 'Transaction could not be completed. Please try again.'));
+              }
             }
           );
         } else {
-          alert('Payment Engine Initializing... Please try again.');
+          alert('Payment Engine Initializing... Please wait 2 seconds and try again.');
         }
       };
 
