@@ -677,6 +677,14 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                 </button>
 
                 <button
+                  onClick={() => setActiveTab('subscriptions')}
+                  className={`w-full text-left px-3.5 py-3 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeTab === 'subscriptions' ? 'bg-brand-gold text-black shadow-md' : 'text-zinc-300 hover:bg-white/5'}`}
+                >
+                  <i data-lucide="users" className="w-4 h-4"></i>
+                  <span>Client Retainers & MRR</span>
+                </button>
+
+                <button
                   onClick={() => setActiveTab('orders')}
                   className={`w-full text-left px-3.5 py-3 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeTab === 'orders' ? 'bg-brand-gold text-black shadow-md' : 'text-zinc-300 hover:bg-white/5'}`}
                 >
@@ -1840,201 +1848,138 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                         ))}
                       </div>
                     )}
-                  {/* TAB: ANALYTICS & BUSINESS METRICS */}
-                  {activeTab === 'analytics' && (
-                    <div className="space-y-6 max-w-6xl mx-auto">
-                      <div className="border-b border-[#232230] pb-4">
-                        <h2 className="text-2xl font-bold text-white">Platform Analytics & Financial Metrics</h2>
-                        <p className="text-xs text-zinc-400 mt-1">Real-time revenue, conversion rates, customer lifetime value, and traffic attribution.</p>
-                      </div>
+                  </div>
+                </div>
+              )}
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
-                          <span className="text-[10px] text-zinc-400 font-mono uppercase font-bold">TOTAL REVENUE</span>
-                          <div className="text-2xl font-extrabold text-brand-gold">₹{((cmsData.analytics && cmsData.analytics.totalRevenue) || 1485000).toLocaleString()}</div>
-                          <span className="text-[10px] text-emerald-400">↑ 14.5% vs last month</span>
-                        </div>
-                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
-                          <span className="text-[10px] text-zinc-400 font-mono uppercase font-bold">TOTAL ORDERS</span>
-                          <div className="text-2xl font-extrabold text-white">{(cmsData.analytics && cmsData.analytics.totalOrders) || 142}</div>
-                          <span className="text-[10px] text-emerald-400">100% Verified via Razorpay</span>
-                        </div>
-                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
-                          <span className="text-[10px] text-zinc-400 font-mono uppercase font-bold">AVERAGE ORDER VALUE</span>
-                          <div className="text-2xl font-extrabold text-white">₹{((cmsData.analytics && cmsData.analytics.averageOrderValue) || 10457).toLocaleString()}</div>
-                          <span className="text-[10px] text-zinc-400">High-Ticket Advisory Boost</span>
-                        </div>
-                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
-                          <span className="text-[10px] text-zinc-400 font-mono uppercase font-bold">LEAD SUBSCRIBERS</span>
-                          <div className="text-2xl font-extrabold text-white">{(cmsData.subscribers || []).length + 4850}</div>
-                          <span className="text-[10px] text-emerald-400">Active Email List</span>
-                        </div>
-                      </div>
+              {/* TAB: ANALYTICS & BUSINESS METRICS */}
+              {activeTab === 'analytics' && (
+                <div className="space-y-6 max-w-6xl mx-auto">
+                  <div className="border-b border-[#232230] pb-4">
+                    <h2 className="text-2xl font-bold text-white">Platform Analytics & Financial Metrics</h2>
+                    <p className="text-xs text-zinc-400 mt-1">Real-time revenue, conversion rates, customer lifetime value, and traffic attribution.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                      <span className="text-[10px] text-zinc-400 font-mono uppercase font-bold">TOTAL REVENUE</span>
+                      <div className="text-2xl font-extrabold text-brand-gold">₹{((cmsData.analytics && cmsData.analytics.totalRevenue) || 1485000).toLocaleString()}</div>
+                      <span className="text-[10px] text-emerald-400">↑ 14.5% vs last month</span>
                     </div>
-                  )}
+                    <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                      <span className="text-[10px] text-zinc-400 font-mono uppercase font-bold">TOTAL ORDERS</span>
+                      <div className="text-2xl font-extrabold text-white">{(cmsData.analytics && cmsData.analytics.totalOrders) || 142}</div>
+                      <span className="text-[10px] text-emerald-400">100% Verified via Razorpay</span>
+                    </div>
+                    <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                      <span className="text-[10px] text-zinc-400 font-mono uppercase font-bold">AVERAGE ORDER VALUE</span>
+                      <div className="text-2xl font-extrabold text-white">₹{((cmsData.analytics && cmsData.analytics.averageOrderValue) || 10457).toLocaleString()}</div>
+                      <span className="text-[10px] text-zinc-400">High-Ticket Advisory Boost</span>
+                    </div>
+                    <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                      <span className="text-[10px] text-zinc-400 font-mono uppercase font-bold">LEAD SUBSCRIBERS</span>
+                      <div className="text-2xl font-extrabold text-white">{(cmsData.subscribers || []).length + 4850}</div>
+                      <span className="text-[10px] text-emerald-400">Active Email List</span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
-                  {/* TAB: FREE LEAD MAGNETS */}
-                  {activeTab === 'resources' && (
-                    <div className="space-y-6 max-w-6xl mx-auto">
-                      <div className="flex justify-between items-center border-b border-[#232230] pb-4">
+              {/* TAB: FREE LEAD MAGNETS */}
+              {activeTab === 'resources' && (
+                <div className="space-y-6 max-w-6xl mx-auto">
+                  <div className="flex justify-between items-center border-b border-[#232230] pb-4">
+                    <div>
+                      <h2 className="text-2xl font-bold text-white">Free Lead Magnets & Opt-in Engine</h2>
+                      <p className="text-xs text-zinc-400 mt-1">Manage free PDF downloads, audit checklists, and lead capture forms.</p>
+                    </div>
+                    <button onClick={() => alert('Add New Lead Magnet Modal launched!')} className="px-5 py-2 rounded-full bg-brand-gold text-black font-bold text-xs">+ Add Lead Magnet</button>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {(cmsData.freeResources || []).map(r => (
+                      <div key={r.id} className="p-5 rounded-2xl bg-[#14131B] border border-white/10 flex justify-between items-center">
                         <div>
-                          <h2 className="text-2xl font-bold text-white">Free Lead Magnets & Opt-in Engine</h2>
-                          <p className="text-xs text-zinc-400 mt-1">Manage free PDF downloads, audit checklists, and lead capture forms.</p>
+                          <span className="text-[10px] text-brand-gold font-mono font-bold uppercase">{r.category}</span>
+                          <h4 className="text-sm font-bold text-white">{r.title}</h4>
+                          <p className="text-xs text-zinc-400 mt-1">{r.downloadsCount} Total Downloads</p>
                         </div>
-                        <button onClick={() => alert('Add New Lead Magnet Modal launched!')} className="px-5 py-2 rounded-full bg-brand-gold text-black font-bold text-xs">+ Add Lead Magnet</button>
+                        <span className="text-xs font-bold text-emerald-400 bg-emerald-950 px-3 py-1 rounded-full">LIVE 🟢</span>
                       </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {(cmsData.freeResources || []).map(r => (
-                          <div key={r.id} className="p-5 rounded-2xl bg-[#14131B] border border-white/10 flex justify-between items-center">
-                            <div>
-                              <span className="text-[10px] text-brand-gold font-mono font-bold uppercase">{r.category}</span>
-                              <h4 className="text-sm font-bold text-white">{r.title}</h4>
-                              <p className="text-xs text-zinc-400 mt-1">{r.downloadsCount} Total Downloads</p>
-                            </div>
-                            <span className="text-xs font-bold text-emerald-400 bg-emerald-950 px-3 py-1 rounded-full">LIVE 🟢</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+              {/* TAB: CONSULTING BOOKINGS */}
+              {activeTab === 'consulting' && (
+                <div className="space-y-6 max-w-6xl mx-auto">
+                  <div className="border-b border-[#232230] pb-4">
+                    <h2 className="text-2xl font-bold text-white">Consulting & Executive Advisory Packages</h2>
+                    <p className="text-xs text-zinc-400 mt-1">Manage 1-on-1 strategy sessions, corporate trainings, and retainer fees.</p>
+                  </div>
 
-                  {/* TAB: CONSULTING BOOKINGS */}
-                  {activeTab === 'consulting' && (
-                    <div className="space-y-6 max-w-6xl mx-auto">
-                      <div className="border-b border-[#232230] pb-4">
-                        <h2 className="text-2xl font-bold text-white">Consulting & Executive Advisory Packages</h2>
-                        <p className="text-xs text-zinc-400 mt-1">Manage 1-on-1 strategy sessions, corporate trainings, and retainer fees.</p>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {(cmsData.consultingOptions || []).map(c => (
-                          <div key={c.id} className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-2">
-                            <div className="flex justify-between items-center">
-                              <span className="text-[10px] text-brand-gold font-mono font-bold">{c.duration}</span>
-                              <span className="text-sm font-extrabold text-white">₹{c.discountPrice.toLocaleString()}</span>
-                            </div>
-                            <h4 className="text-sm font-bold text-white">{c.title}</h4>
-                            <p className="text-xs text-zinc-400">{c.desc}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TAB: ORDERS & PAYMENTS */}
-                  {activeTab === 'orders' && (
-                    <div className="space-y-6 max-w-6xl mx-auto">
-                      <div className="border-b border-[#232230] pb-4 flex justify-between items-center">
-                        <div>
-                          <h2 className="text-2xl font-bold text-white">Razorpay Orders & Tax Invoices</h2>
-                          <p className="text-xs text-zinc-400 mt-1">Live customer orders verified through Razorpay backend API.</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {(cmsData.consultingOptions || []).map(c => (
+                      <div key={c.id} className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-[10px] text-brand-gold font-mono font-bold">{c.duration}</span>
+                          <span className="text-sm font-extrabold text-white">₹{c.discountPrice.toLocaleString()}</span>
                         </div>
-                        <button
-                          onClick={async () => {
-                            try {
-                              const r = await fetch('/api/admin/data');
-                              const d = await r.json();
-                              if (d.status === 'success') {
-                                setCmsData(prev => ({ ...prev, dbData: d.data }));
-                                alert('✓ Realtime Order & Customer database synced!');
-                              }
-                            } catch(e) {}
-                          }}
-                          className="px-4 py-2 rounded-full bg-brand-gold text-black text-xs font-bold shadow-md"
-                        >
-                          🔄 Refresh Orders DB
-                        </button>
+                        <h4 className="text-sm font-bold text-white">{c.title}</h4>
+                        <p className="text-xs text-zinc-400">{c.desc}</p>
                       </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-                      {/* Orders Table */}
-                      <div className="p-6 rounded-2xl bg-[#14131B] border border-white/10 space-y-4">
-                        <h3 className="text-sm font-bold text-white">Live Verified Orders</h3>
-                        <div className="overflow-x-auto">
-                          <table className="w-full text-left text-xs text-zinc-300">
-                            <thead className="bg-black text-zinc-400 uppercase font-mono font-bold border-b border-white/10">
-                              <tr>
-                                <th className="p-3">Order ID</th>
-                                <th className="p-3">Customer</th>
-                                <th className="p-3">Item Purchased</th>
-                                <th className="p-3">Amount</th>
-                                <th className="p-3">Payment ID</th>
-                                <th className="p-3">Invoice</th>
-                                <th className="p-3">Date</th>
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/5">
-                              {((cmsData.orders || []).concat((cmsData.dbData && cmsData.dbData.orders) || [])).map((ord, idx) => (
-                                <tr key={idx} className="hover:bg-white/5">
-                                  <td className="p-3 font-mono text-brand-gold font-bold">{ord.orderId}</td>
-                                  <td className="p-3">
-                                    <div className="font-bold text-white">{ord.customerName || ord.userName}</div>
-                                    <div className="text-[10px] text-zinc-400">{ord.customerEmail || ord.userEmail}</div>
-                                  </td>
-                                  <td className="p-3 font-bold text-white">{ord.itemTitle}</td>
-                                  <td className="p-3 font-bold text-brand-gold">₹{(ord.amount || 0).toLocaleString()}</td>
-                                  <td className="p-3 font-mono text-zinc-400">{ord.paymentId || 'Captured'}</td>
-                                  <td className="p-3 font-mono text-emerald-400">{ord.invoiceNo || 'INV-2026-1049'}</td>
-                                  <td className="p-3 text-zinc-400">{ord.timestamp ? new Date(ord.timestamp).toLocaleDateString() : 'Recent'}</td>
-                                </tr>
-                              ))}
-                              {(!cmsData.orders && (!cmsData.dbData || !cmsData.dbData.orders || cmsData.dbData.orders.length === 0)) && (
-                                <tr>
-                                  <td colSpan="7" className="p-6 text-center text-zinc-500 font-mono">No live orders recorded yet. Complete a checkout on store.html to see real orders appear here automatically.</td>
-                                </tr>
-                              )}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
+              {/* TAB: CUSTOMERS & CRM */}
+              {activeTab === 'customers' && (
+                <div className="space-y-6 max-w-6xl mx-auto">
+                  <div className="border-b border-[#232230] pb-4">
+                    <h2 className="text-2xl font-bold text-white">Customers & Registered Users CRM</h2>
+                    <p className="text-xs text-zinc-400 mt-1">Registered customer accounts and authorized store purchasers.</p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-[#14131B] border border-white/10 space-y-4">
+                    <h3 className="text-sm font-bold text-white">Customer Database</h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs text-zinc-300">
+                        <thead className="bg-black text-zinc-400 uppercase font-mono font-bold border-b border-white/10">
+                          <tr>
+                            <th className="p-3">Customer Name</th>
+                            <th className="p-3">Email Address</th>
+                            <th className="p-3">Phone</th>
+                            <th className="p-3">Member Tier</th>
+                            <th className="p-3">Account Status</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                          {((cmsData.dbData && cmsData.dbData.users) || []).map((u, i) => (
+                            <tr key={i} className="hover:bg-white/5">
+                              <td className="p-3 font-bold text-white">{u.name}</td>
+                              <td className="p-3 text-zinc-300">{u.email}</td>
+                              <td className="p-3 text-zinc-400">{u.phone || 'N/A'}</td>
+                              <td className="p-3 font-bold text-brand-gold">{u.memberTier || 'Pro Executive'}</td>
+                              <td className="p-3">
+                                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${u.status === 'Disabled' ? 'bg-red-500/20 text-red-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
+                                  {u.status || 'Active'}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                          {(!cmsData.dbData || !cmsData.dbData.users || cmsData.dbData.users.length === 0) && (
+                            <tr>
+                              <td colSpan="5" className="p-6 text-center text-zinc-500 font-mono">No customer accounts registered yet. Customers register via dashboard.html or during checkout.</td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
                     </div>
-                  )}
-
-                  {/* TAB: CUSTOMERS & CRM */}
-                  {activeTab === 'customers' && (
-                    <div className="space-y-6 max-w-6xl mx-auto">
-                      <div className="border-b border-[#232230] pb-4">
-                        <h2 className="text-2xl font-bold text-white">Customers & Registered Users CRM</h2>
-                        <p className="text-xs text-zinc-400 mt-1">Registered customer accounts and authorized store purchasers.</p>
-                      </div>
-
-                      <div className="p-6 rounded-2xl bg-[#14131B] border border-white/10 space-y-4">
-                        <h3 className="text-sm font-bold text-white">Customer Database</h3>
-                        <div className="overflow-x-auto">
-                          <table className="w-full text-left text-xs text-zinc-300">
-                            <thead className="bg-black text-zinc-400 uppercase font-mono font-bold border-b border-white/10">
-                              <tr>
-                                <th className="p-3">Customer Name</th>
-                                <th className="p-3">Email Address</th>
-                                <th className="p-3">Phone</th>
-                                <th className="p-3">Member Tier</th>
-                                <th className="p-3">Account Status</th>
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/5">
-                              {((cmsData.dbData && cmsData.dbData.users) || []).map((u, i) => (
-                                <tr key={i} className="hover:bg-white/5">
-                                  <td className="p-3 font-bold text-white">{u.name}</td>
-                                  <td className="p-3 text-zinc-300">{u.email}</td>
-                                  <td className="p-3 text-zinc-400">{u.phone || 'N/A'}</td>
-                                  <td className="p-3 font-bold text-brand-gold">{u.memberTier || 'Pro Executive'}</td>
-                                  <td className="p-3">
-                                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${u.status === 'Disabled' ? 'bg-red-500/20 text-red-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
-                                      {u.status || 'Active'}
-                                    </span>
-                                  </td>
-                                </tr>
-                              ))}
-                              {(!cmsData.dbData || !cmsData.dbData.users || cmsData.dbData.users.length === 0) && (
-                                <tr>
-                                  <td colSpan="5" className="p-6 text-center text-zinc-500 font-mono">No customer accounts registered yet. Customers register via dashboard.html or during checkout.</td>
-                                </tr>
-                              )}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
+                  </div>
+                </div>
+              )}
                   {/* TAB: SEO & AI DISCOVERABILITY DASHBOARD */}
                   {activeTab === 'aiDiscoverability' && (
                     <div className="space-y-6 max-w-6xl mx-auto">
@@ -2145,6 +2090,184 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                                 <td className="p-3 text-brand-gold font-mono">meagarwalyash.com/#book</td>
                                 <td className="p-3 font-bold text-emerald-400">100% (Entity Match)</td>
                               </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                    </div>
+                  {/* TAB: CLIENT RETAINERS & MRR DASHBOARD */}
+                  {activeTab === 'subscriptions' && (
+                    <div className="space-y-6 max-w-6xl mx-auto">
+                      <div className="border-b border-[#232230] pb-4 flex justify-between items-center">
+                        <div>
+                          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                            <span>Client Subscriptions, MRR & Onboarding Manager</span>
+                            <span className="px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold text-[10px] font-mono font-bold uppercase">Executive P&L</span>
+                          </h2>
+                          <p className="text-xs text-zinc-400 mt-1">Manage active monthly retainers, update client onboarding stages, view questionnaires, and handle upgrades/cancellations.</p>
+                        </div>
+                        <button
+                          onClick={async () => {
+                            try {
+                              const r = await fetch('/api/admin/data');
+                              const d = await r.json();
+                              if (d.status === 'success') {
+                                setCmsData(prev => ({ ...prev, dbData: d.data }));
+                                alert('✓ Realtime Subscriptions & Onboarding database synced!');
+                              }
+                            } catch(e) {}
+                          }}
+                          className="px-4 py-2 rounded-full bg-brand-gold text-black text-xs font-bold shadow-md"
+                        >
+                          🔄 Refresh Retainers DB
+                        </button>
+                      </div>
+
+                      {/* MRR & CLIENT STATS */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-brand-gold/40 space-y-1">
+                          <div className="text-[10px] font-mono text-brand-gold font-bold uppercase">MONTHLY RECURRING REVENUE (MRR)</div>
+                          <div className="text-3xl font-extrabold text-white">
+                            ₹{(((cmsData.dbData && cmsData.dbData.subscriptions) || []).filter(s => s.status !== 'Cancelled').reduce((acc, s) => acc + (s.monthlyPrice || 150000), 0)).toLocaleString()}
+                          </div>
+                          <div className="text-[10px] text-zinc-400">Active Retainers Volume</div>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                          <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">ACTIVE RETAINER CLIENTS</div>
+                          <div className="text-3xl font-extrabold text-emerald-400">
+                            {(((cmsData.dbData && cmsData.dbData.subscriptions) || []).filter(s => s.status !== 'Cancelled')).length}
+                          </div>
+                          <div className="text-[10px] text-zinc-400">Growth, Scale & Dominance</div>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                          <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">PENDING KICKOFF CALLS</div>
+                          <div className="text-3xl font-extrabold text-brand-gold">
+                            {(((cmsData.dbData && cmsData.dbData.subscriptions) || []).filter(s => (s.onboardingStatus || '').includes('Pending'))).length}
+                          </div>
+                          <div className="text-[10px] text-zinc-400">Strategy Alignment Needed</div>
+                        </div>
+
+                        <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                          <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">TOTAL RETAINER SALES</div>
+                          <div className="text-3xl font-extrabold text-white">
+                            ₹{(((cmsData.dbData && cmsData.dbData.subscriptions) || []).reduce((acc, s) => acc + (s.amountPaid || 177000), 0)).toLocaleString()}
+                          </div>
+                          <div className="text-[10px] text-zinc-400">Verified Razorpay Payments</div>
+                        </div>
+                      </div>
+
+                      {/* CLIENT RETAINERS TABLE */}
+                      <div className="p-6 rounded-2xl bg-[#14131B] border border-white/10 space-y-4">
+                        <h3 className="text-sm font-bold text-white">Active Retainers & Onboarding Stages</h3>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs text-zinc-300">
+                            <thead className="bg-black text-zinc-400 uppercase font-mono font-bold border-b border-white/10">
+                              <tr>
+                                <th className="p-3">Client / Company</th>
+                                <th className="p-3">Package & Retainer</th>
+                                <th className="p-3">Onboarding Lifecycle Stage</th>
+                                <th className="p-3">Status</th>
+                                <th className="p-3">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                              {((cmsData.dbData && cmsData.dbData.subscriptions) || []).map((sub, sIdx) => (
+                                <tr key={sIdx} className="hover:bg-white/5">
+                                  <td className="p-3">
+                                    <div className="font-bold text-white">{sub.companyName || sub.customerName}</div>
+                                    <div className="text-[10px] text-brand-gold">{sub.website || sub.customerEmail}</div>
+                                    <div className="text-[10px] text-zinc-400">Contact: {sub.customerName} ({sub.whatsapp || 'N/A'})</div>
+                                  </td>
+                                  <td className="p-3">
+                                    <div className="font-bold text-white">{sub.packageName}</div>
+                                    <div className="text-brand-gold font-mono font-bold">₹{(sub.monthlyPrice || 150000).toLocaleString()} / mo</div>
+                                    <div className="text-[10px] text-zinc-400">Renews: {sub.renewalDate || 'Monthly'}</div>
+                                  </td>
+                                  <td className="p-3">
+                                    <select
+                                      value={sub.onboardingStatus || 'Kickoff Pending'}
+                                      onChange={async (e) => {
+                                        const newStatus = e.target.value;
+                                        try {
+                                          const r = await fetch('/api/admin/subscription/update-status', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({ subscriptionId: sub.id, onboardingStatus: newStatus })
+                                          });
+                                          const resData = await r.json();
+                                          if (resData.status === 'success') {
+                                            sub.onboardingStatus = newStatus;
+                                            alert(`✓ Onboarding stage updated to '${newStatus}'`);
+                                          }
+                                        } catch(err) { alert('Failed to update stage'); }
+                                      }}
+                                      className="p-2 rounded-xl bg-black border border-white/20 text-xs font-bold text-brand-gold focus:outline-none"
+                                    >
+                                      <option value="Payment Received">1. Payment Verified</option>
+                                      <option value="Kickoff Pending">2. Kickoff Pending</option>
+                                      <option value="Strategy Call Scheduled">3. Strategy Call Scheduled</option>
+                                      <option value="Content Collection Pending">4. Content Collection Pending</option>
+                                      <option value="Design Started">5. Design Started</option>
+                                      <option value="Campaign Setup">6. Campaign Setup</option>
+                                      <option value="Ads Ready">7. Ads Ready</option>
+                                      <option value="Monthly Reporting">8. Monthly Reporting</option>
+                                      <option value="Completed">9. Completed</option>
+                                    </select>
+                                  </td>
+                                  <td className="p-3">
+                                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${sub.status === 'Cancelled' ? 'bg-red-500/20 text-red-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
+                                      {sub.status || 'Active'}
+                                    </span>
+                                  </td>
+                                  <td className="p-3">
+                                    <div className="flex flex-col gap-1.5">
+                                      <button
+                                        onClick={() => {
+                                          alert(`📋 ONBOARDING QUESTIONNAIRE FOR ${sub.companyName || sub.customerName}:\n\n` +
+                                            `Industry: ${sub.industry || 'N/A'}\n` +
+                                            `Business Size: ${sub.businessSize || 'N/A'}\n` +
+                                            `Monthly Revenue: ${sub.monthlyRevenue || 'N/A'}\n` +
+                                            `Marketing Channels: ${(sub.marketingChannels || []).join(', ') || 'N/A'}\n` +
+                                            `Business Goals: ${sub.businessGoals || 'N/A'}\n` +
+                                            `Target Audience: ${sub.targetAudience || 'N/A'}\n` +
+                                            `WhatsApp: ${sub.whatsapp || 'N/A'}\n` +
+                                            `GST Number: ${sub.gstNumber || 'N/A'}`
+                                          );
+                                        }}
+                                        className="px-3 py-1 rounded-lg bg-white/10 text-white hover:bg-white/20 text-[10px] font-bold"
+                                      >
+                                        View Questionnaire 📋
+                                      </button>
+                                      <button
+                                        onClick={async () => {
+                                          if (confirm(`Cancel active retainer for ${sub.companyName}?`)) {
+                                            try {
+                                              await fetch('/api/admin/subscription/manage', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ subscriptionId: sub.id, action: 'Cancel' })
+                                              });
+                                              sub.status = 'Cancelled';
+                                              alert('Subscription cancelled.');
+                                            } catch(e) {}
+                                          }
+                                        }}
+                                        className="px-3 py-1 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 text-[10px] font-bold"
+                                      >
+                                        Cancel Retainer 🛑
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
+                              {(!cmsData.dbData || !cmsData.dbData.subscriptions || cmsData.dbData.subscriptions.length === 0) && (
+                                <tr>
+                                  <td colSpan="5" className="p-6 text-center text-zinc-500 font-mono">No active client retainers recorded yet. Clients onboard and pay via index.html#pricing.</td>
+                                </tr>
+                              )}
                             </tbody>
                           </table>
                         </div>

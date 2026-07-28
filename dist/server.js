@@ -480,64 +480,158 @@ app.post('/api/verify-payment', (req, res) => {
       accessGrantedAt: timestamp
     });
 
+    // 6. Store Subscription & Business Onboarding Form (if package/subscription purchase)
+    let subscriptionRecord = null;
+    if (details.onboarding || details.itemType === 'package' || details.isSubscription) {
+      const ob = details.onboarding || {};
+      const startDateStr = new Date().toISOString().split('T')[0];
+      const renewalDateObj = new Date();
+      renewalDateObj.setMonth(renewalDateObj.getMonth() + 1);
+      const renewalDateStr = renewalDateObj.toISOString().split('T')[0];
+
+      subscriptionRecord = {
+        id: 'sub_' + Date.now(),
+        orderId: orderId,
+        paymentId: razorpay_payment_id,
+        invoiceNo: invoiceNo,
+        customerName: userName,
+        customerEmail: userEmail,
+        companyName: ob.companyName || userName + ' Brand',
+        website: ob.website || '',
+        industry: ob.industry || 'General Business',
+        businessSize: ob.businessSize || 'Startup',
+        monthlyRevenue: ob.monthlyRevenue || 'Under ₹10L/mo',
+        marketingChannels: ob.marketingChannels || [],
+        businessGoals: ob.businessGoals || 'Scale Revenue',
+        targetAudience: ob.targetAudience || 'B2B/B2C',
+        whatsapp: ob.whatsapp || details.userPhone || '',
+        companyAddress: ob.companyAddress || '',
+        gstNumber: ob.gstNumber || details.userGst || '',
+        packageId: details.packageId || 'pkg_scale',
+        packageName: details.packageName || details.itemTitle || 'Scale Package',
+        monthlyPrice: details.monthlyPrice || details.amount || 150000,
+        amountPaid: Math.round((details.amount || 150000) * 1.18),
+        status: 'Active',
+        startDate: startDateStr,
+        renewalDate: renewalDateStr,
+        onboardingStatus: 'Kickoff Pending',
+        onboardingStep: 2,
+        onboardingStepsList: [
+          { step: 1, label: 'Payment Received', done: true, date: startDateStr },
+          { step: 2, label: 'Kickoff Pending', done: false, active: true },
+          { step: 3, label: 'Strategy Call Scheduled', done: false },
+          { step: 4, label: 'Content Collection Pending', done: false },
+          { step: 5, label: 'Design Started', done: false },
+          { step: 6, label: 'Campaign Setup', done: false },
+          { step: 7, label: 'Ads Ready', done: false },
+          { step: 8, label: 'Monthly Reporting', done: false }
+        ]
+      };
+
+      if (!db.subscriptions) db.subscriptions = [];
+      db.subscriptions.unshift(subscriptionRecord);
+
+      if (!db.onboardingForms) db.onboardingForms = [];
+      db.onboardingForms.unshift({
+        id: 'ob_' + Date.now(),
+        orderId: orderId,
+        customerEmail: userEmail,
+        ...ob,
+        submittedAt: timestamp
+      });
+
+      if (!user.activeSubscriptions) user.activeSubscriptions = [];
+      user.activeSubscriptions.unshift(subscriptionRecord);
+    }
+
     saveDB(db);
 
-    // 6. Send Email Automations
+    // 7. Send Email Automations
     // Customer Email from Yash Agarwal <yash@meagarwalyash.com>
     sendEmail({
       to: userEmail,
-      subject: `Order Confirmation & Receipt — ${orderId}`,
+      subject: subscriptionRecord 
+        ? `Welcome to ${subscriptionRecord.packageName}! Order Confirmation & Kickoff Details — ${orderId}`
+        : `Order Confirmation & Receipt — ${orderId}`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #EAE6DF; border-radius: 12px; color: #121212;">
-          <h2 style="color: #D4AF37; margin-top: 0;">Thank You For Your Purchase!</h2>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #EAE6DF; border-radius: 12px; color: #121212; background: #FFFFFF;">
+          <h2 style="color: #D4AF37; margin-top: 0;">Welcome to ${subscriptionRecord ? subscriptionRecord.packageName : 'Yash Agarwal Platform'}!</h2>
           <p>Hi ${userName},</p>
-          <p>Your payment has been successfully processed and verified. Here are your transaction details:</p>
+          <p>Your payment has been successfully verified. We are thrilled to partner with you to scale your brand authority and business revenue.</p>
 
-          <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-            <tr style="background: #FDF8EC;"><td style="padding: 10px; font-weight: bold;">Order ID</td><td style="padding: 10px;">${orderId}</td></tr>
-            <tr><td style="padding: 10px; font-weight: bold;">Payment ID</td><td style="padding: 10px;">${razorpay_payment_id}</td></tr>
-            <tr style="background: #FDF8EC;"><td style="padding: 10px; font-weight: bold;">Invoice Number</td><td style="padding: 10px;">${invoiceNo}</td></tr>
-            <tr><td style="padding: 10px; font-weight: bold;">Product Purchased</td><td style="padding: 10px;">${details.itemTitle}</td></tr>
-            <tr style="background: #FDF8EC;"><td style="padding: 10px; font-weight: bold;">Total Paid</td><td style="padding: 10px; font-size: 16px; color: #D4AF37; font-weight: bold;">₹${(details.amount || 9999).toLocaleString()}</td></tr>
-          </table>
+          <div style="background: #FDF8EC; border: 1px solid #E6D298; border-radius: 8px; padding: 16px; margin: 20px 0;">
+            <h4 style="margin: 0 0 10px 0; color: #B8860B;">Order & Plan Overview</h4>
+            <p style="margin: 4px 0;"><b>Package:</b> ${subscriptionRecord ? subscriptionRecord.packageName : details.itemTitle}</p>
+            <p style="margin: 4px 0;"><b>Order ID:</b> ${orderId}</p>
+            <p style="margin: 4px 0;"><b>Payment ID:</b> ${razorpay_payment_id}</p>
+            <p style="margin: 4px 0;"><b>Invoice No:</b> ${invoiceNo}</p>
+            <p style="margin: 4px 0;"><b>Total Paid (inc. 18% GST):</b> ₹${((details.amount || 9999) * 1.18).toLocaleString()}</p>
+          </div>
+
+          <h3 style="color: #121212; margin-top: 24px;">🚀 Next Steps for Your Onboarding:</h3>
+          <ol style="padding-left: 20px; line-height: 1.6;">
+            <li><b>Book Your 1-on-1 Kickoff Strategy Call:</b> Schedule your initial executive alignment session.</li>
+            <li><b>Access Your Customer Portal:</b> Track real-time campaign design progress, view tax invoices, and upload brand assets.</li>
+            <li><b>Strategy & Setup:</b> Our team will construct your custom growth architecture within 48 hours.</li>
+          </ol>
 
           <div style="text-align: center; margin: 30px 0;">
-            <a href="http://localhost:8085/dashboard.html" style="display: inline-block; padding: 14px 28px; background: #D4AF37; color: #000; font-weight: bold; text-decoration: none; border-radius: 8px;">Access Customer Dashboard & Downloads →</a>
+            <a href="http://localhost:8085/dashboard.html" style="display: inline-block; padding: 14px 28px; background: #D4AF37; color: #000; font-weight: bold; text-decoration: none; border-radius: 8px; margin-right: 10px;">Go to Customer Portal →</a>
+            <a href="https://calendly.com" target="_blank" style="display: inline-block; padding: 14px 28px; background: #121212; color: #FFF; font-weight: bold; text-decoration: none; border-radius: 8px;">Book Kickoff Call 📅</a>
           </div>
 
           <hr style="border: none; border-top: 1px solid #EAE6DF; margin: 20px 0;"/>
-          <p style="font-size: 12px; color: #666;">Need help? Contact support directly at <a href="mailto:yash@meagarwalyash.com">yash@meagarwalyash.com</a>.<br/>© 2026 Yash Agarwal. All Rights Reserved.</p>
+          <p style="font-size: 12px; color: #666;">Direct Executive Support: <a href="mailto:yash@meagarwalyash.com">yash@meagarwalyash.com</a><br/>© 2026 Yash Agarwal. All Rights Reserved.</p>
         </div>
       `,
-      emailType: 'Order Confirmation & Invoice',
+      emailType: subscriptionRecord ? 'Package Welcome & Invoice' : 'Order Confirmation & Invoice',
       customerEmail: userEmail,
       orderId: orderId
     });
 
     // Admin Alert to yash@meagarwalyash.com
+    const obData = details.onboarding || {};
     sendEmail({
       to: ADMIN_EMAIL,
-      subject: `💰 NEW SALE: ₹${(details.amount || 9999)} from ${userName}`,
+      subject: `💰 NEW CLIENT ONBOARDED: ${obData.companyName || userName} (${details.packageName || details.itemTitle})`,
       html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px;">
-          <h2 style="color: #2E7D32;">🎉 New Order Received!</h2>
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #121212;">
+          <h2 style="color: #2E7D32;">🎉 New Client Onboarding & Payment Alert!</h2>
           <p><b>Customer Name:</b> ${userName}</p>
-          <p><b>Customer Email:</b> ${userEmail}</p>
-          <p><b>Product:</b> ${details.itemTitle}</p>
-          <p><b>Order Amount:</b> ₹${(details.amount || 9999)}</p>
+          <p><b>Company Name:</b> ${obData.companyName || 'N/A'}</p>
+          <p><b>Website:</b> ${obData.website || 'N/A'}</p>
+          <p><b>Email:</b> ${userEmail}</p>
+          <p><b>Phone / WhatsApp:</b> ${obData.whatsapp || details.userPhone || 'N/A'}</p>
+          <p><b>Selected Package:</b> ${details.packageName || details.itemTitle}</p>
+          <p><b>Amount Paid:</b> ₹${((details.amount || 9999) * 1.18).toLocaleString()} (Inc GST)</p>
           <p><b>Order ID:</b> ${orderId}</p>
           <p><b>Razorpay Payment ID:</b> ${razorpay_payment_id}</p>
           <p><b>Invoice No:</b> ${invoiceNo}</p>
-          <p><b>Date & Time:</b> ${timestamp}</p>
+
+          <hr/>
+          <h3>📋 Onboarding Questionnaire Responses:</h3>
+          <p><b>Industry:</b> ${obData.industry || 'N/A'}</p>
+          <p><b>Business Size:</b> ${obData.businessSize || 'N/A'}</p>
+          <p><b>Current Monthly Revenue:</b> ${obData.monthlyRevenue || 'N/A'}</p>
+          <p><b>Current Marketing Channels:</b> ${(obData.marketingChannels || []).join(', ') || 'N/A'}</p>
+          <p><b>Primary Business Goals:</b> ${obData.businessGoals || 'N/A'}</p>
+          <p><b>Target Audience:</b> ${obData.targetAudience || 'N/A'}</p>
+          <p><b>GST Number:</b> ${obData.gstNumber || 'N/A'}</p>
         </div>
       `,
-      emailType: 'Admin Order Notification',
+      emailType: 'Admin Client Onboarding Alert',
       customerEmail: userEmail,
       orderId: orderId
     });
 
     return res.status(200).json({
       status: 'success',
+      message: 'Payment verified, onboarding recorded, and customer subscription created.',
+      order: orderRecord,
+      subscription: subscriptionRecord
+    });
+  } catch (err) {
+    console.error('Verify payment error:', err);
       message: 'Payment verified and order recorded permanently.',
       order: orderRecord
     });
@@ -669,6 +763,68 @@ app.post('/api/newsletter/subscribe', (req, res) => {
     });
 
     return res.status(200).json({ status: 'success', message: 'Subscribed successfully' });
+  } catch (err) {
+    return res.status(500).json({ status: 'error', message: err.message });
+  }
+// POST /api/admin/subscription/update-status
+app.post('/api/admin/subscription/update-status', (req, res) => {
+  try {
+    const { subscriptionId, onboardingStatus } = req.body;
+    const db = getDB();
+
+    if (!db.subscriptions) db.subscriptions = [];
+    const sub = db.subscriptions.find(s => s.id === subscriptionId);
+    if (!sub) return res.status(404).json({ status: 'error', message: 'Subscription not found.' });
+
+    sub.onboardingStatus = onboardingStatus;
+    const stepIdx = sub.onboardingStepsList.findIndex(st => st.label === onboardingStatus);
+    if (stepIdx >= 0) {
+      sub.onboardingStep = stepIdx + 1;
+      sub.onboardingStepsList.forEach((st, idx) => {
+        if (idx <= stepIdx) st.done = true;
+        st.active = (idx === stepIdx);
+      });
+    }
+
+    // Sync user record activeSubscriptions
+    db.users.forEach(u => {
+      if (u.activeSubscriptions) {
+        const uSub = u.activeSubscriptions.find(s => s.id === subscriptionId);
+        if (uSub) {
+          uSub.onboardingStatus = onboardingStatus;
+          uSub.onboardingStep = sub.onboardingStep;
+          uSub.onboardingStepsList = sub.onboardingStepsList;
+        }
+      }
+    });
+
+    saveDB(db);
+    return res.status(200).json({ status: 'success', message: `Status updated to '${onboardingStatus}'`, subscription: sub });
+  } catch (err) {
+    return res.status(500).json({ status: 'error', message: err.message });
+  }
+});
+
+// POST /api/admin/subscription/manage
+app.post('/api/admin/subscription/manage', (req, res) => {
+  try {
+    const { subscriptionId, action, newPackageName, newPrice } = req.body; // action: 'Upgrade' | 'Downgrade' | 'Cancel'
+    const db = getDB();
+
+    if (!db.subscriptions) db.subscriptions = [];
+    const sub = db.subscriptions.find(s => s.id === subscriptionId);
+    if (!sub) return res.status(404).json({ status: 'error', message: 'Subscription not found.' });
+
+    if (action === 'Cancel') {
+      sub.status = 'Cancelled';
+    } else if (action === 'Upgrade' || action === 'Downgrade') {
+      if (newPackageName) sub.packageName = newPackageName;
+      if (newPrice) sub.monthlyPrice = parseInt(newPrice, 10);
+      sub.status = 'Active';
+    }
+
+    saveDB(db);
+    return res.status(200).json({ status: 'success', message: `Subscription ${action.toLowerCase()}d successfully.`, subscription: sub });
   } catch (err) {
     return res.status(500).json({ status: 'error', message: err.message });
   }

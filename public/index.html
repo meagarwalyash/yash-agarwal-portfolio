@@ -807,7 +807,6 @@
       const [selectedBlog, setSelectedBlog] = useState(null);
       const [selectedNews, setSelectedNews] = useState(null);
       const [selectedCourse, setSelectedCourse] = useState(null);
-
       // Path Finder Interactive Selector State
       const [userGoal, setUserGoal] = useState('revenue');
 
@@ -819,6 +818,105 @@
 
       const [waitlistEmail, setWaitlistEmail] = useState('');
       const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+
+      // Onboarding Wizard & Pricing Modal States
+      const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+      const [onboardingStep, setOnboardingStep] = useState(1);
+      const [selectedPackage, setSelectedPackage] = useState({
+        id: 'pkg_scale',
+        name: 'Scale Package',
+        price: 150000,
+        tag: 'Best For Growing Businesses & SMEs'
+      });
+
+      const [obData, setObData] = useState({
+        companyName: '',
+        website: '',
+        industry: 'D2C & E-Commerce',
+        businessSize: '11-50 Employees',
+        monthlyRevenue: '₹10L - ₹50L/mo',
+        marketingChannels: ['Meta Ads (FB/IG)', 'Google Ads'],
+        businessGoals: 'Scale monthly revenue past ₹50L with positive payback ROAS.',
+        targetAudience: 'Tier 1 & Tier 2 Working Professionals & Founders',
+        fullName: '',
+        email: '',
+        phone: '',
+        whatsapp: '',
+        companyAddress: '',
+        gstNumber: '',
+        acceptTerms: false,
+        acceptPrivacy: false
+      });
+
+      const [onboardingCompletedOrder, setOnboardingCompletedOrder] = useState(null);
+
+      const handleLaunchOnboarding = (pkg) => {
+        setSelectedPackage(pkg);
+        setOnboardingStep(1);
+        const currentUser = window.MAY_AuthEngine ? window.MAY_AuthEngine.getCurrentUser() : null;
+        if (currentUser) {
+          setObData(prev => ({
+            ...prev,
+            fullName: currentUser.name || prev.fullName,
+            email: currentUser.email || prev.email,
+            phone: currentUser.phone || prev.phone,
+            whatsapp: currentUser.phone || prev.whatsapp,
+            gstNumber: currentUser.gst || prev.gstNumber
+          }));
+        }
+        setShowOnboardingModal(true);
+      };
+
+      const handleProceedToPayment = async () => {
+        if (!obData.acceptTerms || !obData.acceptPrivacy) {
+          alert('Please accept the Terms & Conditions and Privacy Policy to proceed.');
+          return;
+        }
+
+        const basePrice = selectedPackage.price;
+        const gstTax = Math.round(basePrice * 0.18);
+        const totalAmount = basePrice + gstTax;
+
+        const orderDetails = {
+          orderId: `MAY_SUB_${Math.floor(100000 + Math.random() * 900000)}`,
+          itemId: selectedPackage.id,
+          itemTitle: `${selectedPackage.name} (Monthly Management)`,
+          itemType: 'package',
+          isSubscription: true,
+          packageId: selectedPackage.id,
+          packageName: selectedPackage.name,
+          monthlyPrice: basePrice,
+          amount: basePrice,
+          userName: obData.fullName,
+          userEmail: obData.email,
+          userPhone: obData.phone,
+          userGst: obData.gstNumber,
+          onboarding: obData
+        };
+
+        if (window.MAY_PaymentEngine) {
+          window.MAY_PaymentEngine.processCheckout(
+            totalAmount,
+            orderDetails,
+            (res) => {
+              setOnboardingCompletedOrder({
+                orderId: orderDetails.orderId,
+                paymentId: res.razorpay_payment_id || 'pay_live_verified',
+                packageName: selectedPackage.name,
+                amountPaid: totalAmount,
+                customerEmail: obData.email,
+                customerName: obData.fullName
+              });
+              setOnboardingStep(4);
+            },
+            (err) => {
+              alert('Payment Error: ' + (err.message || 'Transaction could not be completed. Please try again.'));
+            }
+          );
+        } else {
+          alert('Payment Engine Initializing... Please try again.');
+        }
+      };
 
       const [currentTime, setCurrentTime] = useState('');
 
@@ -1464,6 +1562,12 @@
                 {/* Blog Link */}
                 <a href="blog.html" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
                   Blog
+                </a>
+
+                {/* Pricing Link */}
+                <a href="#pricing" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold flex items-center gap-1 text-marie-gold">
+                  <span>💳</span>
+                  <span>Pricing</span>
                 </a>
 
                 {/* Consulting Link */}
@@ -2800,6 +2904,208 @@
             </div>
           </section>
 
+          {/* ══════════════════════════════════════════════════════════
+               PRICING & SOCIAL MEDIA MANAGEMENT PACKAGES
+          ══════════════════════════════════════════════════════════ */}
+          <section id="pricing" className={`py-24 border-t relative overflow-hidden ${darkMode ? 'bg-[#0A090E] border-white/10' : 'bg-[#FAF8F5] border-marie-border'}`}>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10 space-y-12">
+              
+              <div className="text-center max-w-3xl mx-auto space-y-4 reveal-on-scroll">
+                <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-marie-gold/15 text-marie-gold border border-marie-gold/30">
+                  EXECUTIVE GROWTH & SOCIAL MEDIA MANAGEMENT
+                </span>
+                <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight">Predictable Revenue & Brand Dominance Packages</h2>
+                <div className="section-divider mx-auto"></div>
+                <p className={`text-base leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                  Full-stack social media execution, performance ad scaling, newsjacking PR, and personal brand authority handled by Yash Agarwal and an elite growth team.
+                </p>
+              </div>
+
+              {/* PRICING CARDS GRID */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch reveal-on-scroll">
+                
+                {/* PACKAGE 1: GROWTH */}
+                <div className={`${cardClass} rounded-3xl p-8 flex flex-col justify-between relative group hover:border-marie-gold/60 transition-all`}>
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">PACKAGE 01</span>
+                      <h3 className="text-2xl font-bold">Growth</h3>
+                      <p className="text-xs text-zinc-400 font-medium">Best For: Startups & Local Businesses</p>
+                    </div>
+
+                    <div className="py-4 border-y border-white/10 space-y-1">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-4xl font-extrabold text-white">₹50,000</span>
+                        <span className="text-xs font-bold text-zinc-400">/ Month</span>
+                      </div>
+                      <p className="text-[10px] text-zinc-500 font-mono">+ 18% GST • Monthly Retainer</p>
+                    </div>
+
+                    <ul className="space-y-3 text-xs text-zinc-300">
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>12 High-Converting Posts & Reels / Month</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Copywriting & Creative Hook Optimization</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Profile Branding & Bio Architecture</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Monthly Content Calendar Approval</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Hashtags & Keyword SEO Optimization</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Monthly Performance Analytics Report</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="pt-8">
+                    <button
+                      onClick={() => handleLaunchOnboarding({ id: 'pkg_growth', name: 'Growth Package', price: 50000, tag: 'Startups & Local Businesses' })}
+                      className="w-full py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2"
+                    >
+                      <span>Choose Growth Plan →</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* PACKAGE 2: SCALE (MOST POPULAR) */}
+                <div className={`${cardClass} rounded-3xl p-8 flex flex-col justify-between relative border-2 border-marie-gold shadow-2xl shadow-marie-gold/20 scale-105 z-10`}>
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-marie-gold text-black font-extrabold text-[10px] uppercase tracking-widest shadow-lg flex items-center gap-1">
+                    <span>⭐ MOST POPULAR</span>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="space-y-2 pt-2">
+                      <span className="text-[10px] font-bold text-marie-gold uppercase tracking-widest font-mono">PACKAGE 02</span>
+                      <h3 className="text-3xl font-extrabold text-white">Scale</h3>
+                      <p className="text-xs text-marie-gold font-bold">Best For: Growing Businesses & SMEs</p>
+                    </div>
+
+                    <div className="py-4 border-y border-marie-gold/30 space-y-1">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-5xl font-extrabold text-marie-gold">₹1,50,000</span>
+                        <span className="text-xs font-bold text-zinc-300">/ Month</span>
+                      </div>
+                      <p className="text-[10px] text-zinc-400 font-mono">+ 18% GST • Monthly Retainer</p>
+                    </div>
+
+                    <ul className="space-y-3.5 text-xs text-zinc-200">
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span><strong>20 Premium Multi-Format Posts & Reels</strong></span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span><strong>Paid Meta & Google Ads Campaign Management</strong> (Up to ₹5L Spend)</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span><strong>Tier-1 Newsjacking PR Pitching</strong> (Forbes & Business Standard)</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Daily Community Engagement & Lead Inbound Handling</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Weekly Creative Testing & UGC Ad Scripting</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Dedicated Account Strategist & Slack Channel</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Fortnightly Executive Strategy Calls with Yash</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="pt-8">
+                    <button
+                      onClick={() => handleLaunchOnboarding({ id: 'pkg_scale', name: 'Scale Package', price: 150000, tag: 'Growing Businesses & SMEs' })}
+                      className="w-full py-4 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-extrabold text-xs transition-all shadow-xl hover:scale-105 gold-glow flex items-center justify-center gap-2"
+                    >
+                      <span>Get Started with Scale →</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* PACKAGE 3: DOMINANCE */}
+                <div className={`${cardClass} rounded-3xl p-8 flex flex-col justify-between relative group hover:border-marie-gold/60 transition-all`}>
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">PACKAGE 03</span>
+                      <h3 className="text-2xl font-bold">Dominance</h3>
+                      <p className="text-xs text-zinc-400 font-medium">Best For: Large Businesses & Enterprise Brands</p>
+                    </div>
+
+                    <div className="py-4 border-y border-white/10 space-y-1">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-4xl font-extrabold text-white">₹2,00,000</span>
+                        <span className="text-xs font-bold text-zinc-400">/ Month</span>
+                      </div>
+                      <p className="text-[10px] text-zinc-500 font-mono">+ 18% GST • Monthly Retainer</p>
+                    </div>
+
+                    <ul className="space-y-3 text-xs text-zinc-300">
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Unlimited Multi-Channel Execution (LinkedIn, Instagram, YouTube, X)</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Full Performance Ad Engine Scaling (Multi-Crore Budgets)</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>2 Guaranteed Press Features / Mo in Forbes or Business Standard</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>C-Suite Personal Branding & Ghostwriting</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>24/7 Priority Executive Advisory</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Weekly P&L & CAC Payback Analytics</span>
+                      </li>
+                      <li className="flex items-start gap-2.5">
+                        <span className="text-marie-gold font-bold">✓</span>
+                        <span>Dedicated Growth Squad (Strategist, Copywriter, Designer, Editor)</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="pt-8">
+                    <button
+                      onClick={() => handleLaunchOnboarding({ id: 'pkg_dominance', name: 'Dominance Package', price: 200000, tag: 'Large Businesses & Enterprise Brands' })}
+                      className="w-full py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2"
+                    >
+                      <span>Select Dominance Plan →</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+
           {/* FREE GROWTH AUDIT LEAD MAGNET SECTION */}
           <section id="audit" className={`py-20 border-t ${darkMode ? 'bg-[#14131B] border-white/10' : 'bg-white border-marie-border'}`}>
             <div className="max-w-4xl mx-auto px-6 text-center space-y-8 reveal-on-scroll">
@@ -3212,6 +3518,346 @@
             </div>
           </footer>
 
+          {/* ══════════════════════════════════════════════════════════
+               PREMIUM MULTI-STEP CLIENT ONBOARDING WIZARD MODAL
+          ══════════════════════════════════════════════════════════ */}
+          {showOnboardingModal && (
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+              <div className={`relative w-full max-w-2xl rounded-3xl border shadow-2xl p-6 sm:p-10 space-y-6 ${darkMode ? 'bg-[#14131B] border-marie-gold/40 text-white' : 'bg-white border-marie-gold text-black'}`}>
+                
+                {/* Modal Header */}
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <div>
+                    <span className="text-[10px] font-bold text-marie-gold uppercase tracking-widest font-mono">CLIENT ONBOARDING WIZARD • STEP {onboardingStep} OF 4</span>
+                    <h3 className="text-xl sm:text-2xl font-bold mt-0.5">
+                      {onboardingStep === 1 && '1. Business Profile & Growth Goals'}
+                      {onboardingStep === 2 && '2. Contact & Company Details'}
+                      {onboardingStep === 3 && '3. Order & Package Review'}
+                      {onboardingStep === 4 && '4. Payment Verified & Kickoff'}
+                    </h3>
+                  </div>
+                  <button onClick={() => setShowOnboardingModal(false)} className="text-zinc-400 hover:text-white text-xl font-bold p-2">✕</button>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+                  <div
+                    className="bg-marie-gold h-full transition-all duration-500 rounded-full"
+                    style={{ width: `${(onboardingStep / 4) * 100}%` }}
+                  ></div>
+                </div>
+
+                {/* STEP 1: BUSINESS PROFILE */}
+                {onboardingStep === 1 && (
+                  <div className="space-y-4 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">Company / Brand Name *</label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Acme FinTech Corp"
+                          value={obData.companyName}
+                          onChange={(e) => setObData({ ...obData, companyName: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">Company Website / Handle *</label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. https://acmefintech.com"
+                          value={obData.website}
+                          onChange={(e) => setObData({ ...obData, website: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">Industry / Niche *</label>
+                        <select
+                          value={obData.industry}
+                          onChange={(e) => setObData({ ...obData, industry: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        >
+                          <option value="D2C & E-Commerce" className="bg-[#14131B]">D2C & E-Commerce</option>
+                          <option value="SaaS & Technology" className="bg-[#14131B]">SaaS & Technology</option>
+                          <option value="Financial Services & FinTech" className="bg-[#14131B]">Financial Services & FinTech</option>
+                          <option value="Healthcare & Wellness" className="bg-[#14131B]">Healthcare & Wellness</option>
+                          <option value="Education & EdTech" className="bg-[#14131B]">Education & EdTech</option>
+                          <option value="Professional Services & B2B" className="bg-[#14131B]">Professional Services & B2B</option>
+                        </select>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">Company Size *</label>
+                        <select
+                          value={obData.businessSize}
+                          onChange={(e) => setObData({ ...obData, businessSize: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        >
+                          <option value="1-10 Employees" className="bg-[#14131B]">1–10 Employees (Startup)</option>
+                          <option value="11-50 Employees" className="bg-[#14131B]">11–50 Employees (Growth SME)</option>
+                          <option value="51-200 Employees" className="bg-[#14131B]">51–200 Employees (Scaleup)</option>
+                          <option value="200+ Employees" className="bg-[#14131B]">200+ Employees (Enterprise)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="font-bold text-zinc-300">Primary Business Goals *</label>
+                      <textarea
+                        rows="2"
+                        required
+                        placeholder="Describe your primary growth target (e.g. Scale Meta & Google ad revenue past ₹50L/mo, establish executive brand authority, build Tier-1 PR press presence)."
+                        value={obData.businessGoals}
+                        onChange={(e) => setObData({ ...obData, businessGoals: e.target.value })}
+                        className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                      ></textarea>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="font-bold text-zinc-300">Target Audience & Customer Persona *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Tier-1 urban founders, working professionals aged 25-45"
+                        value={obData.targetAudience}
+                        onChange={(e) => setObData({ ...obData, targetAudience: e.target.value })}
+                        className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                      />
+                    </div>
+
+                    <div className="flex justify-end pt-4 border-t border-white/10">
+                      <button
+                        onClick={() => {
+                          if (!obData.companyName || !obData.website) {
+                            alert('Please fill in Company Name and Website to continue.');
+                            return;
+                          }
+                          setOnboardingStep(2);
+                        }}
+                        className="px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md"
+                      >
+                        Next: Contact Info →
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 2: CONTACT DETAILS */}
+                {onboardingStep === 2 && (
+                  <div className="space-y-4 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">Full Name *</label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Rajesh Mehta"
+                          value={obData.fullName}
+                          onChange={(e) => setObData({ ...obData, fullName: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">Email Address *</label>
+                        <input
+                          type="email"
+                          required
+                          placeholder="e.g. rajesh@acme.com"
+                          value={obData.email}
+                          onChange={(e) => setObData({ ...obData, email: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">Phone Number *</label>
+                        <input
+                          type="tel"
+                          required
+                          placeholder="e.g. +91 9876543210"
+                          value={obData.phone}
+                          onChange={(e) => setObData({ ...obData, phone: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">WhatsApp Number *</label>
+                        <input
+                          type="tel"
+                          required
+                          placeholder="e.g. +91 9876543210"
+                          value={obData.whatsapp}
+                          onChange={(e) => setObData({ ...obData, whatsapp: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">Company Address (Optional)</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. BKC, Mumbai, Maharashtra"
+                          value={obData.companyAddress}
+                          onChange={(e) => setObData({ ...obData, companyAddress: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-zinc-300">GST Number (Optional for Tax Invoice)</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. 27AAAAA0000A1Z5"
+                          value={obData.gstNumber}
+                          onChange={(e) => setObData({ ...obData, gstNumber: e.target.value })}
+                          className={`w-full p-3 rounded-xl border text-xs font-mono focus:border-marie-gold focus:outline-none ${darkMode ? 'bg-black border-white/20 text-white' : 'bg-white border-marie-border text-black'}`}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between pt-4 border-t border-white/10">
+                      <button
+                        onClick={() => setOnboardingStep(1)}
+                        className="px-5 py-2.5 rounded-full bg-white/10 text-white font-bold text-xs"
+                      >
+                        ← Back
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (!obData.fullName || !obData.email || !obData.phone) {
+                            alert('Please fill in Full Name, Email, and Phone Number.');
+                            return;
+                          }
+                          setOnboardingStep(3);
+                        }}
+                        className="px-6 py-3 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-bold text-xs shadow-md"
+                      >
+                        Next: Review & Pricing →
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 3: ORDER REVIEW */}
+                {onboardingStep === 3 && (
+                  <div className="space-y-4 text-xs">
+                    <div className="p-4 rounded-2xl bg-black border border-marie-gold/30 space-y-3">
+                      <div className="flex justify-between items-center pb-2 border-b border-white/10">
+                        <span className="font-bold text-marie-gold font-mono uppercase">SELECTED SERVICE PACKAGE</span>
+                        <span className="px-2.5 py-0.5 rounded-full bg-marie-gold/20 text-marie-gold font-bold text-[10px]">{selectedPackage.name}</span>
+                      </div>
+
+                      <div className="space-y-1.5 text-zinc-300">
+                        <div className="flex justify-between">
+                          <span>Base Monthly Retainer:</span>
+                          <span className="font-bold text-white">₹{selectedPackage.price.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>GST (18% Tax):</span>
+                          <span className="font-bold text-white">₹{Math.round(selectedPackage.price * 0.18).toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between pt-2 border-t border-white/10 text-sm font-extrabold">
+                          <span className="text-white">Total Amount Payable:</span>
+                          <span className="text-marie-gold">₹{Math.round(selectedPackage.price * 1.18).toLocaleString()} / Mo</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={obData.acceptTerms}
+                          onChange={(e) => setObData({ ...obData, acceptTerms: e.target.checked })}
+                          className="w-4 h-4 accent-marie-gold"
+                        />
+                        <span className="text-zinc-300">I agree to the <a href="terms.html" target="_blank" className="text-marie-gold underline">Terms of Service & Retainer Agreement</a></span>
+                      </label>
+
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={obData.acceptPrivacy}
+                          onChange={(e) => setObData({ ...obData, acceptPrivacy: e.target.checked })}
+                          className="w-4 h-4 accent-marie-gold"
+                        />
+                        <span className="text-zinc-300">I agree to the <a href="privacy.html" target="_blank" className="text-marie-gold underline">Privacy Policy</a></span>
+                      </label>
+                    </div>
+
+                    <div className="flex justify-between pt-4 border-t border-white/10">
+                      <button
+                        onClick={() => setOnboardingStep(2)}
+                        className="px-5 py-2.5 rounded-full bg-white/10 text-white font-bold text-xs"
+                      >
+                        ← Back
+                      </button>
+                      <button
+                        onClick={handleProceedToPayment}
+                        className="px-8 py-3.5 rounded-full bg-marie-gold hover:bg-marie-goldHover text-black font-extrabold text-xs shadow-xl transition-all hover:scale-105 gold-glow"
+                      >
+                        Pay ₹{Math.round(selectedPackage.price * 1.18).toLocaleString()} via Razorpay 💳
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 4: THANK YOU / SUCCESS */}
+                {onboardingStep === 4 && onboardingCompletedOrder && (
+                  <div className="text-center space-y-6 py-4">
+                    <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center mx-auto text-3xl font-bold shadow-xl animate-bounce">
+                      ✓
+                    </div>
+
+                    <div className="space-y-2">
+                      <h3 className="text-2xl font-extrabold text-white">Payment Successful & Client Onboarded!</h3>
+                      <p className="text-xs text-zinc-300">
+                        Thank you <strong>{onboardingCompletedOrder.customerName}</strong>. Your subscription for <strong>{onboardingCompletedOrder.packageName}</strong> is officially active.
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-black border border-white/10 text-left text-xs space-y-2 font-mono">
+                      <div><span className="text-zinc-500">Order ID:</span> <span className="text-marie-gold font-bold">{onboardingCompletedOrder.orderId}</span></div>
+                      <div><span className="text-zinc-500">Razorpay Payment ID:</span> <span className="text-zinc-300">{onboardingCompletedOrder.paymentId}</span></div>
+                      <div><span className="text-zinc-500">Amount Paid:</span> <span className="text-emerald-400 font-bold">₹{onboardingCompletedOrder.amountPaid.toLocaleString()}</span></div>
+                      <div><span className="text-zinc-500">Welcome Email Sent To:</span> <span className="text-zinc-300">{onboardingCompletedOrder.customerEmail}</span></div>
+                    </div>
+
+                    <div className="flex flex-wrap justify-center gap-3 pt-2">
+                      <a
+                        href="dashboard.html"
+                        className="px-6 py-3 rounded-full bg-marie-gold text-black font-extrabold text-xs shadow-lg hover:bg-marie-goldHover transition-all"
+                      >
+                        Go to Customer Portal 👤
+                      </a>
+                      <a
+                        href="https://calendly.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all flex items-center gap-1.5"
+                      >
+                        <span>Schedule Kickoff Call 📅</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+              </div>
+            </div>
+          )}
         </div>
       );
     }

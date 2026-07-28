@@ -43,6 +43,7 @@ while ($listener.IsListening) {
             $response.StatusCode = 200
             $response.Close()
             continue
+        }
         # Auth API Endpoint: Register (POST /api/auth/register)
         if ($localPath -eq "/api/auth/register" -and $request.HttpMethod -eq "POST") {
             $reader = New-Object System.IO.StreamReader($request.InputStream, $request.ContentEncoding)
