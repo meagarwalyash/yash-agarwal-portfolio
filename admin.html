@@ -278,7 +278,9 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
         return defaultCmsData;
       });
 
-      const [activeTab, setActiveTab] = useState('blogs'); // 'blogs' | 'hero' | 'seo' | 'news' | 'book'
+      const [activeTab, setActiveTab] = useState('leads'); // 'leads' | 'blogs' | 'hero' | 'seo' | 'news' | 'book'
+      const [masterLeadSearch, setMasterLeadSearch] = useState('');
+      const [masterLeadFilter, setMasterLeadFilter] = useState('all');
       const [blogSubTab, setBlogSubTab] = useState('overview'); // 'overview' | 'posts' | 'comments' | 'categories' | 'tags' | 'writers' | 'monetization' | 'analytics'
       const [blogMenuExpanded, setBlogMenuExpanded] = useState(true);
       const [editingBlog, setEditingBlog] = useState(null);
@@ -695,11 +697,19 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                 </button>
 
                 <button
+                  onClick={() => setActiveTab('leads')}
+                  className={`w-full text-left px-3.5 py-3 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeTab === 'leads' ? 'bg-brand-gold text-black shadow-md' : 'text-zinc-300 hover:bg-white/5'}`}
+                >
+                  <i data-lucide="users" className="w-4 h-4 text-brand-gold"></i>
+                  <span>Master Customer & Lead DB</span>
+                </button>
+
+                <button
                   onClick={() => setActiveTab('waitlist')}
                   className={`w-full text-left px-3.5 py-3 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeTab === 'waitlist' ? 'bg-brand-gold text-black shadow-md' : 'text-zinc-300 hover:bg-white/5'}`}
                 >
                   <i data-lucide="bell" className="w-4 h-4"></i>
-                  <span>Product Waitlist</span>
+                  <span>Product Waitlist & Leads</span>
                 </button>
 
                 <button
@@ -2123,143 +2133,376 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
 
                     </div>
                   )}
-                  {/* TAB: PRODUCT WAITLIST & LAUNCH MANAGER */}
-                  {activeTab === 'waitlist' && (
-                    <div className="space-y-6 max-w-6xl mx-auto">
-                      <div className="border-b border-[#232230] pb-4 flex justify-between items-center">
+                  {/* TAB: MASTER CUSTOMER & LEAD DATABASE */}
+                  {(activeTab === 'leads' || activeTab === 'waitlist') && (
+                    <div className="space-y-6 max-w-6xl mx-auto text-left">
+                      <div className="border-b border-[#232230] pb-4 flex flex-wrap justify-between items-center gap-4">
                         <div>
                           <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                            <span>Product Launch Waitlist & Store Control</span>
-                            <span className="px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold text-[10px] font-mono font-bold uppercase">Store CMS</span>
+                            <span>Master Customer & Lead Database</span>
+                            <span className="px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold text-[10px] font-mono font-bold uppercase">Universal CRM</span>
                           </h2>
-                          <p className="text-xs text-zinc-400 mt-1">Manage coming soon product waitlists, send launch alert emails, and toggle product availability ON/OFF.</p>
+                          <p className="text-xs text-zinc-400 mt-1">Unified real-time database capturing all Ebook downloads, audit requests, newsletter subscribers, registered accounts, and paid orders across the platform.</p>
                         </div>
-                        <button
-                          onClick={async () => {
-                            try {
-                              const r = await fetch('/api/admin/waitlist');
-                              const d = await r.json();
-                              if (d.status === 'success') {
-                                setCmsData(prev => ({ ...prev, waitlistData: d.waitlist }));
-                                alert('✓ Product Waitlist database refreshed!');
+
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => {
+                              try {
+                                const masterLeads = (() => {
+                                  try { return JSON.parse(localStorage.getItem('may_master_leads') || '[]'); } catch(e) { return []; }
+                                })();
+                                const localLeads = (() => {
+                                  try { return JSON.parse(localStorage.getItem('may_leads') || '[]'); } catch(e) { return []; }
+                                })();
+                                const registeredUsers = (() => {
+                                  try { return JSON.parse(localStorage.getItem('MAY_PLATFORM_USERS') || '[]'); } catch(e) { return []; }
+                                })();
+
+                                const all = [
+                                  ...masterLeads,
+                                  ...localLeads,
+                                  ...((cmsData.waitlistData) || []),
+                                  ...((cmsData.subscribers) || []),
+                                  ...((cmsData.leads) || []),
+                                  ...((cmsData.orders) || []).map(o => ({
+                                    id: o.orderId || 'ord_' + Math.random(),
+                                    name: o.customerName || 'Customer',
+                                    email: o.customerEmail || o.email,
+                                    phone: o.customerPhone || o.phone || '',
+                                    type: 'Paid Order',
+                                    productName: o.productTitle || o.productName || 'Store Order',
+                                    createdAt: o.createdAt || new Date().toISOString()
+                                  })),
+                                  ...registeredUsers.map(u => ({
+                                    id: u.id || 'usr_' + Math.random(),
+                                    name: u.name || 'Member',
+                                    email: u.email,
+                                    phone: u.phone || '',
+                                    type: 'Registered User',
+                                    productName: 'Customer Portal Member',
+                                    createdAt: u.createdAt || new Date().toISOString()
+                                  }))
+                                ];
+
+                                const uniqueMap = new Map();
+                                all.forEach(item => {
+                                  const em = (item.email || item.customerEmail || '').toLowerCase().trim();
+                                  if (em) {
+                                    const key = em + '_' + (item.type || 'lead');
+                                    if (!uniqueMap.has(key)) {
+                                      uniqueMap.set(key, {
+                                        id: item.id || 'ld_' + Math.random(),
+                                        name: item.name || item.customerName || em.split('@')[0],
+                                        email: em,
+                                        phone: item.phone || item.mobile || '',
+                                        type: item.type || item.source || 'Ebook Download',
+                                        productName: item.productName || item.source || 'MAY Asset',
+                                        createdAt: item.createdAt || item.date || new Date().toISOString(),
+                                        status: item.status || 'Active'
+                                      });
+                                    }
+                                  }
+                                });
+
+                                const leadsList = Array.from(uniqueMap.values());
+                                if (leadsList.length === 0) {
+                                  alert("No lead records available to export yet.");
+                                  return;
+                                }
+
+                                const headers = ["ID", "Customer Name", "Email", "Phone", "Lead Type", "Product / Source", "Created Date", "Status"];
+                                const csvRows = [headers.join(",")];
+
+                                leadsList.forEach(l => {
+                                  const row = [
+                                    `"${l.id}"`,
+                                    `"${(l.name || '').replace(/"/g, '""')}"`,
+                                    `"${l.email}"`,
+                                    `"${(l.phone || '').replace(/"/g, '""')}"`,
+                                    `"${(l.type || '').replace(/"/g, '""')}"`,
+                                    `"${(l.productName || '').replace(/"/g, '""')}"`,
+                                    `"${l.createdAt ? new Date(l.createdAt).toLocaleDateString() : 'Today'}"`,
+                                    `"${l.status || 'Active'}"`
+                                  ];
+                                  csvRows.push(row.join(","));
+                                });
+
+                                const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(csvRows.join("\n"));
+                                const dlAnchor = document.createElement('a');
+                                dlAnchor.setAttribute("href", csvContent);
+                                dlAnchor.setAttribute("download", `MAY_Website_Master_Leads_${new Date().toISOString().split('T')[0]}.csv`);
+                                document.body.appendChild(dlAnchor);
+                                dlAnchor.click();
+                                dlAnchor.remove();
+                                alert(`✓ Exported ${leadsList.length} customer leads to Excel CSV!`);
+                              } catch(err) {
+                                alert("Export failed: " + err.message);
                               }
-                            } catch(e) {}
-                          }}
-                          className="px-4 py-2 rounded-full bg-brand-gold text-black text-xs font-bold shadow-md"
-                        >
-                          🔄 Refresh Waitlist DB
-                        </button>
+                            }}
+                            className="px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition-all"
+                          >
+                            <i data-lucide="download" className="w-3.5 h-3.5"></i>
+                            <span>📥 Export to Excel CSV</span>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              const email = prompt("Enter customer email address:");
+                              if (!email || !email.includes('@')) return;
+                              const name = prompt("Enter customer name:", email.split('@')[0]);
+                              const phone = prompt("Enter customer phone (optional):", "");
+                              const type = prompt("Enter lead type (e.g. Ebook Download, Audit Request, Newsletter):", "Ebook Download");
+                              const productName = prompt("Enter product name:", "Zero-Budget PR Audit Ebook");
+
+                              if (window.saveMasterLead) {
+                                window.saveMasterLead({ name, email, phone, type, productName });
+                                alert("✓ Customer lead added to master database!");
+                                window.location.reload();
+                              }
+                            }}
+                            className="px-4 py-2.5 rounded-full bg-brand-gold hover:bg-brand-goldHover text-black font-bold text-xs flex items-center gap-2 shadow-lg transition-all"
+                          >
+                            <i data-lucide="plus" className="w-3.5 h-3.5"></i>
+                            <span>+ Add Manual Lead</span>
+                          </button>
+                        </div>
                       </div>
 
-                      {/* WAITLIST STATS & ANALYTICS */}
+                      {/* STATS & METRICS GRID */}
                       {(() => {
+                        const masterLeads = (() => {
+                          try { return JSON.parse(localStorage.getItem('may_master_leads') || '[]'); } catch(e) { return []; }
+                        })();
                         const localLeads = (() => {
                           try { return JSON.parse(localStorage.getItem('may_leads') || '[]'); } catch(e) { return []; }
                         })();
-                        const combinedLeads = [
+                        const registeredUsers = (() => {
+                          try { return JSON.parse(localStorage.getItem('MAY_PLATFORM_USERS') || '[]'); } catch(e) { return []; }
+                        })();
+
+                        const all = [
+                          ...masterLeads,
+                          ...localLeads,
                           ...((cmsData.waitlistData) || []),
-                          ...((cmsData.subscribers) || []).map(s => ({
-                            id: s.id || 'sub_' + Math.random(),
-                            productName: s.productName || s.source || 'Free PDF Download',
-                            customerName: s.customerName || s.name || (s.email ? s.email.split('@')[0] : 'Subscriber'),
-                            customerEmail: s.customerEmail || s.email,
-                            createdAt: s.createdAt || s.date || new Date().toISOString(),
-                            status: s.status || 'Active'
+                          ...((cmsData.subscribers) || []),
+                          ...((cmsData.leads) || []),
+                          ...((cmsData.orders) || []).map(o => ({
+                            id: o.orderId || 'ord_' + Math.random(),
+                            name: o.customerName || 'Customer',
+                            email: o.customerEmail || o.email,
+                            phone: o.customerPhone || o.phone || '',
+                            type: 'Paid Order',
+                            productName: o.productTitle || o.productName || 'Store Order',
+                            createdAt: o.createdAt || new Date().toISOString()
                           })),
-                          ...localLeads.map(l => ({
-                            id: l.id || 'ld_' + Math.random(),
-                            productName: l.productName || l.source || 'Digital Product Lead',
-                            customerName: l.customerName || l.name || (l.email ? l.email.split('@')[0] : 'Customer'),
-                            customerEmail: l.customerEmail || l.email,
-                            createdAt: l.createdAt || l.date || new Date().toISOString(),
-                            status: l.status || 'Pending'
+                          ...registeredUsers.map(u => ({
+                            id: u.id || 'usr_' + Math.random(),
+                            name: u.name || 'Member',
+                            email: u.email,
+                            phone: u.phone || '',
+                            type: 'Registered User',
+                            productName: 'Customer Portal Member',
+                            createdAt: u.createdAt || new Date().toISOString()
                           }))
-                        ].filter((item, index, self) => 
-                          item.customerEmail && index === self.findIndex(t => (t.customerEmail || '').toLowerCase() === (item.customerEmail || '').toLowerCase())
-                        );
+                        ];
+
+                        const uniqueMap = new Map();
+                        all.forEach(item => {
+                          const em = (item.email || item.customerEmail || '').toLowerCase().trim();
+                          if (em) {
+                            const key = em + '_' + (item.type || 'lead');
+                            if (!uniqueMap.has(key)) {
+                              uniqueMap.set(key, {
+                                id: item.id || 'ld_' + Math.random(),
+                                name: item.name || item.customerName || em.split('@')[0],
+                                email: em,
+                                phone: item.phone || item.mobile || '',
+                                type: item.type || item.source || 'Ebook Download',
+                                productName: item.productName || item.source || 'MAY Asset',
+                                createdAt: item.createdAt || item.date || new Date().toISOString(),
+                                status: item.status || 'Active'
+                              });
+                            }
+                          }
+                        });
+
+                        let allLeadsList = Array.from(uniqueMap.values());
+
+                        // Apply Live Filtering & Search
+                        let filteredLeads = allLeadsList.filter(item => {
+                          if (masterLeadFilter !== 'all') {
+                            const t = (item.type || '').toLowerCase();
+                            if (masterLeadFilter === 'ebook' && !t.includes('ebook') && !t.includes('sop') && !t.includes('download') && !t.includes('resource')) return false;
+                            if (masterLeadFilter === 'audit' && !t.includes('audit') && !t.includes('booking') && !t.includes('inquiry')) return false;
+                            if (masterLeadFilter === 'newsletter' && !t.includes('newsletter') && !t.includes('subscriber') && !t.includes('waitlist')) return false;
+                            if (masterLeadFilter === 'orders' && !t.includes('order') && !t.includes('paid') && !t.includes('checkout')) return false;
+                            if (masterLeadFilter === 'users' && !t.includes('user') && !t.includes('registered') && !t.includes('member')) return false;
+                          }
+                          if (masterLeadSearch && masterLeadSearch.trim()) {
+                            const q = masterLeadSearch.toLowerCase();
+                            const matchesName = (item.name || '').toLowerCase().includes(q);
+                            const matchesEmail = (item.email || '').toLowerCase().includes(q);
+                            const matchesPhone = (item.phone || '').toLowerCase().includes(q);
+                            const matchesProduct = (item.productName || '').toLowerCase().includes(q);
+                            const matchesType = (item.type || '').toLowerCase().includes(q);
+                            return matchesName || matchesEmail || matchesPhone || matchesProduct || matchesType;
+                          }
+                          return true;
+                        });
 
                         return (
                           <div className="space-y-6">
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                              <div className="p-5 rounded-2xl bg-[#14131B] border border-brand-gold/40 space-y-1">
-                                <div className="text-[10px] font-mono text-brand-gold font-bold uppercase">TOTAL SUBSCRIBERS & LEADS</div>
-                                <div className="text-3xl font-extrabold text-white">
-                                  {combinedLeads.length}
-                                </div>
-                                <div className="text-[10px] text-zinc-400">High-intent launch & download leads</div>
+                            {/* KPI STATS COUNTERS */}
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                              <div className="p-4 rounded-2xl bg-[#14131B] border border-brand-gold/40 space-y-1">
+                                <div className="text-[10px] font-mono text-brand-gold font-bold uppercase">TOTAL LEADS</div>
+                                <div className="text-3xl font-extrabold text-white">{allLeadsList.length}</div>
+                                <div className="text-[10px] text-zinc-400">All captured contacts</div>
                               </div>
 
-                              <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
-                                <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">PENDING NOTIFICATIONS</div>
-                                <div className="text-3xl font-extrabold text-amber-400">
-                                  {combinedLeads.filter(w => w.status !== 'Notified').length}
+                              <div className="p-4 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                                <div className="text-[10px] font-mono text-blue-400 font-bold uppercase">EBOOK DOWNLOADS</div>
+                                <div className="text-3xl font-extrabold text-blue-400">
+                                  {allLeadsList.filter(l => (l.type || '').toLowerCase().includes('ebook') || (l.type || '').toLowerCase().includes('sop') || (l.type || '').toLowerCase().includes('download')).length}
                                 </div>
-                                <div className="text-[10px] text-zinc-400">Waiting for product launch</div>
+                                <div className="text-[10px] text-zinc-400 font-mono">Free PDF lead magnets</div>
                               </div>
 
-                              <div className="p-5 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
-                                <div className="text-[10px] font-mono text-zinc-400 font-bold uppercase">NOTIFIED SUBSCRIBERS</div>
+                              <div className="p-4 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                                <div className="text-[10px] font-mono text-emerald-400 font-bold uppercase">AUDIT REQUESTS</div>
                                 <div className="text-3xl font-extrabold text-emerald-400">
-                                  {combinedLeads.filter(w => w.status === 'Notified').length}
+                                  {allLeadsList.filter(l => (l.type || '').toLowerCase().includes('audit') || (l.type || '').toLowerCase().includes('booking')).length}
                                 </div>
-                                <div className="text-[10px] text-zinc-400">Sent launch email alert</div>
+                                <div className="text-[10px] text-zinc-400 font-mono">High-ticket growth leads</div>
+                              </div>
+
+                              <div className="p-4 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
+                                <div className="text-[10px] font-mono text-purple-400 font-bold uppercase">PAID & REGISTERED</div>
+                                <div className="text-3xl font-extrabold text-purple-400">
+                                  {allLeadsList.filter(l => (l.type || '').toLowerCase().includes('order') || (l.type || '').toLowerCase().includes('paid') || (l.type || '').toLowerCase().includes('user')).length}
+                                </div>
+                                <div className="text-[10px] text-zinc-400 font-mono">Customers & portal users</div>
                               </div>
                             </div>
 
-                            {/* WAITLIST SUBSCRIBERS TABLE */}
+                            {/* FILTER TABS & LIVE SEARCH BAR */}
+                            <div className="p-4 rounded-2xl bg-[#14131B] border border-white/10 flex flex-wrap items-center justify-between gap-4">
+                              <div className="flex flex-wrap items-center gap-2 text-xs">
+                                <button
+                                  onClick={() => setMasterLeadFilter('all')}
+                                  className={`px-3 py-1.5 rounded-full font-bold transition-all ${masterLeadFilter === 'all' ? 'bg-brand-gold text-black shadow-md' : 'bg-white/5 text-zinc-300 hover:bg-white/10'}`}
+                                >
+                                  All Leads ({allLeadsList.length})
+                                </button>
+                                <button
+                                  onClick={() => setMasterLeadFilter('ebook')}
+                                  className={`px-3 py-1.5 rounded-full font-bold transition-all ${masterLeadFilter === 'ebook' ? 'bg-blue-600 text-white shadow-md' : 'bg-white/5 text-zinc-300 hover:bg-white/10'}`}
+                                >
+                                  📚 Ebooks & SOPs
+                                </button>
+                                <button
+                                  onClick={() => setMasterLeadFilter('audit')}
+                                  className={`px-3 py-1.5 rounded-full font-bold transition-all ${masterLeadFilter === 'audit' ? 'bg-emerald-600 text-white shadow-md' : 'bg-white/5 text-zinc-300 hover:bg-white/10'}`}
+                                >
+                                  📊 Audit Requests
+                                </button>
+                                <button
+                                  onClick={() => setMasterLeadFilter('newsletter')}
+                                  className={`px-3 py-1.5 rounded-full font-bold transition-all ${masterLeadFilter === 'newsletter' ? 'bg-amber-600 text-white shadow-md' : 'bg-white/5 text-zinc-300 hover:bg-white/10'}`}
+                                >
+                                  ✉️ Newsletter
+                                </button>
+                                <button
+                                  onClick={() => setMasterLeadFilter('orders')}
+                                  className={`px-3 py-1.5 rounded-full font-bold transition-all ${masterLeadFilter === 'orders' ? 'bg-purple-600 text-white shadow-md' : 'bg-white/5 text-zinc-300 hover:bg-white/10'}`}
+                                >
+                                  💳 Paid Orders & Accounts
+                                </button>
+                              </div>
+
+                              <div className="relative min-w-[240px]">
+                                <input
+                                  type="text"
+                                  placeholder="Search name, email, phone..."
+                                  value={masterLeadSearch}
+                                  onChange={(e) => setMasterLeadSearch(e.target.value)}
+                                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-black border border-[#232230] text-white text-xs font-mono focus:border-brand-gold focus:outline-none"
+                                />
+                                <i data-lucide="search" className="w-3.5 h-3.5 text-zinc-400 absolute left-3 top-2.5"></i>
+                              </div>
+                            </div>
+
+                            {/* MASTER LEADS DATA TABLE */}
                             <div className="p-6 rounded-2xl bg-[#14131B] border border-white/10 space-y-4">
-                              <h3 className="text-sm font-bold text-white">VIP Product Waitlist & Customer Lead Database</h3>
+                              <div className="flex justify-between items-center">
+                                <h3 className="text-sm font-bold text-white">Showing {filteredLeads.length} Lead Records</h3>
+                                <span className="text-[10px] text-zinc-400 font-mono">Live Real-time Sync: Active ✓</span>
+                              </div>
+
                               <div className="overflow-x-auto">
                                 <table className="w-full text-left text-xs text-zinc-300">
                                   <thead className="bg-black text-zinc-400 uppercase font-mono font-bold border-b border-white/10">
                                     <tr>
-                                      <th className="p-3">Product Name</th>
                                       <th className="p-3">Customer Name</th>
-                                      <th className="p-3">Customer Email</th>
-                                      <th className="p-3">Joined Date</th>
-                                      <th className="p-3">Status</th>
+                                      <th className="p-3">Email Address</th>
+                                      <th className="p-3">Phone</th>
+                                      <th className="p-3">Lead Type</th>
+                                      <th className="p-3">Asset / Product Source</th>
+                                      <th className="p-3">Date</th>
                                       <th className="p-3">Actions</th>
                                     </tr>
                                   </thead>
                                   <tbody className="divide-y divide-white/5">
-                                    {combinedLeads.length === 0 ? (
+                                    {filteredLeads.length === 0 ? (
                                       <tr>
-                                        <td colSpan="6" className="p-6 text-center text-zinc-500">No waitlist subscribers yet. Visitors can join waitlists via store.html.</td>
+                                        <td colSpan="7" className="p-8 text-center text-zinc-500 font-mono">No matching lead records found. Form submissions across all pages will appear here automatically.</td>
                                       </tr>
                                     ) : (
-                                      combinedLeads.map((item, idx) => (
-                                        <tr key={item.id || idx} className="hover:bg-white/5">
-                                          <td className="p-3 font-bold text-white">{item.productName || 'Zero-Budget PR Audit Ebook'}</td>
-                                          <td className="p-3 text-zinc-300">{item.customerName || 'Customer'}</td>
-                                          <td className="p-3 font-mono text-brand-gold">{item.customerEmail}</td>
-                                          <td className="p-3 font-mono text-[10px] text-zinc-400">{item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Today'}</td>
+                                      filteredLeads.map((item, idx) => (
+                                        <tr key={item.id || idx} className="hover:bg-white/5 transition-colors">
+                                          <td className="p-3 font-bold text-white">{item.name || item.customerName || 'Lead User'}</td>
+                                          <td className="p-3 font-mono text-brand-gold font-bold">{item.email}</td>
+                                          <td className="p-3 font-mono text-zinc-300">{item.phone || '—'}</td>
                                           <td className="p-3">
-                                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${item.status === 'Notified' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}`}>
-                                              {item.status || 'Active'}
+                                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                                              (item.type || '').toLowerCase().includes('order') || (item.type || '').toLowerCase().includes('paid') ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' :
+                                              (item.type || '').toLowerCase().includes('audit') ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
+                                              (item.type || '').toLowerCase().includes('ebook') || (item.type || '').toLowerCase().includes('sop') ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
+                                              'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                                            }`}>
+                                              {item.type || 'Ebook Download'}
                                             </span>
                                           </td>
-                                          <td className="p-3">
+                                          <td className="p-3 text-zinc-200">{item.productName || 'Zero-Budget PR Audit Ebook'}</td>
+                                          <td className="p-3 font-mono text-[10px] text-zinc-400">{item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Today'}</td>
+                                          <td className="p-3 flex items-center gap-2">
                                             <button
-                                              onClick={async () => {
-                                                try {
-                                                  const r = await fetch('/api/admin/waitlist/notify', {
-                                                    method: 'POST',
-                                                    headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({ email: item.customerEmail, id: item.id })
-                                                  });
-                                                  const d = await r.json();
-                                                  if (d.status === 'success') {
-                                                    alert(`✓ Email notification sent to ${item.customerEmail}!`);
-                                                  } else {
-                                                    alert(`✓ Simulated email alert queued for ${item.customerEmail}!`);
-                                                  }
-                                                } catch(e) {
-                                                  alert(`✓ Email notification queued for ${item.customerEmail}!`);
+                                              onClick={() => {
+                                                const subject = encodeURIComponent(`Message from Yash Agarwal (${item.productName || 'Executive Advisory'})`);
+                                                const body = encodeURIComponent(`Hi ${item.name || 'there'},\n\nThank you for downloading/requesting ${item.productName || 'our resource'} on meagarwalyash.com...\n\nBest regards,\nYash Agarwal`);
+                                                window.location.href = `mailto:${item.email}?subject=${subject}&body=${body}`;
+                                              }}
+                                              className="px-3 py-1 rounded-full bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold text-[10px] font-bold border border-brand-gold/30 transition-all flex items-center gap-1"
+                                            >
+                                              <i data-lucide="mail" className="w-3 h-3"></i>
+                                              <span>Email</span>
+                                            </button>
+
+                                            <button
+                                              onClick={() => {
+                                                if (confirm(`Remove ${item.email} from CMS database?`)) {
+                                                  let masterLeads = JSON.parse(localStorage.getItem('may_master_leads') || '[]');
+                                                  masterLeads = masterLeads.filter(m => m.email !== item.email);
+                                                  localStorage.setItem('may_master_leads', JSON.stringify(masterLeads));
+                                                  alert("✓ Record removed.");
+                                                  window.location.reload();
                                                 }
                                               }}
-                                              className="px-3 py-1 rounded-full bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold text-[10px] font-bold border border-brand-gold/30 transition-all"
+                                              className="p-1.5 rounded-full bg-rose-950/40 text-rose-400 hover:bg-rose-900/60"
+                                              title="Delete Lead"
                                             >
-                                              📧 Send Alert Email
+                                              <i data-lucide="trash-2" className="w-3.5 h-3.5"></i>
                                             </button>
                                           </td>
                                         </tr>

@@ -240,3 +240,57 @@ window.MAY_AuthEngine = {
     this.setCurrentUser(current);
   }
 };
+
+// Global Master Lead Recording Engine across all website pages
+window.saveMasterLead = function(leadData) {
+  if (!leadData) return;
+  try {
+    const record = {
+      id: leadData.id || 'ld_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+      customerName: (leadData.name || leadData.customerName || (leadData.email ? leadData.email.split('@')[0] : 'Lead')).trim(),
+      name: (leadData.name || leadData.customerName || (leadData.email ? leadData.email.split('@')[0] : 'Lead')).trim(),
+      customerEmail: (leadData.email || leadData.customerEmail || '').trim().toLowerCase(),
+      email: (leadData.email || leadData.customerEmail || '').trim().toLowerCase(),
+      phone: (leadData.phone || leadData.mobile || '').trim(),
+      type: leadData.type || leadData.source || 'Ebook Download',
+      productName: leadData.productName || leadData.source || 'MAY Executive Asset',
+      source: leadData.source || window.location.pathname.split('/').pop() || 'Website',
+      createdAt: leadData.createdAt || new Date().toISOString(),
+      date: leadData.date || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+      status: leadData.status || 'Active'
+    };
+
+    if (!record.email && !record.phone) return;
+
+    // 1. Save to master leads array
+    let master = JSON.parse(localStorage.getItem('may_master_leads') || '[]');
+    master = master.filter(m => !(m.email === record.email && m.type === record.type && Math.abs(Date.now() - new Date(m.createdAt).getTime()) < 30000));
+    master.unshift(record);
+    localStorage.setItem('may_master_leads', JSON.stringify(master));
+
+    // 2. Save to may_leads array
+    let existingLeads = JSON.parse(localStorage.getItem('may_leads') || '[]');
+    existingLeads.unshift(record);
+    localStorage.setItem('may_leads', JSON.stringify(existingLeads));
+
+    // 3. Save to MAY_WEBSITE_CMS_DATA
+    let savedData = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
+    let cms = savedData ? JSON.parse(savedData) : {};
+    if (!cms.waitlistData) cms.waitlistData = [];
+    if (!cms.subscribers) cms.subscribers = [];
+    if (!cms.leads) cms.leads = [];
+    cms.waitlistData.unshift(record);
+    cms.subscribers.unshift(record);
+    cms.leads.unshift(record);
+    localStorage.setItem('MAY_WEBSITE_CMS_DATA', JSON.stringify(cms));
+
+    // 4. Background server POST
+    fetch('/api/leads/capture', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(record)
+    }).catch(function() {});
+  } catch(e) {
+    console.warn('saveMasterLead error:', e);
+  }
+};

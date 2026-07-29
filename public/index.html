@@ -1145,6 +1145,14 @@
         e.preventDefault();
         if (auditEmail.trim()) {
           setAuditSubmitted(true);
+          if (window.saveMasterLead) {
+            window.saveMasterLead({
+              email: auditEmail.trim(),
+              type: 'Audit Request',
+              productName: 'Free 30-Min Executive Growth Audit',
+              source: 'Homepage Growth Audit Form'
+            });
+          }
           const subject = encodeURIComponent(`New Enterprise Growth Blueprint Request (${auditEmail})`);
           const body = encodeURIComponent(`New Growth Blueprint Request:\n\nMonthly Ad Spend: ${auditSpend}\nPrimary Scale Bottleneck: ${auditGoal}\nWork Email: ${auditEmail}\n\nSubmitted via meagarwalyash.com`);
           window.location.href = `mailto:yash@meagarwalyash.com?subject=${subject}&body=${body}`;
@@ -1155,6 +1163,14 @@
         e.preventDefault();
         if (waitlistEmail.trim()) {
           setWaitlistSubmitted(true);
+          if (window.saveMasterLead) {
+            window.saveMasterLead({
+              email: waitlistEmail.trim(),
+              type: 'Book Waitlist',
+              productName: 'No Godfather Book VIP Access',
+              source: 'Homepage Book Waitlist'
+            });
+          }
           const subject = encodeURIComponent(`No Godfather Book Waitlist Access Request (${waitlistEmail})`);
           const body = encodeURIComponent(`Please add my email to the early access waitlist for 'No Godfather':\n\nEmail: ${waitlistEmail}\n\nSubmitted via meagarwalyash.com`);
           window.location.href = `mailto:yash@meagarwalyash.com?subject=${subject}&body=${body}`;
@@ -1166,6 +1182,14 @@
         e.preventDefault();
         if (newsletterEmail.trim()) {
           setNewsletterSubmitted(true);
+          if (window.saveMasterLead) {
+            window.saveMasterLead({
+              email: newsletterEmail.trim(),
+              type: 'Newsletter Subscriber',
+              productName: 'MAY Executive Growth Newsletter',
+              source: 'Homepage VIP Newsletter'
+            });
+          }
           const subject = encodeURIComponent(`Newsletter Subscription Request (${newsletterEmail})`);
           const body = encodeURIComponent(`Please add me to the MAY Executive Newsletter:\n\nEmail: ${newsletterEmail}\n\nSubmitted via meagarwalyash.com`);
           window.location.href = `mailto:yash@meagarwalyash.com?subject=${subject}&body=${body}`;
