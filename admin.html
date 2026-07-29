@@ -322,9 +322,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
 
       const handleLogin = (e) => {
         e.preventDefault();
-        const p = passcode.trim();
-        const validPasscodes = ['Yash@8565', 'yash@8565', 'admin', 'yash', '8565', 'Yash8565', 'MAYadmin'];
-        if (validPasscodes.includes(p)) {
+        if (passcode.trim() === 'Yash@8565') {
           sessionStorage.setItem('MAY_ADMIN_AUTH', 'true');
           setAuthenticated(true);
           setLoginError(false);
@@ -456,7 +454,6 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
               <div className="space-y-1">
                 <h1 className="text-2xl font-bold text-white tracking-tight">MAY CMS Executive Gate</h1>
                 <p className="text-xs text-zinc-400 font-mono">Enter Master Passcode to Access Admin Panel</p>
-                <p className="text-[11px] text-brand-gold font-mono pt-1">Default Passcode: <span className="font-bold underline">Yash@8565</span> or <span className="font-bold underline">admin</span></p>
               </div>
 
               {loginError && (
