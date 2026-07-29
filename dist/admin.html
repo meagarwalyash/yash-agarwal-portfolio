@@ -483,7 +483,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
             setEditingBlog(updated);
             setCmsData(prev => ({
               ...prev,
-              blogs: prev.blogs.map(b => b.id === updated.id ? updated : b)
+              blogs: (prev.blogs || []).map(b => b.id === updated.id ? updated : b)
             }));
           }
         }
@@ -537,7 +537,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
 
       // Insert Picture Inside Blog Body
       const handleInsertInsidePicture = () => {
-        if (!inlineImgUrl.trim()) return;
+        if (!inlineImgUrl.trim() || !editingBlog) return;
         const pictureMarkdown = `\n\n![${inlineImgAlt || 'Article Picture'}](${inlineImgUrl})\n*Figure: ${inlineImgCaption || 'Inside article photo'}*\n\n`;
         handleUpdateBlogField('content', (editingBlog.content || '') + pictureMarkdown);
         setInlineImgUrl('');
@@ -1268,7 +1268,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                         {/* Right Controls */}
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => handleDeleteBlog(editingBlog.id)}
+                            onClick={() => editingBlog && handleDeleteBlog(editingBlog.id)}
                             className="text-[10px] font-bold text-rose-400 bg-rose-950/60 hover:bg-rose-900/80 px-3 py-2 rounded-full transition-colors border border-rose-800/40 flex items-center gap-1"
                           >
                             <i data-lucide="trash-2" className="w-3 h-3"></i>
