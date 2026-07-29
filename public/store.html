@@ -256,11 +256,11 @@
         }
       };
 
-      const handleLeadSubmit = async (e) => {
+      const handleLeadSubmit = (e) => {
         e.preventDefault();
         if (!leadName || !leadPhone || !leadEmail || !leadModalProduct) return;
-        setLeadSubmitting(true);
 
+        const targetProduct = leadModalProduct;
         const leadData = {
           id: 'ld_' + Date.now(),
           customerName: leadName.trim(),
@@ -268,13 +268,14 @@
           phone: leadPhone.trim(),
           customerEmail: leadEmail.trim().toLowerCase(),
           email: leadEmail.trim().toLowerCase(),
-          productId: leadModalProduct ? leadModalProduct.id : 'dp_store',
-          productName: leadModalProduct ? leadModalProduct.title : 'Digital Store Asset',
+          productId: targetProduct ? targetProduct.id : 'dp_store',
+          productName: targetProduct ? targetProduct.title : 'Digital Store Asset',
           createdAt: new Date().toISOString(),
           date: new Date().toISOString().split('T')[0],
           status: 'Pending'
         };
 
+        // 1. Save lead to local storage & CMS instantly
         try {
           localStorage.setItem('may_lead_user', JSON.stringify(leadData));
           const existingLeads = JSON.parse(localStorage.getItem('may_leads') || '[]');
@@ -290,29 +291,34 @@
           localStorage.setItem('MAY_WEBSITE_CMS_DATA', JSON.stringify(cms));
         } catch(err) {}
 
-        try {
-          await fetch('/api/leads/capture', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(leadData)
-          });
-        } catch(err) {}
+        // 2. Fire backend lead capture in background (non-blocking)
+        fetch('/api/leads/capture', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(leadData)
+        }).catch(() => {});
 
-        setLeadSubmitting(false);
-        setLeadSuccessMsg('✓ Lead Information Saved to CMS! Unlocking access...');
+        // 3. Immediately trigger file download / open synchronously for mobile compatibility
+        if (targetProduct.discountPrice === 0 || !targetProduct.discountPrice) {
+          const downloadUrl = (targetProduct.downloadUrl || targetProduct.fileUrl) ? (targetProduct.downloadUrl || targetProduct.fileUrl) : 'EBOOKS/MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf';
+          
+          const a = document.createElement('a');
+          a.href = downloadUrl;
+          a.target = '_blank';
+          a.download = downloadUrl.split('/').pop() || 'Ebook.pdf';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
 
-        const targetProduct = leadModalProduct;
-        setTimeout(() => {
           setLeadModalProduct(null);
+          setLeadSubmitting(false);
           setLeadSuccessMsg('');
-
-          if (targetProduct.discountPrice === 0) {
-            const downloadUrl = (targetProduct.downloadUrl || targetProduct.fileUrl) ? (targetProduct.downloadUrl || targetProduct.fileUrl) : 'EBOOKS/MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf';
-            window.open(downloadUrl, '_blank');
-          } else {
-            handleBuyNow(targetProduct, leadData);
-          }
-        }, 1200);
+        } else {
+          setLeadModalProduct(null);
+          setLeadSubmitting(false);
+          setLeadSuccessMsg('');
+          handleBuyNow(targetProduct, leadData);
+        }
       };
 
       return (

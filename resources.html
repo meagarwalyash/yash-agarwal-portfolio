@@ -160,6 +160,16 @@
           }).catch(() => {});
         } catch(e) {}
 
+        // 4. Instantly trigger file download synchronously for mobile browser popup compatibility
+        const fileTarget = (activeResource && (activeResource.fileUrl || activeResource.downloadUrl)) ? (activeResource.fileUrl || activeResource.downloadUrl) : 'EBOOKS/MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf';
+        const a = document.createElement('a');
+        a.href = fileTarget;
+        a.target = '_blank';
+        a.download = fileTarget.split('/').pop() || 'Ebook.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
         setDownloadSuccess(true);
       };
 
