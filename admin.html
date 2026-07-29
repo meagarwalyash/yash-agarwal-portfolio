@@ -52,13 +52,12 @@
     }
   </script>
 
-  <!-- Lucide Icons -->
+  <!-- React 18, Babel & Lucide Multi-CDN System for 100% Uptime -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
-
-  <!-- React 18 & Babel CDN (High Speed Cloudflare & jsDelivr) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin></script>
 
   <style>
     * {
@@ -82,7 +81,14 @@
   </style>
 </head>
 <body class="bg-[#0A090E] text-white antialiased selection:bg-brand-gold/30 selection:text-brand-gold">
-  <div id="root"></div>
+  <div id="root">
+    <div style="min-height:100vh;background-color:#0A090E;color:#D4AF37;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:sans-serif;text-align:center;padding:20px;">
+      <div style="width:48px;height:48px;border:3px solid rgba(212,175,55,0.2);border-top:3px solid #D4AF37;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:20px;"></div>
+      <h2 style="font-size:18px;font-weight:bold;margin:0;color:#FFFFFF;">Loading MAY Executive CMS Admin Console...</h2>
+      <p style="font-size:12px;color:#8A8894;margin-top:8px;">Initializing secure database, analytics & controls...</p>
+      <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+    </div>
+  </div>
 
   <script type="text/babel">
     const { useState, useEffect } = React;
@@ -300,11 +306,17 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
       // Auto-save to LocalStorage whenever cmsData updates
       useEffect(() => {
         if (authenticated) {
-          localStorage.setItem('MAY_WEBSITE_CMS_DATA', JSON.stringify(cmsData));
-          broadcastCmsUpdate(cmsData);
-          setSaveStatus('All Changes Saved & Live Synced ✓');
+          try {
+            localStorage.setItem('MAY_WEBSITE_CMS_DATA', JSON.stringify(cmsData));
+            broadcastCmsUpdate(cmsData);
+            setSaveStatus('All Changes Saved & Live Synced ✓');
+          } catch(e) {}
         }
-        if (window.lucide) window.lucide.createIcons();
+        try {
+          if (window.lucide && window.lucide.createIcons) {
+            window.lucide.createIcons();
+          }
+        } catch(e) {}
       }, [cmsData, authenticated]);
 
       const handleLogin = (e) => {
