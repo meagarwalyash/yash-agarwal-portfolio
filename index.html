@@ -22,6 +22,12 @@
       location.replace('https:' + location.href.substring(location.protocol.length));
     }
   </script>
+  <!-- Resource Preconnects & High Performance CDN Optimization -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
   <title>Yash Agarwal (MeAgarwalYash) — Executive Growth Architect & Author</title>
   <meta name="description" content="Official platform of Yash Agarwal (MeAgarwalYash). Head of Marketing at DR Choksey FinServ, Former Head of Digital Marketing at Avant Garde Industries, Founder of FMK Agency, Author of 'No Godfather'." />
   <link rel="canonical" href="https://meagarwalyash.com/" />
@@ -1744,6 +1750,7 @@
                 {/* ☰ ALL HAMBURGER DRAWER BUTTON */}
                 <button
                   onClick={() => setAmazonDrawerOpen(true)}
+                  aria-label="Open All Categories Navigation Menu"
                   className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/10 hover:bg-white/20 font-extrabold text-white border border-white/15 transition-all mr-2"
                 >
                   <span className="text-base leading-none">☰</span>
@@ -2136,6 +2143,10 @@
                   <img
                     src={heroImage}
                     alt={heroName}
+                    width="460"
+                    height="460"
+                    fetchpriority="high"
+                    decoding="async"
                     className="w-full h-auto max-h-[460px] object-cover rounded-3xl filter contrast-[1.03] transform group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
