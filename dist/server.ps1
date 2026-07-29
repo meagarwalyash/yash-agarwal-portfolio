@@ -213,6 +213,56 @@ while ($listener.IsListening) {
             continue
         }
 
+        # API Endpoint: Capture Download/Store Lead (POST /api/leads/capture)
+        if ($localPath -eq "/api/leads/capture" -and $request.HttpMethod -eq "POST") {
+            $reader = New-Object System.IO.StreamReader($request.InputStream, $request.ContentEncoding)
+            $bodyText = $reader.ReadToEnd()
+            $json = ConvertFrom-Json $bodyText
+
+            $dbPath = Join-Path $PSScriptRoot "database.json"
+            $db = Get-Content $dbPath -Raw | ConvertFrom-Json
+            if (-not $db.leads) { $db | Add-Member -NotePropertyName "leads" -NotePropertyValue @() }
+            if (-not $db.users) { $db | Add-Member -NotePropertyName "users" -NotePropertyValue @() }
+
+            $leadEntry = @{
+                id = "lead_" + [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+                name = [string]$json.name
+                email = [string]$json.email
+                phone = [string]$json.phone
+                productId = [string]$json.productId
+                productName = [string]$json.productName
+                source = "Gated Download Form"
+                createdAt = [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+                status = "Active Lead"
+            }
+
+            $db.leads = @($leadEntry) + $db.leads
+
+            $userEntry = @{
+                id = "usr_" + [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+                name = [string]$json.name
+                email = [string]$json.email
+                phone = [string]$json.phone
+                memberTier = "Registered Lead"
+                status = "Active"
+                createdAt = [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+            }
+            $existingUser = $db.users | Where-Object { $_.email -eq $json.email }
+            if (-not $existingUser) {
+                $db.users = @($userEntry) + $db.users
+            }
+
+            $db | ConvertTo-Json -Depth 10 | Set-Content $dbPath -Encoding UTF8
+
+            $response.StatusCode = 200
+            $response.ContentType = "application/json"
+            $resObj = @{ status = "success"; message = "Lead captured successfully"; lead = $leadEntry } | ConvertTo-Json
+            $resBytes = [System.Text.Encoding]::UTF8.GetBytes($resObj)
+            $response.OutputStream.Write($resBytes, 0, $resBytes.Length)
+            $response.Close()
+            continue
+        }
+
         # 3. API Endpoint: Join Launch Waitlist (POST /api/waitlist/join)
         if ($localPath -eq "/api/waitlist/join" -and $request.HttpMethod -eq "POST") {
             $reader = New-Object System.IO.StreamReader($request.InputStream, $request.ContentEncoding)

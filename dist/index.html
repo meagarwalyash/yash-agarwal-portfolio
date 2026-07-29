@@ -971,6 +971,9 @@
       const [videoAutoPlay, setVideoAutoPlay] = useState(true);
       const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
       const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
+      const [amazonDrawerOpen, setAmazonDrawerOpen] = useState(false);
+      const [searchQuery, setSearchQuery] = useState('');
+      const [searchCategory, setSearchCategory] = useState('All');
       const [testimonialIdx, setTestimonialIdx] = useState(0);
       const [newsletterEmail, setNewsletterEmail] = useState('');
       const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
@@ -1575,133 +1578,315 @@
             </div>
           </div>
 
-          {/* MARIE FORLEO STYLE EXECUTIVE DOCK NAVIGATION BAR */}
-          <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${darkMode ? 'bg-[#0A090E] border-b border-white/10 text-white' : 'bg-white border-zinc-200 text-black'} py-3 px-4 sm:px-8 shadow-sm`}>
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
-              
-              {/* LEFT: Logo Brand */}
-              <a href="#" className="flex items-center group relative z-10 flex-shrink-0">
-                <img
-                  src="maylogo.png"
-                  alt="MAY Executive Logo"
-                  className="h-36 sm:h-48 md:h-56 w-auto object-contain -my-12 sm:-my-18 translate-y-3 transition-transform duration-300 group-hover:scale-105 brightness-150 contrast-125 filter drop-shadow-[0_0_24px_rgba(212,175,55,0.9)]"
-                />
-              </a>
-
-              {/* RIGHT: Right-Aligned Text Navigation + Dropdowns + Pill CTA */}
-              <div className="hidden lg:flex items-center gap-6 xl:gap-8 font-bold text-base tracking-tight ml-auto">
+          {/* AMAZON.IN STYLE EXECUTIVE HEADER SYSTEM */}
+          <header className="sticky top-0 z-50 w-full shadow-2xl font-sans">
+            
+            {/* ROW 1: MAIN AMAZON.IN HEADER BAR */}
+            <div className="bg-[#131921] border-b border-[#232F3E] text-white py-2 px-3 sm:px-6">
+              <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-2 sm:gap-4">
                 
-                {/* Store Direct Link */}
-                <a href="store.html" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold flex items-center gap-1.5">
-                  <span className="text-brand-gold">🛍️</span>
-                  <span>Store</span>
+                {/* 1. BRAND LOGO */}
+                <a href="index.html" className="flex items-center group relative z-10 flex-shrink-0">
+                  <img
+                    src="maylogo.png"
+                    alt="MAY Executive Logo"
+                    className="h-36 sm:h-48 md:h-56 w-auto object-contain -my-12 sm:-my-18 translate-y-3 transition-transform duration-300 group-hover:scale-105 brightness-150 contrast-125 filter drop-shadow-[0_0_24px_rgba(212,175,55,0.9)]"
+                  />
                 </a>
 
-                {/* Free Resources Direct Link */}
-                <a href="resources.html" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold flex items-center gap-1.5">
-                  <span className="text-brand-gold">🎁</span>
-                  <span>Resources</span>
-                </a>
+                {/* 3. CENTER SEARCH ENGINE BAR (AMAZON STYLE CENTERPIECE) */}
+                <div className="relative flex-1 max-w-3xl mx-1 sm:mx-3">
+                  <div className="flex items-center rounded-xl overflow-hidden border border-marie-gold/40 focus-within:ring-2 focus-within:ring-marie-gold shadow-lg bg-[#0F0E17]">
+                    
+                    {/* Category Dropdown */}
+                    <select
+                      value={searchCategory}
+                      onChange={(e) => setSearchCategory(e.target.value)}
+                      className="bg-[#232F3E] text-zinc-200 text-xs font-bold px-3 py-2.5 border-r border-white/10 outline-none cursor-pointer hover:bg-[#1a232e] hidden sm:block shrink-0"
+                    >
+                      <option value="All">All Categories ▾</option>
+                      <option value="Store">Digital Store</option>
+                      <option value="Ebooks">E-Books & SOPs</option>
+                      <option value="CaseStudies">1-Min Case Studies</option>
+                      <option value="Blog">Growth Essays</option>
+                      <option value="PR">PR & Media</option>
+                      <option value="Consulting">CMO Advisory</option>
+                    </select>
 
-                {/* Blog Link */}
-                <a href="blog.html" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
-                  Blog
-                </a>
+                    {/* Search Input Field */}
+                    <input
+                      type="text"
+                      placeholder="Search Yash Agarwal growth playbooks, SOPs, articles, case studies..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full bg-[#0F0E17] text-white text-xs px-3.5 py-2.5 outline-none placeholder:text-zinc-500 font-medium"
+                    />
 
-                {/* Pricing Link */}
-                <a href="#pricing" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold flex items-center gap-1 text-marie-gold">
-                  <span>💳</span>
-                  <span>Pricing</span>
-                </a>
+                    {/* Clear Button */}
+                    {searchQuery && (
+                      <button onClick={() => setSearchQuery("")} className="px-2 text-zinc-400 hover:text-white text-xs">✕</button>
+                    )}
 
-                {/* Consulting Link */}
-                <a href="speaking.html" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
-                  Consulting
-                </a>
+                    {/* Gold Search Button */}
+                    <button 
+                      onClick={() => {
+                        if (searchQuery.trim()) {
+                          window.location.href = `store.html?search=${encodeURIComponent(searchQuery)}`;
+                        }
+                      }}
+                      className="bg-marie-gold hover:bg-marie-goldHover text-black font-extrabold px-4 sm:px-5 py-2.5 flex items-center justify-center transition-colors shrink-0"
+                      title="Search"
+                    >
+                      <span className="text-sm font-bold">🔍</span>
+                    </button>
+                  </div>
 
-                {/* Videos / MarieTV Link */}
-                <a href="#tv" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
-                  Videos
-                </a>
-
-                {/* About Link */}
-                <a href="#journey" className="hover:text-marie-gold transition-colors whitespace-nowrap text-base font-bold">
-                  About
-                </a>
-
-                {/* More Dropdown */}
-                <div onMouseEnter={() => setMoreDropdownOpen(true)} onMouseLeave={() => setMoreDropdownOpen(false)}>
-                  <button className="flex items-center gap-1.5 hover:text-marie-gold transition-colors whitespace-nowrap py-2 text-base font-bold">
-                    <span>More</span>
-                    <i data-lucide={moreDropdownOpen ? "chevron-up" : "chevron-down"} className="w-4 h-4"></i>
-                  </button>
+                  {/* LIVE INSTANT SEARCH RESULTS POPOVER */}
+                  {searchQuery.trim().length > 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-[#14131B] border border-marie-gold/40 rounded-2xl shadow-2xl z-50 p-4 max-h-96 overflow-y-auto space-y-3 animate-fadeIn text-left">
+                      <div className="text-[10px] font-mono text-marie-gold font-bold uppercase tracking-wider flex justify-between">
+                        <span>SEARCH RESULTS FOR &quot;{searchQuery}&quot;</span>
+                        <span className="text-zinc-400">PRESS ENTER TO VIEW ALL</span>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        {[
+                          { title: 'The Zero-Budget PR Audit Checklist', category: 'E-books & SOPs', link: 'store.html' },
+                          { title: '1-Min Case Studies: Growth Breakdowns', category: 'Videos', link: '#case-studies' },
+                          { title: 'The Zero-Budget PR Framework Essay', category: 'Blog', link: 'blog.html' },
+                          { title: 'Fractional CMO Advisory & Growth Architecture', category: 'Consulting', link: 'speaking.html' }
+                        ].filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()) || item.category.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .map((resItem, idx) => (
+                          <a
+                            key={idx}
+                            href={resItem.link}
+                            className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 flex items-center justify-between transition-colors block text-xs"
+                          >
+                            <div>
+                              <div className="font-bold text-white">{resItem.title}</div>
+                              <div className="text-[10px] text-zinc-400 font-mono">{resItem.category}</div>
+                            </div>
+                            <span className="text-marie-gold font-bold">→</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {/* Right Action Controls: Language, Theme & My Account */}
-                <div className="flex items-center gap-2 pl-2 border-l border-white/10">
-                  {/* Theme Toggle Button */}
+                {/* 4. RIGHT ACTIONS (AMAZON STYLE) */}
+                <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+                  
+                  {/* Language Selector */}
+                  <div className="hidden lg:flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-transparent hover:border-white/20 cursor-pointer">
+                    <span className="text-sm">🇮🇳</span>
+                    <select
+                      value={lang}
+                      onChange={(e) => setLang(e.target.value)}
+                      className="bg-transparent text-white text-xs font-bold outline-none cursor-pointer"
+                    >
+                      <option value="en" className="bg-black text-white">EN</option>
+                      <option value="hi" className="bg-black text-white">HI (हिंदी)</option>
+                      <option value="mr" className="bg-black text-white">MR (मराठी)</option>
+                      <option value="bn" className="bg-black text-white">BN (বাংলা)</option>
+                      <option value="gu" className="bg-black text-white">GU (ગુજરાતી)</option>
+                      <option value="es" className="bg-black text-white">ES (Español)</option>
+                    </select>
+                  </div>
+
+                  {/* Accounts & Lists */}
+                  <a href="dashboard.html" className="hidden sm:block text-left px-2.5 py-1.5 rounded-md border border-transparent hover:border-white/20 transition-colors">
+                    <div className="text-[10px] text-zinc-400 leading-none">Hello, Sign in</div>
+                    <div className="text-xs font-extrabold text-white flex items-center gap-0.5 mt-0.5">
+                      <span>Account & Lists</span>
+                      <span className="text-[9px] text-marie-gold">▾</span>
+                    </div>
+                  </a>
+
+                  {/* Returns & Orders */}
+                  <a href="dashboard.html" className="hidden md:block text-left px-2.5 py-1.5 rounded-md border border-transparent hover:border-white/20 transition-colors">
+                    <div className="text-[10px] text-zinc-400 leading-none">Retainers &</div>
+                    <div className="text-xs font-extrabold text-white mt-0.5">Orders</div>
+                  </a>
+
+                  {/* Store / Cart Badge Button */}
+                  <a
+                    href="store.html"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-marie-gold/15 border border-marie-gold/40 hover:bg-marie-gold/25 transition-all gold-glow"
+                  >
+                    <div className="relative">
+                      <span className="text-lg">🛒</span>
+                      <span className="absolute -top-1.5 -right-2 bg-marie-gold text-black font-extrabold text-[9px] w-4 h-4 rounded-full flex items-center justify-center shadow-md">
+                        15
+                      </span>
+                    </div>
+                    <span className="hidden lg:inline text-xs font-extrabold text-marie-gold">Store</span>
+                  </a>
+
+                  {/* Dark / Light Mode Toggle */}
                   <button
                     onClick={() => setDarkMode(!darkMode)}
-                    className={`p-2 rounded-full border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-marie-gold hover:bg-white/15' : 'border-black/15 bg-black/5 text-marie-goldHover hover:bg-black/10'}`}
+                    className="p-2 rounded-lg border border-white/10 hover:border-marie-gold/40 bg-white/5 text-marie-gold transition-colors"
                     title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
                   >
-                    <i data-lucide={darkMode ? "sun" : "moon"} className="w-3.5 h-3.5"></i>
+                    <i data-lucide={darkMode ? "sun" : "moon"} className="w-4 h-4"></i>
                   </button>
-
-                  {/* Multi-Language Selector */}
-                  <select
-                    value={lang}
-                    onChange={(e) => setLang(e.target.value)}
-                    className={`px-2.5 py-1 rounded-full font-semibold text-[11px] border focus:outline-none cursor-pointer transition-all ${darkMode ? 'bg-[#14131B] border-white/20 text-white hover:border-marie-gold' : 'bg-white border-black/20 text-black hover:border-marie-gold'}`}
-                  >
-                    <option value="en">EN</option>
-                    <option value="hi">HI (हिंदी)</option>
-                    <option value="bn">BN (বাংলা)</option>
-                    <option value="mwr">MWR (मारवाड़ी)</option>
-                    <option value="mr">MR (मराठी)</option>
-                    <option value="gu">GU (ગુજરાતી)</option>
-                    <option value="kn">KN (કನ್ನಡ)</option>
-                    <option value="pa">PA (ਪੰਜਾਬੀ)</option>
-                    <option value="es">ES (Español)</option>
-                  </select>
-
-                  {/* My Account */}
-                  <a
-                    href="dashboard.html"
-                    className={`px-3 py-1.5 rounded-full border text-xs font-bold transition-all flex items-center gap-1 ${darkMode ? 'border-marie-gold/40 text-marie-gold hover:bg-marie-gold/20' : 'border-black/20 text-black hover:bg-black/5'}`}
-                  >
-                    <i data-lucide="user" className="w-3 h-3"></i>
-                    <span>Account</span>
-                  </a>
                 </div>
 
-                {/* DISTINCTIVE MARIE FORLEO STYLE LIME/GOLD PILL CTA BUTTON */}
-                <a
-                  href="#audit"
-                  className="px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider transition-all duration-300 bg-[#E2F16D] text-black border border-black shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none hover:bg-[#d8e85c] whitespace-nowrap flex items-center gap-1"
+              </div>
+            </div>
+
+            {/* ROW 2: SUB-HEADER AMAZON NAVIGATION MENU BAR */}
+            <div className="bg-[#1A232E] border-b border-white/10 py-1.5 px-3 sm:px-6 text-xs text-white flex items-center justify-between overflow-x-auto scrollbar-none font-semibold">
+              
+              <div className="flex items-center gap-1 sm:gap-2 whitespace-nowrap">
+                
+                {/* ☰ ALL HAMBURGER DRAWER BUTTON */}
+                <button
+                  onClick={() => setAmazonDrawerOpen(true)}
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/10 hover:bg-white/20 font-extrabold text-white border border-white/15 transition-all mr-2"
                 >
-                  <span>Free Audit</span>
-                  <i data-lucide="sparkles" className="w-3.5 h-3.5"></i>
+                  <span className="text-base leading-none">☰</span>
+                  <span className="text-xs font-extrabold">All</span>
+                </button>
+
+                {/* SUB MENU LINKS */}
+                <a href="#case-studies" className="px-2.5 py-1 rounded-md hover:bg-white/10 text-marie-gold font-bold transition-colors flex items-center gap-1">
+                  <span>🎬 1-Min Case Studies</span>
                 </a>
+
+                <a href="store.html" className="px-2.5 py-1 rounded-md hover:bg-white/10 transition-colors flex items-center gap-1">
+                  <span>🛍️ Digital Store</span>
+                </a>
+
+                <a href="store.html" className="px-2.5 py-1 rounded-md hover:bg-white/10 transition-colors flex items-center gap-1">
+                  <span>📚 E-Books & SOPs</span>
+                </a>
+
+                <a href="#pricing" className="px-2.5 py-1 rounded-md hover:bg-white/10 text-marie-gold font-bold transition-colors flex items-center gap-1">
+                  <span>💳 Pricing</span>
+                </a>
+
+                <a href="blog.html" className="px-2.5 py-1 rounded-md hover:bg-white/10 transition-colors flex items-center gap-1">
+                  <span>✍️ Growth Essays</span>
+                </a>
+
+                <a href="speaking.html" className="px-2.5 py-1 rounded-md hover:bg-white/10 transition-colors flex items-center gap-1">
+                  <span>💼 Fractional CMO</span>
+                </a>
+
+                <a href="resources.html" className="px-2.5 py-1 rounded-md hover:bg-white/10 transition-colors flex items-center gap-1">
+                  <span>🎁 Free Resources</span>
+                </a>
+
+                <a href="media.html" className="px-2.5 py-1 rounded-md hover:bg-white/10 transition-colors flex items-center gap-1">
+                  <span>🎙️ Press & Media</span>
+                </a>
+
+                <a href="dashboard.html" className="px-2.5 py-1 rounded-md hover:bg-white/10 transition-colors flex items-center gap-1">
+                  <span>⭐ Customer Portal</span>
+                </a>
+
               </div>
 
-              {/* Mobile Actions & Menu Toggle */}
-              <div className="flex items-center gap-2 lg:hidden">
-                <a
-                  href="#audit"
-                  className="px-4 py-2 rounded-full bg-[#E2F16D] text-black font-extrabold text-xs border border-black shadow-[2px_2px_0px_rgba(0,0,0,1)]"
-                >
-                  Free Audit
+              {/* RIGHT HIGHLIGHT BANNER */}
+              <div className="hidden xl:flex items-center gap-2 text-[11px] font-bold text-marie-gold shrink-0 pl-4 border-l border-white/10">
+                <a href="#book" className="hover:underline flex items-center gap-1">
+                  <span>📖 Read "No Godfather" Book</span>
+                  <span>→</span>
                 </a>
-                <button
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className={`p-2 rounded-xl border transition-all ${darkMode ? 'border-white/15 bg-white/5 text-white' : 'border-black/15 bg-black/5 text-black'}`}
-                >
-                  <i data-lucide={mobileMenuOpen ? "x" : "menu"} className="w-5 h-5"></i>
-                </button>
               </div>
 
             </div>
+
+          {/* AMAZON EXECUTIVE NAVIGATION SIDEBAR DRAWER (OVERLAY) */}
+          {amazonDrawerOpen && (
+            <div className="fixed inset-0 z-[100] flex">
+              
+              {/* Dark Backdrop */}
+              <div 
+                onClick={() => setAmazonDrawerOpen(false)}
+                className="fixed inset-0 bg-black/80 backdrop-blur-sm animate-fadeIn"
+              ></div>
+
+              {/* Sidebar Panel */}
+              <div className="relative w-80 sm:w-96 bg-[#0E0D14] border-r border-marie-gold/30 text-white h-full flex flex-col justify-between shadow-2xl z-10 font-sans">
+                
+                <div>
+                  {/* Drawer Header Banner */}
+                  <div className="bg-[#131921] p-5 border-b border-white/10 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-marie-gold/20 text-marie-gold border border-marie-gold/40 flex items-center justify-center text-lg font-bold">
+                        👤
+                      </div>
+                      <div>
+                        <div className="text-xs text-zinc-400">Hello, Growth Leader</div>
+                        <div className="text-sm font-extrabold text-white">Yash Agarwal Ecosystem</div>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => setAmazonDrawerOpen(false)}
+                      className="p-1.5 text-zinc-400 hover:text-white text-xl font-bold"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  {/* Drawer Content Groups */}
+                  <div className="p-5 space-y-6 overflow-y-auto max-h-[calc(100vh-140px)] text-xs">
+                    
+                    {/* Section 1: Digital Products & E-Books */}
+                    <div className="space-y-2">
+                      <div className="font-mono text-[10px] text-marie-gold font-bold uppercase tracking-wider">Digital Store & E-Books</div>
+                      <ul className="space-y-1 text-zinc-300 font-semibold">
+                        <li><a href="store.html" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">🛍️ Digital Marketplace (15 Assets)</a></li>
+                        <li><a href="store.html" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">📄 The Zero-Budget PR Audit Checklist</a></li>
+                        <li><a href="resources.html" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">🎁 Free Growth SOPs & Lead Magnets</a></li>
+                      </ul>
+                    </div>
+
+                    {/* Section 2: Case Studies & Advisory */}
+                    <div className="space-y-2 pt-4 border-t border-white/10">
+                      <div className="font-mono text-[10px] text-marie-gold font-bold uppercase tracking-wider">Case Studies & Advisory</div>
+                      <ul className="space-y-1 text-zinc-300 font-semibold">
+                        <li><a href="#case-studies" onClick={() => setAmazonDrawerOpen(false)} className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">🎬 1-Min Case Studies (Under 60s)</a></li>
+                        <li><a href="#pricing" onClick={() => setAmazonDrawerOpen(false)} className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">💳 Social Media & Performance Packages</a></li>
+                        <li><a href="speaking.html" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">💼 Fractional CMO & Advisory Services</a></li>
+                        <li><a href="speaking.html" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">🎙️ Keynote Speaking & Summits</a></li>
+                      </ul>
+                    </div>
+
+                    {/* Section 3: Thought Leadership & Media */}
+                    <div className="space-y-2 pt-4 border-t border-white/10">
+                      <div className="font-mono text-[10px] text-marie-gold font-bold uppercase tracking-wider">Essays & Press</div>
+                      <ul className="space-y-1 text-zinc-300 font-semibold">
+                        <li><a href="blog.html" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">✍️ Growth Essays & Playbooks</a></li>
+                        <li><a href="media.html" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">📰 Press & Media Features (Forbes, BS)</a></li>
+                        <li><a href="#book" onClick={() => setAmazonDrawerOpen(false)} className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">📖 No Godfather Book Masterwork</a></li>
+                      </ul>
+                    </div>
+
+                    {/* Section 4: Customer Account */}
+                    <div className="space-y-2 pt-4 border-t border-white/10">
+                      <div className="font-mono text-[10px] text-marie-gold font-bold uppercase tracking-wider">Account & Support</div>
+                      <ul className="space-y-1 text-zinc-300 font-semibold">
+                        <li><a href="dashboard.html" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">⭐ Customer Portal & Active Retainers</a></li>
+                        <li><a href="dashboard.html#downloads" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">📥 My Purchased Downloads</a></li>
+                        <li><a href="admin.html" className="block p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors">⚙️ CMS Admin Console</a></li>
+                      </ul>
+                    </div>
+
+                  </div>
+                </div>
+
+                {/* Footer Banner */}
+                <div className="p-4 bg-[#131921] border-t border-white/10 text-center text-xs text-zinc-400">
+                  © 2026 Yash Agarwal (@MeAgarwalYash)
+                </div>
+
+              </div>
+            </div>
+          )}
 
             {/* MORE MEGA DROPDOWN - ALWAYS ATTACHED DIRECTLY BELOW HEADER */}
             {moreDropdownOpen && (

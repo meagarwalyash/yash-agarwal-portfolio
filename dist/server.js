@@ -95,6 +95,51 @@ async function sendEmail({ to, subject, html, emailType, customerEmail, orderId 
 // ==========================================
 
 // POST /api/auth/register
+app.post('/api/leads/capture', (req, res) => {
+  try {
+    const { name, email, phone, productId, productName } = req.body;
+    if (!name || !email || !phone) {
+      return res.status(400).json({ status: 'error', message: 'Name, email, and phone number are required.' });
+    }
+
+    const db = getDB();
+    if (!db.leads) db.leads = [];
+    if (!db.users) db.users = [];
+
+    const leadEntry = {
+      id: 'lead_' + Date.now(),
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      phone: phone.trim(),
+      productId: productId || '',
+      productName: productName || 'Gated Download Asset',
+      source: 'Gated Download Form',
+      createdAt: new Date().toISOString(),
+      status: 'Active Lead'
+    };
+
+    db.leads.unshift(leadEntry);
+
+    const existingUser = db.users.find(u => u.email.toLowerCase() === email.trim().toLowerCase());
+    if (!existingUser) {
+      db.users.unshift({
+        id: 'usr_' + Date.now(),
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        phone: phone.trim(),
+        memberTier: 'Registered Lead',
+        status: 'Active',
+        createdAt: new Date().toISOString()
+      });
+    }
+
+    saveDB(db);
+    return res.json({ status: 'success', message: 'Lead captured successfully', lead: leadEntry });
+  } catch(e) {
+    return res.status(500).json({ status: 'error', message: e.message });
+  }
+});
+
 app.post('/api/auth/register', (req, res) => {
   try {
     const { name, email, password, phone, gst } = req.body;
