@@ -1722,6 +1722,7 @@
                   {/* Store / Cart Badge Button */}
                   <a
                     href="store.html"
+                    onClick={(e) => { e.preventDefault(); window.location.href = 'store.html'; }}
                     className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-marie-gold/15 border border-marie-gold/40 hover:bg-marie-gold/25 transition-all gold-glow"
                   >
                     <div className="relative">
@@ -1766,7 +1767,11 @@
                   <span>🎬 1-Min Case Studies</span>
                 </a>
 
-                <a href="store.html" className="px-2.5 py-1 rounded-md hover:bg-white/10 transition-colors flex items-center gap-1">
+                <a 
+                  href="store.html" 
+                  onClick={(e) => { e.preventDefault(); window.location.href = 'store.html'; }}
+                  className="px-2.5 py-1 rounded-md hover:bg-white/10 transition-colors flex items-center gap-1"
+                >
                   <span>🛍️ Digital Store</span>
                 </a>
 
@@ -2062,6 +2067,11 @@
                     href={href}
                     onClick={(e) => {
                       setMobileMenuOpen(false);
+                      if (href === 'store.html' || href === '/store.html') {
+                        e.preventDefault();
+                        window.location.href = 'store.html';
+                        return;
+                      }
                       if (href.startsWith('#')) {
                         const targetEl = document.querySelector(href);
                         if (targetEl) {
