@@ -349,6 +349,28 @@
                 </a>
                 <a href="blog.html" className="text-marie-gold font-extrabold border-b-2 border-marie-gold pb-0.5">Blog</a>
                 <a href="speaking.html" className="hover:text-marie-gold transition-colors">Consulting</a>
+                
+                {/* More Options Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setMoreDropdownOpen(!moreDropdownOpen)}
+                    className="hover:text-marie-gold transition-colors flex items-center gap-1 font-bold text-base cursor-pointer"
+                  >
+                    <span>More</span>
+                    <i data-lucide="chevron-down" className="w-4 h-4"></i>
+                  </button>
+
+                  {moreDropdownOpen && (
+                    <div className="absolute right-0 mt-3 w-52 bg-[#14131B] border border-marie-gold/40 rounded-2xl p-2 shadow-2xl z-50 text-xs font-bold space-y-1 text-left">
+                      <a href="media.html" className="block px-4 py-2.5 rounded-xl text-white hover:bg-white/10 hover:text-marie-gold transition-all">📺 Media & Press</a>
+                      <a href="speaking.html" className="block px-4 py-2.5 rounded-xl text-white hover:bg-white/10 hover:text-marie-gold transition-all">🎤 Keynotes & Advisory</a>
+                      <a href="checkout.html" className="block px-4 py-2.5 rounded-xl text-white hover:bg-white/10 hover:text-marie-gold transition-all">💳 Store Checkout</a>
+                      <a href="course-player.html" className="block px-4 py-2.5 rounded-xl text-white hover:bg-white/10 hover:text-marie-gold transition-all">🎓 Executive Portal</a>
+                      <a href="admin.html" className="block px-4 py-2.5 rounded-xl text-marie-gold hover:bg-marie-gold/20 transition-all border-t border-white/10 mt-1 pt-2">⚡ Admin Console</a>
+                    </div>
+                  )}
+                </div>
+
                 <a href="index.html" className="hover:text-marie-gold transition-colors flex items-center gap-1">
                   <span>Home</span>
                   <i data-lucide="arrow-up-right" className="w-4 h-4"></i>
