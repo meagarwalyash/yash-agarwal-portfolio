@@ -262,18 +262,32 @@
         setLeadSubmitting(true);
 
         const leadData = {
+          id: 'ld_' + Date.now(),
+          customerName: leadName.trim(),
           name: leadName.trim(),
           phone: leadPhone.trim(),
+          customerEmail: leadEmail.trim().toLowerCase(),
           email: leadEmail.trim().toLowerCase(),
-          productId: leadModalProduct.id,
-          productName: leadModalProduct.title
+          productId: leadModalProduct ? leadModalProduct.id : 'dp_store',
+          productName: leadModalProduct ? leadModalProduct.title : 'Digital Store Asset',
+          createdAt: new Date().toISOString(),
+          date: new Date().toISOString().split('T')[0],
+          status: 'Pending'
         };
 
         try {
           localStorage.setItem('may_lead_user', JSON.stringify(leadData));
           const existingLeads = JSON.parse(localStorage.getItem('may_leads') || '[]');
-          existingLeads.unshift({ ...leadData, id: 'ld_' + Date.now(), createdAt: new Date().toISOString() });
+          existingLeads.unshift(leadData);
           localStorage.setItem('may_leads', JSON.stringify(existingLeads));
+
+          let savedData = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
+          let cms = savedData ? JSON.parse(savedData) : {};
+          if (!cms.waitlistData) cms.waitlistData = [];
+          if (!cms.subscribers) cms.subscribers = [];
+          cms.waitlistData.unshift(leadData);
+          cms.subscribers.unshift(leadData);
+          localStorage.setItem('MAY_WEBSITE_CMS_DATA', JSON.stringify(cms));
         } catch(err) {}
 
         try {
@@ -282,9 +296,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(leadData)
           });
-        } catch(err) {
-          console.log('Stored lead locally');
-        }
+        } catch(err) {}
 
         setLeadSubmitting(false);
         setLeadSuccessMsg('✓ Lead Information Saved to CMS! Unlocking access...');

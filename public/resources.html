@@ -123,18 +123,41 @@
           return;
         }
 
-        // Save lead subscriber to CMS LocalStorage
+        // Save lead subscriber to CMS LocalStorage & server endpoints
         try {
+          const leadRecord = {
+            id: 'ld_' + Date.now(),
+            customerName: email.split('@')[0],
+            name: email.split('@')[0],
+            customerEmail: email.trim().toLowerCase(),
+            email: email.trim().toLowerCase(),
+            productName: activeResource ? activeResource.title : 'Free Lead Magnet Download',
+            source: activeResource ? activeResource.title : 'Free Lead Magnet Hub',
+            createdAt: new Date().toISOString(),
+            date: new Date().toISOString().split('T')[0],
+            status: 'Pending'
+          };
+
+          // 1. Save to may_leads array
+          let existingLeads = JSON.parse(localStorage.getItem('may_leads') || '[]');
+          existingLeads.unshift(leadRecord);
+          localStorage.setItem('may_leads', JSON.stringify(existingLeads));
+
+          // 2. Save to MAY_WEBSITE_CMS_DATA waitlistData & subscribers
           let savedData = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
           let cms = savedData ? JSON.parse(savedData) : {};
+          if (!cms.waitlistData) cms.waitlistData = [];
           if (!cms.subscribers) cms.subscribers = [];
-          cms.subscribers.unshift({
-            email: email,
-            date: new Date().toISOString().split('T')[0],
-            source: activeResource ? activeResource.title : 'Free Lead Magnet Hub',
-            status: 'active'
-          });
+          cms.waitlistData.unshift(leadRecord);
+          cms.subscribers.unshift(leadRecord);
           localStorage.setItem('MAY_WEBSITE_CMS_DATA', JSON.stringify(cms));
+
+          // 3. Post to backend leads capture endpoint
+          fetch('/api/leads/capture', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(leadRecord)
+          }).catch(() => {});
         } catch(e) {}
 
         setDownloadSuccess(true);
