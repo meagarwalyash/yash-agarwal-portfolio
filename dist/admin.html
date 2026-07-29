@@ -345,7 +345,20 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
       const [cmsData, setCmsData] = useState(() => {
         const saved = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
         if (saved) {
-          try { return JSON.parse(saved); } catch(e) { return defaultCmsData; }
+          try {
+            const parsed = JSON.parse(saved);
+            return {
+              ...defaultCmsData,
+              ...parsed,
+              blogs: Array.isArray(parsed.blogs) && parsed.blogs.length > 0 ? parsed.blogs : defaultCmsData.blogs,
+              waitlistData: Array.isArray(parsed.waitlistData) ? parsed.waitlistData : [],
+              subscribers: Array.isArray(parsed.subscribers) ? parsed.subscribers : [],
+              leads: Array.isArray(parsed.leads) ? parsed.leads : [],
+              orders: Array.isArray(parsed.orders) ? parsed.orders : []
+            };
+          } catch(e) {
+            return defaultCmsData;
+          }
         }
         return defaultCmsData;
       });
@@ -2986,7 +2999,62 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
       );
     }
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<AdminApp />);
+    class AdminErrorBoundary extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { hasError: false, error: null };
+      }
+      static getDerivedStateFromError(error) {
+        return { hasError: true, error };
+      }
+      componentDidCatch(error, errorInfo) {
+        console.error("MAY Admin Console Caught Error:", error, errorInfo);
+      }
+      render() {
+        if (this.state.hasError) {
+          return (
+            <div className="min-h-screen bg-[#0A090E] text-white flex flex-col items-center justify-center p-6 text-center font-sans">
+              <div className="max-w-lg p-8 rounded-3xl bg-[#14131B] border border-brand-gold/40 shadow-2xl space-y-6">
+                <div className="w-16 h-16 rounded-full bg-brand-gold/20 text-brand-gold flex items-center justify-center mx-auto text-2xl font-bold">
+                  ⚠️
+                </div>
+                <h1 className="text-2xl font-bold text-white">MAY Admin Console Recovery Mode</h1>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  An unexpected render error occurred. Click below to instantly refresh or reset your CMS cache.
+                </p>
+                <div className="p-3 bg-black rounded-xl border border-white/10 text-[10px] font-mono text-rose-300 overflow-x-auto text-left">
+                  {this.state.error?.toString()}
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="flex-1 py-3 px-6 rounded-full bg-brand-gold text-black text-xs font-bold shadow-lg"
+                  >
+                    🔄 Refresh Admin Panel
+                  </button>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('MAY_WEBSITE_CMS_DATA');
+                      window.location.reload();
+                    }}
+                    className="flex-1 py-3 px-6 rounded-full bg-rose-950 text-rose-300 text-xs font-bold border border-rose-800"
+                  >
+                    🧹 Reset CMS Cache
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        }
+        return this.props.children;
+      }
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <AdminErrorBoundary>
+        <AdminApp />
+      </AdminErrorBoundary>
+    );
   </script>
 </body>
 </html>
