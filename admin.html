@@ -1075,16 +1075,27 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                         {/* Right Controls */}
                         <div className="flex items-center gap-3">
                           <button 
-                            onClick={() => { handleUpdateBlogField('status', 'draft'); setEditingBlog(null); }}
-                            className="text-[10px] font-bold text-white hover:bg-white/10 px-4 py-2 rounded-full transition-colors border border-white/20"
+                            onClick={() => { handleUpdateBlogField('status', 'draft'); setEditingBlog(null); alert('✓ Article saved as Draft'); }}
+                            className="text-[10px] font-bold text-white hover:bg-white/10 px-3.5 py-2 rounded-full transition-colors border border-white/20"
                           >
                             Save Draft
                           </button>
-                          <button 
-                            onClick={() => { handleUpdateBlogField('status', 'published'); setEditingBlog(null); }}
-                            className="text-[10px] font-bold bg-white text-black px-5 py-2 rounded-full hover:bg-zinc-200 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                          <a
+                            href="blog.html"
+                            target="_blank"
+                            className="text-[10px] font-bold text-brand-gold bg-brand-gold/10 hover:bg-brand-gold/20 px-3.5 py-2 rounded-full transition-colors border border-brand-gold/30"
                           >
-                            Publish Live
+                            👁️ View Live Blog
+                          </a>
+                          <button 
+                            onClick={() => {
+                              handleUpdateBlogField('status', 'published');
+                              setEditingBlog(null);
+                              alert('🚀 Article Published Live! It is now instantly synchronized across https://meagarwalyash.com/blog.html and homepage.');
+                            }}
+                            className="text-[10px] font-bold bg-brand-gold text-black px-5 py-2 rounded-full hover:bg-brand-goldHover transition-colors shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+                          >
+                            Publish Live 🚀
                           </button>
                         </div>
                       </div>

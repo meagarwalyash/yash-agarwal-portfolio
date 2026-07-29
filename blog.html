@@ -124,7 +124,7 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    const blogPosts = [
+    const fallbackBlogPosts = [
       {
         id: 'post-1',
         title: 'How to Scale Digital Revenue Past ₹3Cr in ANY Economy with First-Principles Marketing',
@@ -225,7 +225,35 @@
       }
     ];
 
+    function getLiveBlogPosts() {
+      try {
+        const savedData = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
+        if (savedData) {
+          const cms = JSON.parse(savedData);
+          if (cms.blogs && Array.isArray(cms.blogs) && cms.blogs.length > 0) {
+            return cms.blogs
+              .filter(b => b.status === 'published' || !b.status)
+              .map((b, idx) => ({
+                id: b.id || `post-${idx}`,
+                title: b.heading || b.title || 'Untitled Essay',
+                category: (b.category || 'EXECUTIVE STRATEGY').toUpperCase(),
+                catColor: '#D4AF37',
+                catBg: 'rgba(212,175,55,0.15)',
+                date: b.date || 'July 2026',
+                readTime: b.readTime || '6 min read',
+                image: b.coverImg || b.image || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80',
+                featured: idx === 0,
+                excerpt: b.snippet || b.excerpt || b.metaDesc || '',
+                content: (b.content && b.content.includes('<p')) ? b.content : (b.content ? b.content.split('\n\n').map(p => p.trim() ? `<p class="text-lg leading-relaxed mb-6 font-medium">${p}</p>` : '').join('') : `<p class="text-lg leading-relaxed mb-6 font-medium">${b.snippet || ''}</p>`)
+              }));
+          }
+        }
+      } catch(e) {}
+      return fallbackBlogPosts;
+    }
+
     function BlogApp() {
+      const [blogPosts, setBlogPosts] = useState(() => getLiveBlogPosts());
       const [darkMode, setDarkMode] = useState(() => {
         return localStorage.getItem('may_theme') === 'dark';
       });
@@ -233,6 +261,31 @@
       const [searchQuery, setSearchQuery] = useState('');
       const [activePost, setActivePost] = useState(null);
       const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
+
+      // Real-time listener for live updates published in admin.html
+      useEffect(() => {
+        const updateBlogPosts = () => {
+          setBlogPosts(getLiveBlogPosts());
+        };
+
+        window.addEventListener('storage', updateBlogPosts);
+
+        if (window.BroadcastChannel) {
+          try {
+            const bc = new BroadcastChannel('MAY_CMS_CHANNEL');
+            bc.onmessage = (event) => {
+              if (event.data && event.data.type === 'CMS_UPDATE') {
+                updateBlogPosts();
+              }
+            };
+            return () => {
+              try { bc.close(); } catch(e) {}
+              window.removeEventListener('storage', updateBlogPosts);
+            };
+          } catch(e) {}
+        }
+        return () => window.removeEventListener('storage', updateBlogPosts);
+      }, []);
 
       useEffect(() => {
         if (darkMode) {
@@ -248,9 +301,9 @@
         if (window.lucide) {
           window.lucide.createIcons();
         }
-      }, [selectedCategory, activePost, moreDropdownOpen]);
+      }, [selectedCategory, activePost, moreDropdownOpen, blogPosts]);
 
-      const categories = ['ALL', 'MONEY & REVENUE', 'PR & BRAND AUTHORITY', 'CAREER & LEADERSHIP', 'EXECUTIVE BRANDING', 'AI & MARKETING TECH', 'PERFORMANCE MARKETING'];
+      const categories = ['ALL', 'MONEY & REVENUE', 'PR & BRAND AUTHORITY', 'CAREER & LEADERSHIP', 'EXECUTIVE BRANDING', 'AI & MARKETING TECH', 'PERFORMANCE MARKETING', 'PR STRATEGY', 'PERFORMANCE', 'LEADERSHIP'];
 
       const filteredPosts = blogPosts.filter(post => {
         const matchesCategory = selectedCategory === 'ALL' || post.category === selectedCategory;
