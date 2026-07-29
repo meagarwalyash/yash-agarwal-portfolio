@@ -842,6 +842,10 @@
       useEffect(() => {
         const handleHashScroll = () => {
           const hash = window.location.hash;
+          if (hash === '#store' || hash === '#store.html' || hash === '#ebooks') {
+            window.location.href = 'store.html';
+            return;
+          }
           if (hash) {
             setTimeout(() => {
               const targetEl = document.querySelector(hash);
