@@ -52,11 +52,10 @@
     }
   </script>
 
-  <!-- React 18, Babel & Lucide Multi-CDN System for 100% Uptime -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- React 18, Babel & Lucide High-Speed Cloudflare Edge CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
 
   <style>
@@ -2273,31 +2272,6 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                           </div>
                         );
                       })()}
-                                        onClick={async () => {
-                                          try {
-                                            const r = await fetch('/api/admin/waitlist/notify', {
-                                              method: 'POST',
-                                              headers: { 'Content-Type': 'application/json' },
-                                              body: JSON.stringify({ productId: item.productId })
-                                            });
-                                            const resD = await r.json();
-                                            alert(resD.message || 'Notification sent!');
-                                          } catch(e) {
-                                            alert('Email notification triggered!');
-                                          }
-                                        }}
-                                        className="px-3 py-1.5 rounded-lg bg-brand-gold text-black font-bold text-[10px] hover:bg-brand-goldHover"
-                                      >
-                                        Send Launch Email 📧
-                                      </button>
-                                    </td>
-                                  </tr>
-                                ))
-                              )}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
                     </div>
                   )}
 

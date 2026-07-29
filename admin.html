@@ -2272,31 +2272,6 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                           </div>
                         );
                       })()}
-                                        onClick={async () => {
-                                          try {
-                                            const r = await fetch('/api/admin/waitlist/notify', {
-                                              method: 'POST',
-                                              headers: { 'Content-Type': 'application/json' },
-                                              body: JSON.stringify({ productId: item.productId })
-                                            });
-                                            const resD = await r.json();
-                                            alert(resD.message || 'Notification sent!');
-                                          } catch(e) {
-                                            alert('Email notification triggered!');
-                                          }
-                                        }}
-                                        className="px-3 py-1.5 rounded-lg bg-brand-gold text-black font-bold text-[10px] hover:bg-brand-goldHover"
-                                      >
-                                        Send Launch Email 📧
-                                      </button>
-                                    </td>
-                                  </tr>
-                                ))
-                              )}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
                     </div>
                   )}
 
