@@ -115,6 +115,74 @@
       overflow-x: hidden;
       transition: background-color 0.4s ease, color 0.4s ease;
     }
+    .blog-wysiwyg-content h1 {
+      font-size: 2.25rem !important;
+      font-weight: 800 !important;
+      margin-top: 1.75rem !important;
+      margin-bottom: 1rem !important;
+      line-height: 1.2 !important;
+    }
+    .blog-wysiwyg-content h2 {
+      font-size: 1.75rem !important;
+      font-weight: 700 !important;
+      color: #D4AF37 !important;
+      margin-top: 1.5rem !important;
+      margin-bottom: 0.75rem !important;
+      line-height: 1.25 !important;
+    }
+    .blog-wysiwyg-content h3 {
+      font-size: 1.35rem !important;
+      font-weight: 700 !important;
+      margin-top: 1.25rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+    .blog-wysiwyg-content p {
+      margin-bottom: 1.25rem !important;
+      line-height: 1.8 !important;
+    }
+    .blog-wysiwyg-content b, .blog-wysiwyg-content strong {
+      font-weight: 800 !important;
+    }
+    .blog-wysiwyg-content i, .blog-wysiwyg-content em {
+      font-style: italic !important;
+    }
+    .blog-wysiwyg-content u {
+      text-decoration: underline !important;
+      text-underline-offset: 4px !important;
+      text-decoration-color: #D4AF37 !important;
+    }
+    .blog-wysiwyg-content ul {
+      list-style-type: disc !important;
+      list-style-position: inside !important;
+      margin-top: 1rem !important;
+      margin-bottom: 1rem !important;
+      padding-left: 1rem !important;
+    }
+    .blog-wysiwyg-content ol {
+      list-style-type: decimal !important;
+      list-style-position: inside !important;
+      margin-top: 1rem !important;
+      margin-bottom: 1rem !important;
+      padding-left: 1rem !important;
+    }
+    .blog-wysiwyg-content li {
+      margin-bottom: 0.4rem !important;
+    }
+    .blog-wysiwyg-content blockquote {
+      border-left: 4px solid #D4AF37 !important;
+      padding-left: 1.25rem !important;
+      padding-top: 0.75rem !important;
+      padding-bottom: 0.75rem !important;
+      margin-top: 1.25rem !important;
+      margin-bottom: 1.25rem !important;
+      font-style: italic !important;
+      background: rgba(212, 175, 55, 0.08) !important;
+      border-radius: 0 0.75rem 0.75rem 0 !important;
+    }
+    .blog-wysiwyg-content a {
+      color: #D4AF37 !important;
+      text-decoration: underline !important;
+    }
   </style>
 </head>
 <body class="bg-[#FAF8F5] text-[#121212] antialiased min-h-screen">
@@ -696,7 +764,7 @@
 
                   <div
                     dangerouslySetInnerHTML={{ __html: activePost.content }}
-                    className="prose dark:prose-invert max-w-none text-base sm:text-lg leading-relaxed pt-4"
+                    className="prose dark:prose-invert max-w-none blog-wysiwyg-content text-base sm:text-lg leading-relaxed pt-4 text-left"
                   />
 
                   <div className="pt-8 border-t border-zinc-200 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
