@@ -268,11 +268,13 @@
           phone: leadPhone.trim(),
           customerEmail: leadEmail.trim().toLowerCase(),
           email: leadEmail.trim().toLowerCase(),
+          type: 'Ebook Download',
           productId: targetProduct ? targetProduct.id : 'dp_store',
           productName: targetProduct ? targetProduct.title : 'Digital Store Asset',
+          source: 'Digital Store – ' + (targetProduct ? targetProduct.title : 'Free Asset'),
           createdAt: new Date().toISOString(),
           date: new Date().toISOString().split('T')[0],
-          status: 'Pending'
+          status: 'Active'
         };
 
         // 1. Save lead to local storage & CMS instantly

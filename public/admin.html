@@ -379,6 +379,74 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
       const [wixEditorSettingsTab, setWixEditorSettingsTab] = useState('general');
       const [simulatedActionMessage, setSimulatedActionMessage] = useState('');
       const [isSimulating, setIsSimulating] = useState(false);
+      const [liveLeads, setLiveLeads] = useState([]);
+
+      // Pull all lead sources from localStorage into a deduplicated list
+      const refreshLeadsFromStorage = () => {
+        try {
+          const masterLeads = (() => { try { return JSON.parse(localStorage.getItem('may_master_leads') || '[]'); } catch(e) { return []; } })();
+          const localLeads = (() => { try { return JSON.parse(localStorage.getItem('may_leads') || '[]'); } catch(e) { return []; } })();
+          const registeredUsers = (() => { try { return JSON.parse(localStorage.getItem('MAY_PLATFORM_USERS') || '[]'); } catch(e) { return []; } })();
+          const cmsRaw = (() => { try { return JSON.parse(localStorage.getItem('MAY_WEBSITE_CMS_DATA') || '{}'); } catch(e) { return {}; } })();
+
+          const all = [
+            ...masterLeads,
+            ...localLeads,
+            ...(Array.isArray(cmsRaw.waitlistData) ? cmsRaw.waitlistData : []),
+            ...(Array.isArray(cmsRaw.subscribers) ? cmsRaw.subscribers : []),
+            ...(Array.isArray(cmsRaw.leads) ? cmsRaw.leads : []),
+            ...(Array.isArray(cmsRaw.orders) ? cmsRaw.orders.map(o => ({
+              id: o.orderId || 'ord_' + Math.random(),
+              name: o.customerName || 'Customer',
+              email: o.customerEmail || o.email,
+              phone: o.customerPhone || o.phone || '',
+              type: 'Paid Order',
+              productName: o.productTitle || o.productName || 'Store Order',
+              createdAt: o.createdAt || new Date().toISOString()
+            })) : []),
+            ...registeredUsers.map(u => ({
+              id: u.id || 'usr_' + Math.random(),
+              name: u.name || 'Member',
+              email: u.email,
+              phone: u.phone || '',
+              type: 'Registered User',
+              productName: 'Customer Portal Member',
+              createdAt: u.createdAt || new Date().toISOString()
+            }))
+          ];
+
+          const uniqueMap = new Map();
+          all.forEach(item => {
+            const em = (item.email || item.customerEmail || '').toLowerCase().trim();
+            if (em) {
+              const key = em + '_' + (item.type || 'lead');
+              if (!uniqueMap.has(key)) {
+                uniqueMap.set(key, {
+                  id: item.id || 'ld_' + Date.now() + Math.random(),
+                  name: item.name || item.customerName || em.split('@')[0],
+                  email: em,
+                  phone: item.phone || item.mobile || '',
+                  type: item.type || item.source || 'Ebook Download',
+                  productName: item.productName || item.source || 'MAY Asset',
+                  createdAt: item.createdAt || item.date || new Date().toISOString(),
+                  status: item.status || 'Active'
+                });
+              }
+            }
+          });
+
+          setLiveLeads(Array.from(uniqueMap.values()).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+        } catch(e) {}
+      };
+
+      // Auto-refresh leads every 5 seconds when leads tab is open
+      useEffect(() => {
+        if (authenticated && (activeTab === 'leads' || activeTab === 'waitlist')) {
+          refreshLeadsFromStorage();
+          const interval = setInterval(refreshLeadsFromStorage, 5000);
+          return () => clearInterval(interval);
+        }
+      }, [authenticated, activeTab]);
 
       const broadcastCmsUpdate = (data) => {
         if (window.BroadcastChannel) {
@@ -2371,63 +2439,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                           <button
                             onClick={() => {
                               try {
-                                const masterLeads = (() => {
-                                  try { return JSON.parse(localStorage.getItem('may_master_leads') || '[]'); } catch(e) { return []; }
-                                })();
-                                const localLeads = (() => {
-                                  try { return JSON.parse(localStorage.getItem('may_leads') || '[]'); } catch(e) { return []; }
-                                })();
-                                const registeredUsers = (() => {
-                                  try { return JSON.parse(localStorage.getItem('MAY_PLATFORM_USERS') || '[]'); } catch(e) { return []; }
-                                })();
-
-                                const all = [
-                                  ...masterLeads,
-                                  ...localLeads,
-                                  ...((cmsData.waitlistData) || []),
-                                  ...((cmsData.subscribers) || []),
-                                  ...((cmsData.leads) || []),
-                                  ...((cmsData.orders) || []).map(o => ({
-                                    id: o.orderId || 'ord_' + Math.random(),
-                                    name: o.customerName || 'Customer',
-                                    email: o.customerEmail || o.email,
-                                    phone: o.customerPhone || o.phone || '',
-                                    type: 'Paid Order',
-                                    productName: o.productTitle || o.productName || 'Store Order',
-                                    createdAt: o.createdAt || new Date().toISOString()
-                                  })),
-                                  ...registeredUsers.map(u => ({
-                                    id: u.id || 'usr_' + Math.random(),
-                                    name: u.name || 'Member',
-                                    email: u.email,
-                                    phone: u.phone || '',
-                                    type: 'Registered User',
-                                    productName: 'Customer Portal Member',
-                                    createdAt: u.createdAt || new Date().toISOString()
-                                  }))
-                                ];
-
-                                const uniqueMap = new Map();
-                                all.forEach(item => {
-                                  const em = (item.email || item.customerEmail || '').toLowerCase().trim();
-                                  if (em) {
-                                    const key = em + '_' + (item.type || 'lead');
-                                    if (!uniqueMap.has(key)) {
-                                      uniqueMap.set(key, {
-                                        id: item.id || 'ld_' + Math.random(),
-                                        name: item.name || item.customerName || em.split('@')[0],
-                                        email: em,
-                                        phone: item.phone || item.mobile || '',
-                                        type: item.type || item.source || 'Ebook Download',
-                                        productName: item.productName || item.source || 'MAY Asset',
-                                        createdAt: item.createdAt || item.date || new Date().toISOString(),
-                                        status: item.status || 'Active'
-                                      });
-                                    }
-                                  }
-                                });
-
-                                const leadsList = Array.from(uniqueMap.values());
+                                const leadsList = liveLeads;
                                 if (leadsList.length === 0) {
                                   alert("No lead records available to export yet.");
                                   return;
@@ -2480,7 +2492,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                               if (window.saveMasterLead) {
                                 window.saveMasterLead({ name, email, phone, type, productName });
                                 alert("✓ Customer lead added to master database!");
-                                window.location.reload();
+                                refreshLeadsFromStorage();
                               }
                             }}
                             className="px-4 py-2.5 rounded-full bg-brand-gold hover:bg-brand-goldHover text-black font-bold text-xs flex items-center gap-2 shadow-lg transition-all"
@@ -2493,63 +2505,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
 
                       {/* STATS & METRICS GRID */}
                       {(() => {
-                        const masterLeads = (() => {
-                          try { return JSON.parse(localStorage.getItem('may_master_leads') || '[]'); } catch(e) { return []; }
-                        })();
-                        const localLeads = (() => {
-                          try { return JSON.parse(localStorage.getItem('may_leads') || '[]'); } catch(e) { return []; }
-                        })();
-                        const registeredUsers = (() => {
-                          try { return JSON.parse(localStorage.getItem('MAY_PLATFORM_USERS') || '[]'); } catch(e) { return []; }
-                        })();
-
-                        const all = [
-                          ...masterLeads,
-                          ...localLeads,
-                          ...((cmsData.waitlistData) || []),
-                          ...((cmsData.subscribers) || []),
-                          ...((cmsData.leads) || []),
-                          ...((cmsData.orders) || []).map(o => ({
-                            id: o.orderId || 'ord_' + Math.random(),
-                            name: o.customerName || 'Customer',
-                            email: o.customerEmail || o.email,
-                            phone: o.customerPhone || o.phone || '',
-                            type: 'Paid Order',
-                            productName: o.productTitle || o.productName || 'Store Order',
-                            createdAt: o.createdAt || new Date().toISOString()
-                          })),
-                          ...registeredUsers.map(u => ({
-                            id: u.id || 'usr_' + Math.random(),
-                            name: u.name || 'Member',
-                            email: u.email,
-                            phone: u.phone || '',
-                            type: 'Registered User',
-                            productName: 'Customer Portal Member',
-                            createdAt: u.createdAt || new Date().toISOString()
-                          }))
-                        ];
-
-                        const uniqueMap = new Map();
-                        all.forEach(item => {
-                          const em = (item.email || item.customerEmail || '').toLowerCase().trim();
-                          if (em) {
-                            const key = em + '_' + (item.type || 'lead');
-                            if (!uniqueMap.has(key)) {
-                              uniqueMap.set(key, {
-                                id: item.id || 'ld_' + Math.random(),
-                                name: item.name || item.customerName || em.split('@')[0],
-                                email: em,
-                                phone: item.phone || item.mobile || '',
-                                type: item.type || item.source || 'Ebook Download',
-                                productName: item.productName || item.source || 'MAY Asset',
-                                createdAt: item.createdAt || item.date || new Date().toISOString(),
-                                status: item.status || 'Active'
-                              });
-                            }
-                          }
-                        });
-
-                        let allLeadsList = Array.from(uniqueMap.values());
+                        const allLeadsList = liveLeads;
 
                         // Apply Live Filtering & Search
                         let filteredLeads = allLeadsList.filter(item => {
