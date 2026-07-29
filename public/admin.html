@@ -1383,21 +1383,21 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                             )}
 
                             {/* SEO MENU */}
-                            {wixEditorActiveSidebar === 'seo' && (
+                            {wixEditorActiveSidebar === 'seo' && editingBlog && (
                               <div className="p-5 space-y-6">
                                 <p className="text-xs text-zinc-400 leading-relaxed">Optimize your article for search engines like Google.</p>
                                 <div className="space-y-4">
                                   <div>
                                     <label className="text-[10px] text-zinc-500 font-mono block mb-1">URL SLUG</label>
-                                    <input type="text" value={editingBlog.slug} onChange={(e) => handleUpdateBlogField('slug', e.target.value)} className="w-full bg-black border border-[#232230] rounded-lg p-2.5 text-xs text-white focus:border-brand-gold outline-none" />
+                                    <input type="text" value={editingBlog.slug || ''} onChange={(e) => handleUpdateBlogField('slug', e.target.value)} className="w-full bg-black border border-[#232230] rounded-lg p-2.5 text-xs text-white focus:border-brand-gold outline-none" />
                                   </div>
                                   <div>
                                     <label className="text-[10px] text-zinc-500 font-mono block mb-1">META TITLE</label>
-                                    <input type="text" value={editingBlog.metaTitle || editingBlog.heading} onChange={(e) => handleUpdateBlogField('metaTitle', e.target.value)} className="w-full bg-black border border-[#232230] rounded-lg p-2.5 text-xs text-white focus:border-brand-gold outline-none" />
+                                    <input type="text" value={editingBlog.metaTitle || editingBlog.heading || ''} onChange={(e) => handleUpdateBlogField('metaTitle', e.target.value)} className="w-full bg-black border border-[#232230] rounded-lg p-2.5 text-xs text-white focus:border-brand-gold outline-none" />
                                   </div>
                                   <div>
                                     <label className="text-[10px] text-zinc-500 font-mono block mb-1">META DESCRIPTION</label>
-                                    <textarea rows={4} value={editingBlog.metaDesc || editingBlog.snippet} onChange={(e) => handleUpdateBlogField('metaDesc', e.target.value)} className="w-full bg-black border border-[#232230] rounded-lg p-2.5 text-xs text-white focus:border-brand-gold outline-none resize-none"></textarea>
+                                    <textarea rows={4} value={editingBlog.metaDesc || editingBlog.snippet || ''} onChange={(e) => handleUpdateBlogField('metaDesc', e.target.value)} className="w-full bg-black border border-[#232230] rounded-lg p-2.5 text-xs text-white focus:border-brand-gold outline-none resize-none"></textarea>
                                   </div>
                                   <div>
                                     <label className="text-[10px] text-zinc-500 font-mono block mb-1">FOCUS KEYWORD</label>
@@ -1489,7 +1489,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                             )}
 
                             {/* SETTINGS MENU (Original 3 tabs) */}
-                            {wixEditorActiveSidebar === 'settings' && (
+                            {wixEditorActiveSidebar === 'settings' && editingBlog && (
                               <div className="flex flex-col h-full">
                                 <div className="flex border-b border-[#232230] px-5 pt-2 shrink-0">
                                   <button onClick={() => setWixEditorSettingsTab('general')} className={`text-[10px] font-bold pb-3 px-1 mr-5 border-b-2 transition-colors uppercase ${wixEditorSettingsTab === 'general' ? 'border-brand-gold text-brand-gold' : 'border-transparent text-zinc-500 hover:text-white'}`}>General</button>
@@ -1517,7 +1517,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                                         <label className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider">Publish Date</label>
                                         <div className="bg-black border border-[#232230] rounded-lg p-2.5 flex items-center gap-2">
                                           <i data-lucide="calendar" className="w-3.5 h-3.5 text-zinc-500"></i>
-                                          <input type="text" value={editingBlog.date} onChange={(e) => handleUpdateBlogField('date', e.target.value)} className="text-xs outline-none w-full bg-transparent text-white" />
+                                          <input type="text" value={editingBlog.date || ''} onChange={(e) => handleUpdateBlogField('date', e.target.value)} className="text-xs outline-none w-full bg-transparent text-white" />
                                         </div>
                                       </div>
 
@@ -1535,7 +1535,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                                         <div className="flex justify-between items-center">
                                           <label className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider">Excerpt</label>
                                         </div>
-                                        <textarea rows={4} value={editingBlog.snippet} onChange={(e) => handleUpdateBlogField('snippet', e.target.value)} placeholder="Write excerpt..." className="w-full bg-black border border-[#232230] rounded-lg p-3 text-xs text-white focus:border-brand-gold outline-none resize-none"></textarea>
+                                        <textarea rows={4} value={editingBlog.snippet || ''} onChange={(e) => handleUpdateBlogField('snippet', e.target.value)} placeholder="Write excerpt..." className="w-full bg-black border border-[#232230] rounded-lg p-3 text-xs text-white focus:border-brand-gold outline-none resize-none"></textarea>
                                       </div>
 
                                       <div className="pt-4 border-t border-[#232230] flex justify-between items-center">
@@ -1550,7 +1550,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                                       <p className="text-[11px] text-zinc-400 leading-relaxed">Organize topics and help readers find posts.</p>
                                       <div>
                                         <div className="flex gap-2">
-                                          <input type="text" value={editingBlog.category} onChange={(e) => handleUpdateBlogField('category', e.target.value)} className="bg-black border border-[#232230] rounded-lg p-2.5 text-xs w-full text-white focus:border-brand-gold outline-none" />
+                                          <input type="text" value={editingBlog.category || ''} onChange={(e) => handleUpdateBlogField('category', e.target.value)} className="bg-black border border-[#232230] rounded-lg p-2.5 text-xs w-full text-white focus:border-brand-gold outline-none" />
                                         </div>
                                       </div>
                                     </div>
@@ -1575,7 +1575,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                             <input 
                               type="text"
                               placeholder="Post Title..."
-                              value={editingBlog.heading}
+                              value={editingBlog?.heading || ''}
                               onChange={(e) => handleUpdateBlogField('heading', e.target.value)}
                               className="w-full text-4xl md:text-5xl font-bold text-white placeholder-zinc-700 outline-none bg-transparent mb-4 leading-tight"
                             />
@@ -1585,7 +1585,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                                 ref={editorRef}
                                 contentEditable="true"
                                 className="w-full text-lg md:text-xl font-serif text-zinc-300 leading-relaxed outline-none min-h-[600px] blog-wysiwyg-content p-6 rounded-2xl border border-white/10 bg-black/40 shadow-inner focus:border-brand-gold/50"
-                                dangerouslySetInnerHTML={{ __html: editingBlog.content }}
+                                dangerouslySetInnerHTML={{ __html: editingBlog?.content || '' }}
                                 onInput={syncEditorContentToState}
                                 onBlur={syncEditorContentToState}
                               ></div>
