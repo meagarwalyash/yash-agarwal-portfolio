@@ -249,7 +249,7 @@
         }
 
         if (product.discountPrice === 0) {
-          const downloadUrl = `/api/download/${product.id}?email=${encodeURIComponent(savedLead.email)}`;
+          const downloadUrl = (product.downloadUrl || product.fileUrl) ? (product.downloadUrl || product.fileUrl) : 'EBOOKS/MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf';
           window.open(downloadUrl, '_blank');
         } else {
           handleBuyNow(product, savedLead);
@@ -295,7 +295,7 @@
           setLeadSuccessMsg('');
 
           if (targetProduct.discountPrice === 0) {
-            const downloadUrl = `/api/download/${targetProduct.id}?email=${encodeURIComponent(leadData.email)}`;
+            const downloadUrl = (targetProduct.downloadUrl || targetProduct.fileUrl) ? (targetProduct.downloadUrl || targetProduct.fileUrl) : 'EBOOKS/MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf';
             window.open(downloadUrl, '_blank');
           } else {
             handleBuyNow(targetProduct, leadData);
@@ -748,7 +748,7 @@
 
               <div className="flex-1 my-4 bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 flex items-center justify-center">
                 <iframe
-                  src={`/api/download/${pdfPreviewProduct.id}?preview=true`}
+                  src={pdfPreviewProduct.downloadUrl || pdfPreviewProduct.fileUrl || 'EBOOKS/MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf'}
                   className="w-full h-full border-none rounded-2xl"
                   title="PDF Preview"
                 ></iframe>

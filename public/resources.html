@@ -259,7 +259,7 @@
                     <h3 className="text-xl font-bold">Download Unlocked!</h3>
                     <p className="text-xs text-zinc-300">We have registered <strong>{email}</strong> for future growth updates.</p>
                     <a 
-                      href={activeResource.fileUrl || "#"}
+                      href={activeResource.fileUrl || activeResource.downloadUrl || "EBOOKS/MeAgarwalYash_Zero_Budget_PR_Audit_Checklist_Ebook.pdf"}
                       download
                       onClick={() => alert(`Downloading ${activeResource.title}...`)}
                       className="inline-block w-full py-3.5 rounded-full bg-brand-gold text-black font-bold text-xs hover:bg-brand-goldHover gold-glow"
