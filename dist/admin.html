@@ -919,6 +919,14 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                   <i data-lucide="brain-circuit" className="w-4 h-4"></i>
                   <span>SEO & AI Discoverability</span>
                 </button>
+
+                <button
+                  onClick={() => setActiveTab('mediaKit')}
+                  className={`w-full text-left px-3.5 py-3 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeTab === 'mediaKit' ? 'bg-brand-gold text-black shadow-md' : 'text-zinc-300 hover:bg-white/5'}`}
+                >
+                  <i data-lucide="sparkles" className="w-4 h-4 text-brand-gold"></i>
+                  <span>Media Kit &amp; Partnerships</span>
+                </button>
               </div>
 
               <div className="p-3 rounded-xl bg-black border border-[#232230] text-[11px] text-zinc-400 space-y-1 font-mono mt-6">
@@ -2423,6 +2431,164 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
 
                     </div>
                   )}
+
+                  {/* TAB: MEDIA KIT & SPONSORSHIPS CMS MANAGER */}
+                  {activeTab === 'mediaKit' && (
+                    <div className="space-y-8 max-w-6xl mx-auto text-left animate-fadeIn">
+                      <div className="border-b border-[#232230] pb-4 flex flex-wrap justify-between items-center gap-4">
+                        <div>
+                          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                            <span>Interactive Media Kit Manager</span>
+                            <span className="px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold text-[10px] font-mono font-bold uppercase">Live CMS</span>
+                          </h2>
+                          <p className="text-xs text-zinc-400 mt-1">Manage verified reach statistics, platform engagement metrics, audience demographics, sponsorship packages, and downloadable rate cards on <a href="media-kit.html" target="_blank" className="text-brand-gold font-bold hover:underline">media-kit.html</a>.</p>
+                        </div>
+
+                        <div className="flex gap-3">
+                          <button
+                            onClick={() => {
+                              try {
+                                localStorage.setItem('MAY_WEBSITE_CMS_DATA', JSON.stringify(cmsData));
+                                showToast('✓ Media Kit CMS Data Saved Successfully!');
+                              } catch(e) {
+                                alert('Error saving CMS data');
+                              }
+                            }}
+                            className="px-5 py-2.5 rounded-xl bg-brand-gold text-black font-extrabold text-xs hover:bg-brand-goldHover transition-all shadow-lg"
+                          >
+                            Save Media Kit Changes
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* HERO POSITIONING & STATS EDITOR */}
+                      <div className="p-6 rounded-2xl bg-[#14131B] border border-[#232230] space-y-6">
+                        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                          <h3 className="font-bold text-white text-base flex items-center gap-2">
+                            <span>👑 Hero Positioning &amp; Executive Headline</span>
+                          </h3>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                          <div>
+                            <label className="block text-zinc-400 font-bold mb-1">Executive Headline</label>
+                            <input
+                              type="text"
+                              value={cmsData.mediaKit?.hero?.headline || ''}
+                              onChange={(e) => {
+                                const updated = { ...cmsData };
+                                if (!updated.mediaKit) updated.mediaKit = {};
+                                if (!updated.mediaKit.hero) updated.mediaKit.hero = {};
+                                updated.mediaKit.hero.headline = e.target.value;
+                                setCmsData(updated);
+                              }}
+                              className="w-full p-3 rounded-xl bg-black border border-white/20 text-white focus:border-brand-gold focus:outline-none"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-zinc-400 font-bold mb-1">Availability Status</label>
+                            <input
+                              type="text"
+                              value={cmsData.mediaKit?.hero?.availability || ''}
+                              onChange={(e) => {
+                                const updated = { ...cmsData };
+                                if (!updated.mediaKit) updated.mediaKit = {};
+                                if (!updated.mediaKit.hero) updated.mediaKit.hero = {};
+                                updated.mediaKit.hero.availability = e.target.value;
+                                setCmsData(updated);
+                              }}
+                              className="w-full p-3 rounded-xl bg-black border border-white/20 text-white focus:border-brand-gold focus:outline-none"
+                            />
+                          </div>
+
+                          <div className="sm:col-span-2">
+                            <label className="block text-zinc-400 font-bold mb-1">Short Positioning Statement</label>
+                            <textarea
+                              rows={2}
+                              value={cmsData.mediaKit?.hero?.positioning || ''}
+                              onChange={(e) => {
+                                const updated = { ...cmsData };
+                                if (!updated.mediaKit) updated.mediaKit = {};
+                                if (!updated.mediaKit.hero) updated.mediaKit.hero = {};
+                                updated.mediaKit.hero.positioning = e.target.value;
+                                setCmsData(updated);
+                              }}
+                              className="w-full p-3 rounded-xl bg-black border border-white/20 text-white focus:border-brand-gold focus:outline-none"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* QUICK REACH METRICS EDITOR */}
+                      <div className="p-6 rounded-2xl bg-[#14131B] border border-[#232230] space-y-6">
+                        <h3 className="font-bold text-white text-base flex items-center gap-2">
+                          <span>📊 Key Verified Reach Statistics</span>
+                        </h3>
+
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 text-xs">
+                          {(cmsData.mediaKit?.stats || []).map((st, idx) => (
+                            <div key={idx} className="p-3.5 rounded-xl bg-black border border-white/10 space-y-2">
+                              <span className="text-[10px] text-zinc-400 font-mono font-bold uppercase">{st.label}</span>
+                              <input
+                                type="text"
+                                value={st.value}
+                                onChange={(e) => {
+                                  const updated = { ...cmsData };
+                                  updated.mediaKit.stats[idx].value = e.target.value;
+                                  setCmsData(updated);
+                                }}
+                                className="w-full p-2 rounded-lg bg-zinc-900 border border-white/20 text-brand-gold font-black text-base focus:border-brand-gold focus:outline-none"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* SPONSORSHIP TIERS EDITOR */}
+                      <div className="p-6 rounded-2xl bg-[#14131B] border border-[#232230] space-y-6">
+                        <h3 className="font-bold text-white text-base flex items-center gap-2">
+                          <span>💳 Sponsorship Packages &amp; Pricing</span>
+                        </h3>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                          {(cmsData.mediaKit?.pricingTiers || []).map((tier, idx) => (
+                            <div key={idx} className="p-4 rounded-xl bg-black border border-white/10 space-y-3">
+                              <div className="font-bold text-white text-sm">{tier.tier}</div>
+                              <div>
+                                <label className="block text-zinc-500 text-[10px] font-mono uppercase mb-1">Pricing Label</label>
+                                <input
+                                  type="text"
+                                  value={tier.price}
+                                  onChange={(e) => {
+                                    const updated = { ...cmsData };
+                                    updated.mediaKit.pricingTiers[idx].price = e.target.value;
+                                    setCmsData(updated);
+                                  }}
+                                  className="w-full p-2 rounded-lg bg-zinc-900 border border-white/20 text-brand-gold font-bold text-sm focus:border-brand-gold focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-zinc-500 text-[10px] font-mono uppercase mb-1">Subtitle</label>
+                                <input
+                                  type="text"
+                                  value={tier.subtitle}
+                                  onChange={(e) => {
+                                    const updated = { ...cmsData };
+                                    updated.mediaKit.pricingTiers[idx].subtitle = e.target.value;
+                                    setCmsData(updated);
+                                  }}
+                                  className="w-full p-2 rounded-lg bg-zinc-900 border border-white/20 text-white text-xs focus:border-brand-gold focus:outline-none"
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                    </div>
+                  )}
+
                   {/* TAB: MASTER CUSTOMER & LEAD DATABASE */}
                   {(activeTab === 'leads' || activeTab === 'waitlist') && (
                     <div className="space-y-6 max-w-6xl mx-auto text-left">

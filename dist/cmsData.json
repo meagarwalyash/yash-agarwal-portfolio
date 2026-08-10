@@ -1093,5 +1093,102 @@
   ],
   "orders": [],
   "users": [],
-  "affiliates": []
+  "affiliates": [],
+  "mediaKit": {
+    "hero": {
+      "name": "Yash Agarwal",
+      "handle": "@MeAgarwalYash",
+      "headline": "Marketing Strategist • Growth Consultant • Personal Brand",
+      "positioning": "Helping ambitious brands and enterprise leaders scale multi-crore revenue engines through Performance Marketing, Tier-1 PR Newsjacking, AI Systems, and High-Authority Brand Storytelling.",
+      "image": "yashdp.png",
+      "location": "Mumbai & Delhi NCR, India (Global Remote)",
+      "availability": "Accepting Select Q3/Q4 Brand Partnerships & Keynotes"
+    },
+    "stats": [
+      { "id": "exp", "value": "12+", "label": "Years of Experience", "icon": "award" },
+      { "id": "brands", "value": "100+", "label": "Brands Worked With", "icon": "briefcase" },
+      { "id": "campaigns", "value": "250+", "label": "Campaigns Managed", "icon": "trending-up" },
+      { "id": "reach", "value": "15M+", "label": "Monthly Reach", "icon": "users" },
+      { "id": "impressions", "value": "45M+", "label": "Monthly Impressions", "icon": "eye" },
+      { "id": "engagement", "value": "8.4%", "label": "Avg Engagement Rate", "icon": "activity" },
+      { "id": "webVisitors", "value": "250K+", "label": "Monthly Web Visitors", "icon": "globe" },
+      { "id": "ytViews", "value": "5M+", "label": "YouTube Views", "icon": "video" },
+      { "id": "igFollowers", "value": "120K+", "label": "Instagram Followers", "icon": "instagram" },
+      { "id": "liFollowers", "value": "85K+", "label": "LinkedIn Followers", "icon": "linkedin" },
+      { "id": "subscribers", "value": "35K+", "label": "Newsletter Subscribers", "icon": "mail" },
+      { "id": "prFeatures", "value": "50+", "label": "Tier-1 PR Features", "icon": "newspaper" },
+      { "id": "speaking", "value": "40+", "label": "Speaking Sessions", "icon": "mic" },
+      { "id": "caseStudies", "value": "30+", "label": "Deep Dive Case Studies", "icon": "file-text" },
+      { "id": "awards", "value": "15+", "label": "Industry Awards", "icon": "star" }
+    ],
+    "about": {
+      "bio": "Yash Agarwal is the Head of Marketing at DR Choksey FinServ, former Head of Digital Marketing at Avant Garde Industries, Founder of FMK Marketing & PR Agency, and Author of the upcoming business masterwork 'No Godfather'. With over 12 years of executive experience scaling companies from 6-figure tests to multi-crore revenue engines, Yash brings an unassailable blend of ROI-first performance advertising, editorial press access, and AI-accelerated distribution.",
+      "mission": "To eradicate wasted marketing budgets by replacing superficial vanity metrics with first-principles customer acquisition, enterprise attribution, and unassailable brand authority.",
+      "vision": "Empowering the next generation of founders and category leaders to build enduring global brands without relying on corporate patronage or backroom favours.",
+      "languages": ["English (Fluent / Native Professional)", "Hindi (Native / Bilingual)"],
+      "industries": ["FinTech & Financial Services", "D2C & Consumer Lifestyle", "B2B SaaS & Tech", "Real Estate & Infrastructure", "EdTech & Career Accelerator", "Luxury & Executive Personal Brands"],
+      "coreExpertise": ["Performance Marketing & Paid Media (Meta / Google)", "Tier-1 PR Newsjacking & Narrative Architecture", "Fractional CMO & Growth P&L Leadership", "AI Marketing Automation & Prompt Engineering", "Executive Personal Branding & Content Engines", "Conversion Rate Optimization & Funnel Architecture"]
+    },
+    "whyBrands": [
+      { "title": "Performance Driven", "desc": "Every campaign is engineered around cash payback, ROAS, and measurable revenue pipeline rather than empty vanity impressions.", "icon": "bar-chart-2" },
+      { "title": "Creative Storytelling", "desc": "High-craft narrative hooks and visual aesthetics that cut through social feeds and hold executive attention.", "icon": "sparkles" },
+      { "title": "AI Powered Marketing", "desc": "Harnessing cutting-edge AI creative velocity, predictive analytics, and workflow automation for 10x output speed.", "icon": "cpu" },
+      { "title": "Growth Strategy", "desc": "First-principles strategic architecture combining paid acquisition, organic virality, and enterprise positioning.", "icon": "compass" },
+      { "title": "PR Expertise", "desc": "Direct editorial relationships and newsjacking blueprints that consistently land Forbes, Business Standard & HT features.", "icon": "feather" },
+      { "title": "Fast Execution", "desc": "Zero bureaucratic drag. Rapid campaign turnaround with agile sprint methodologies and rapid A/B testing.", "icon": "zap" },
+      { "title": "Transparent Reporting", "desc": "Real-time UTM dashboards, transparent blended ROAS metrics, and honest post-campaign debriefs.", "icon": "check-circle-2" },
+      { "title": "Enterprise Experience", "desc": "Proven track record managing ₹500Cr+ financial institution marketing and ₹3Cr+/month paid ad scaling.", "icon": "shield" }
+    ],
+    "platforms": [
+      { "name": "Instagram", "handle": "@meagarwalyash", "followers": "120K+", "reach": "4.2M/mo", "impressions": "12.5M/mo", "avgViews": "85K", "engagement": "9.2%", "growth": "+18.5% YoY", "link": "https://instagram.com/meagarwalyash", "color": "#E1306C", "icon": "instagram" },
+      { "name": "LinkedIn", "handle": "Yash Agarwal", "followers": "85K+", "reach": "3.8M/mo", "impressions": "9.1M/mo", "avgViews": "45K", "engagement": "7.8%", "growth": "+32.4% YoY", "link": "https://linkedin.com/in/meagarwalyash", "color": "#0A66C2", "icon": "linkedin" },
+      { "name": "YouTube", "handle": "@meagarwalyash", "followers": "65K+", "reach": "2.9M/mo", "impressions": "8.4M/mo", "avgViews": "92K", "engagement": "8.6%", "growth": "+24.1% YoY", "link": "https://youtube.com/@meagarwalyash", "color": "#FF0000", "icon": "youtube" },
+      { "name": "Website & SEO", "handle": "meagarwalyash.com", "followers": "250K+ Monthly", "reach": "250K Unique", "impressions": "1.2M/mo", "avgViews": "3.4 Pages/Session", "engagement": "4m 12s Avg Duration", "growth": "+45.0% YoY", "link": "https://meagarwalyash.com", "color": "#D4AF37", "icon": "globe" },
+      { "name": "Executive Newsletter", "handle": "MAY Growth Dispatch", "followers": "35K+", "reach": "35K CXOs", "impressions": "140K/mo", "avgViews": "54.2% Open Rate", "engagement": "14.8% CTR", "growth": "+28.0% YoY", "link": "https://meagarwalyash.com/blog.html", "color": "#10B981", "icon": "mail" },
+      { "name": "X (Twitter)", "handle": "@meagarwalyash", "followers": "28K+", "reach": "1.4M/mo", "impressions": "3.8M/mo", "avgViews": "22K", "engagement": "5.4%", "growth": "+15.2% YoY", "link": "https://x.com/meagarwalyash", "color": "#1DA1F2", "icon": "twitter" }
+    ],
+    "audience": {
+      "age": [
+        { "range": "18-24", "percentage": 18 },
+        { "range": "25-34", "percentage": 52 },
+        { "range": "35-44", "percentage": 22 },
+        { "range": "45+", "percentage": 8 }
+      ],
+      "gender": { "male": 64, "female": 36 },
+      "geography": [
+        { "country": "India 🇮🇳", "percentage": 72 },
+        { "country": "United States 🇺🇸", "percentage": 12 },
+        { "country": "UAE & GCC 🇦🇪", "percentage": 8 },
+        { "country": "United Kingdom 🇬🇧", "percentage": 5 },
+        { "country": "Others 🌐", "percentage": 3 }
+      ],
+      "topCities": ["Mumbai", "Bengaluru", "Delhi NCR", "Hyderabad", "Pune", "London", "Dubai"],
+      "professions": [
+        { "role": "Founders & CXOs", "percentage": 42 },
+        { "role": "VP & Marketing Heads", "percentage": 31 },
+        { "role": "Investors & VCs", "percentage": 15 },
+        { "role": "Creators & Agency Leaders", "percentage": 12 }
+      ],
+      "interests": [
+        { "topic": "Growth & Performance Marketing", "affinity": "96%" },
+        { "topic": "AI Tools & Automation", "affinity": "92%" },
+        { "topic": "Venture Capital & Startups", "affinity": "88%" },
+        { "topic": "FinTech & Wealth Creation", "affinity": "85%" },
+        { "topic": "Executive Personal Branding", "affinity": "94%" }
+      ],
+      "devices": { "mobile": 68, "desktop": 29, "tablet": 3 }
+    },
+    "services": [
+      { "id": "s1", "title": "Integrated Brand Partnerships & Sponsored Series", "badge": "MOST POPULAR", "desc": "High-impact, multi-platform narrative integration across LinkedIn, Instagram Reels, YouTube Shorts, and Newsletter tailored for high-ticket B2B SaaS, FinTech, and D2C brands.", "deliverables": ["Dedicated LinkedIn Thought Leadership Post", "High-Production 60s Instagram Reel / YouTube Short", "Feature Placement in MAY Growth Dispatch Newsletter (35k+ CXOs)", "Full Digital Usage Rights for 90 Days"], "startingPrice": "₹1,50,000", "duration": "2–3 Weeks" },
+      { "id": "s2", "title": "Keynote Speaking & Panel Moderation", "badge": "FLAGSHIP", "desc": "Electrifying, high-retention keynote addresses for corporate conferences, tech summits, college conclaves, and executive leadership retreats on First-Principles Growth, AI Marketing, and Brand Equity.", "deliverables": ["45–60 Minute Keynote Address + Live Q&A", "Pre-Event Social Announcement to 200k+ Audience", "Post-Event Content Amplification & Highlight Clips", "Custom Slide Deck & Framework Handouts"], "startingPrice": "₹2,00,000", "duration": "Half / Full Day" },
+      { "id": "s3", "title": "Fractional CMO & Growth Retainer", "badge": "EXECUTIVE", "desc": "Senior executive marketing leadership on an outcome-driven retainer for scale-ups aiming to scale digital revenue past ₹1Cr–₹3Cr/month with positive cash payback.", "deliverables": ["Complete Performance Media & Paid Ad Architecture", "P&L Budget Allocation & CAC Optimization", "PR Newsjacking Narrative Engine Execution", "Weekly Executive Strategy Sprints with Founders"], "startingPrice": "₹3,50,000 / mo", "duration": "3–6 Month Retainer" },
+      { "id": "s4", "title": "Corporate AI & Performance Growth Workshops", "badge": "ENTERPRISE", "desc": "Intensive hands-on masterclass sessions training enterprise marketing teams, agency staff, or founder cohorts on AI prompt engineering, creative velocity, and ROAS scaling.", "deliverables": ["Half-Day or Full-Day Interactive Masterclass", "100+ Custom Growth Marketing AI Prompts & SOPs", "Live Campaign Audit & Creative Breakdown", "Certificate of Masterclass Completion"], "startingPrice": "₹1,25,000", "duration": "1 Day Workshop" },
+      { "id": "s5", "title": "Podcast Guest & Executive Roundtables", "badge": "THOUGHT LEADERSHIP", "desc": "In-depth, high-engagement appearances on top business, tech, venture capital, and marketing podcasts discussing career architecture, scaling, and market insights.", "deliverables": ["Deep-Dive 60–90 Minute Conversation", "Social Co-Promotion Across All Channels", "YouTube Shorts & Video Snippet Repurposing", "Backlink & Show Notes Inclusion"], "startingPrice": "Custom Inquiry", "duration": "Session Based" }
+    ],
+    "pricingTiers": [
+      { "tier": "Brand Spotlight Package", "price": "₹1,50,000", "subtitle": "Single-Channel High-Conversion Blast", "features": ["1x In-Depth LinkedIn Carousel / Narrative Post", "1x High-Production 60s Reel / Short", "Targeted Audience of 150k+ Founders & Marketers", "Basic Performance Reporting"], "cta": "Request Proposal", "popular": false },
+      { "tier": "Multi-Platform Growth Blitz", "price": "₹3,50,000", "subtitle": "Omnichannel Dominance & Lead Engine", "features": ["2x Dedicated LinkedIn Thought Leadership Articles", "2x Vertical Reels / YouTube Shorts", "1x Dedicated Newsletter Sponsorship (35k+ Subscribers)", "90-Day Paid Whitelisting & Ad Usage Rights", "Comprehensive Attribution & UTM Dashboard"], "cta": "Request Proposal", "popular": true },
+      { "tier": "Executive Ambassador Retainer", "price": "₹7,50,000 / Quarter", "subtitle": "Quarterly Category Authority Partnership", "features": ["Continuous Monthly Content Integration Across All Platforms", "Keynote Appearance / Virtual Masterclass for Brand", "Brand Ambassadorship & Website Badge Placement", "Exclusive Category Lockout (No Direct Competitors)", "Direct Co-Creation Strategy with Yash Agarwal"], "cta": "Inquire Retainer", "popular": false }
+    ]
+  }
 }
