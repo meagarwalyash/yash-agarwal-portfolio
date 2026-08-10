@@ -25,8 +25,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Build Static Site Artifacts
+        run: |
+          mkdir -p dist
+          cp -r *.html *.json *.xml *.txt *.png *.jpg *.svg *.pdf CNAME dist/ 2>/dev/null || true
+          touch dist/.nojekyll
+          touch .nojekyll
+          for d in media-kit store admin resources js logos EBOOKS public; do
+            if [ -d "$d" ]; then cp -r "$d" dist/; fi
+          done
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3

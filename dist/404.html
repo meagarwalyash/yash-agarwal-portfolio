@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRCV1573GQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DRCV1573GQ');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1230021023248251" crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found — Yash Agarwal (MeAgarwalYash)</title>
+
+  <!-- Instant SPA Path Router -->
+  <script>
+    (function() {
+      var pathname = window.location.pathname.toLowerCase().replace(/\/+$/, "");
+      var search = window.location.search || "";
+      var hash = window.location.hash || "";
+
+      var routes = {
+        "/media-kit": "/media-kit.html",
+        "/media-kit/index": "/media-kit.html",
+        "/store": "/store.html",
+        "/blog": "/blog.html",
+        "/speaking": "/speaking.html",
+        "/resources": "/resources.html",
+        "/media": "/media.html",
+        "/admin": "/admin.html",
+        "/dashboard": "/dashboard.html",
+        "/checkout": "/checkout.html",
+        "/new-here": "/new-here.html"
+      };
+
+      if (routes[pathname]) {
+        window.location.replace(routes[pathname] + search + hash);
+      }
+    })();
+  </script>
+
+  <link rel="icon" type="image/png" href="/maylogo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #0A090E;
+      color: #FFFFFF;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between items-center text-center p-6 antialiased">
+  
+  <header class="w-full max-w-5xl py-6 flex justify-between items-center border-b border-white/10">
+    <a href="/" class="flex items-center">
+      <img src="/maylogo.png" alt="MAY Logo" class="h-12 w-auto object-contain brightness-150 contrast-125 filter drop-shadow-[0_0_15px_rgba(212,175,55,0.6)]" />
+    </a>
+    <a href="/" class="text-xs text-zinc-400 hover:text-white font-bold transition-colors">← Back to Home</a>
+  </header>
+
+  <main class="max-w-md w-full my-auto space-y-6 py-12">
+    <div className="w-20 h-20 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 flex items-center justify-center text-3xl font-black mx-auto shadow-2xl">
+      404
+    </div>
+
+    <div class="space-y-2">
+      <h1 class="text-3xl font-extrabold text-white">Page Not Found</h1>
+      <p class="text-sm text-zinc-400 leading-relaxed">
+        The page you are looking for might have been moved, renamed, or is temporarily unavailable.
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+      <a href="/media-kit.html" class="px-6 py-3 rounded-full bg-[#D4AF37] hover:bg-[#B8860B] text-black font-extrabold text-xs transition-all shadow-lg">
+        Explore Media Kit →
+      </a>
+      <a href="/store.html" class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/15 transition-all">
+        Digital Store
+      </a>
+      <a href="/" class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/15 transition-all">
+        Homepage
+      </a>
+    </div>
+  </main>
+
+  <footer class="w-full max-w-5xl py-6 border-t border-white/10 text-xs text-zinc-500 flex justify-between items-center">
+    <div>© 2026 Yash Agarwal (MeAgarwalYash)</div>
+    <div class="flex gap-4">
+      <a href="/media-kit.html" class="hover:text-zinc-300">Media Kit</a>
+      <a href="/blog.html" class="hover:text-zinc-300">Growth Essays</a>
+      <a href="/speaking.html" class="hover:text-zinc-300">Speaking</a>
+    </div>
+  </footer>
+
+</body>
+</html>

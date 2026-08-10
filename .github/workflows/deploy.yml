@@ -21,8 +21,12 @@ jobs:
       - name: Build Static Site
         run: |
           mkdir -p dist
-          cp index.html dist/index.html
-          if [ -d public ]; then cp -r public/* dist/; fi
+          cp -r *.html *.json *.xml *.txt *.png *.jpg *.svg *.pdf CNAME dist/ 2>/dev/null || true
+          touch dist/.nojekyll
+          touch .nojekyll
+          for d in media-kit store admin resources js logos EBOOKS public; do
+            if [ -d "$d" ]; then cp -r "$d" dist/; fi
+          done
 
       - name: Deploy Static Assets to Cloudflare Workers / Pages
         uses: cloudflare/wrangler-action@v3
