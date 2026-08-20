@@ -341,6 +341,13 @@ while ($listener.IsListening) {
         if ($localPath -eq "/") { $localPath = "/index.html" }
         $filePath = Join-Path $PSScriptRoot $localPath.TrimStart('/')
         
+        if (Test-Path $filePath -PathType Container) {
+            $indexPath = Join-Path $filePath "index.html"
+            if (Test-Path $indexPath -PathType Leaf) { $filePath = $indexPath }
+        } elseif (-not (Test-Path $filePath -PathType Leaf) -and (Test-Path ($filePath + ".html") -PathType Leaf)) {
+            $filePath = $filePath + ".html"
+        }
+        
         if (Test-Path $filePath -PathType Leaf) {
             $bytes = [System.IO.File]::ReadAllBytes($filePath)
             $response.ContentLength64 = $bytes.Length

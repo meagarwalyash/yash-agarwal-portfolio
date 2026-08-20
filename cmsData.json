@@ -1190,5 +1190,66 @@
       { "tier": "Multi-Platform Growth Blitz", "price": "₹3,50,000", "subtitle": "Omnichannel Dominance & Lead Engine", "features": ["2x Dedicated LinkedIn Thought Leadership Articles", "2x Vertical Reels / YouTube Shorts", "1x Dedicated Newsletter Sponsorship (35k+ Subscribers)", "90-Day Paid Whitelisting & Ad Usage Rights", "Comprehensive Attribution & UTM Dashboard"], "cta": "Request Proposal", "popular": true },
       { "tier": "Executive Ambassador Retainer", "price": "₹7,50,000 / Quarter", "subtitle": "Quarterly Category Authority Partnership", "features": ["Continuous Monthly Content Integration Across All Platforms", "Keynote Appearance / Virtual Masterclass for Brand", "Brand Ambassadorship & Website Badge Placement", "Exclusive Category Lockout (No Direct Competitors)", "Direct Co-Creation Strategy with Yash Agarwal"], "cta": "Inquire Retainer", "popular": false }
     ]
+  },
+  "kyeEvents": {
+    "title": "KYE Global Community Meets",
+    "tagline": "Connect. Collaborate. Grow.",
+    "subtagline": "One Community. Endless Opportunities.",
+    "pressFeaturedIn": ["Forbes", "Mid-Day", "Hindustan Times"],
+    "instagram": "@kyeglobal",
+    "location": "Borivali West, Mumbai",
+    "time": "8:00 PM – 11:00 PM",
+    "pricePerDay": 200,
+    "events": [
+      {
+        "id": "kye-aug21",
+        "title": "Friday Kickstart The Weekend",
+        "dateLabel": "Friday 21st / 22nd August",
+        "dayName": "Friday",
+        "dateFormatted": "August 21/22, 2026",
+        "time": "8:00 PM – 11:00 PM",
+        "venue": "Borivali West, Mumbai",
+        "price": 200,
+        "flyerImg": "/kye-flyer-aug21.jpg",
+        "tagline": "Meet. Connect. Collaborate.",
+        "description": "Kickstart your weekend with Mumbai's most vibrant community of founders, creators, and professionals. Experience an energetic evening of networking, BYOB drinks, fun games, karaoke sessions, and stand-up comedy.",
+        "highlights": [
+          { "icon": "users", "label": "NETWORK", "desc": "Meet. Connect. Collaborate." },
+          { "icon": "message-square", "label": "SHARE", "desc": "Ideas. Thoughts. Experiences." },
+          { "icon": "mic", "label": "INSPIRE", "desc": "Conversations that lead to action." }
+        ],
+        "activities": [
+          { "title": "BYOB", "desc": "Bring Your Own Bottle" },
+          { "title": "GAMES", "desc": "Fun. People. Good Vibes." },
+          { "title": "KARAOKE", "desc": "Sing. Express. Enjoy." },
+          { "title": "STAND UP", "desc": "Laughs That Connect." }
+        ]
+      },
+      {
+        "id": "kye-aug22",
+        "title": "Saturday Vibes — Connect. Have Fun. Grow.",
+        "dateLabel": "Saturday 22nd / 23rd August",
+        "dayName": "Saturday",
+        "dateFormatted": "August 22/23, 2026",
+        "time": "8:00 PM – 11:00 PM",
+        "venue": "Borivali West, Mumbai",
+        "price": 200,
+        "flyerImg": "/kye-flyer-aug22.jpg",
+        "tagline": "Bring Your Energy. Leave With Connections.",
+        "description": "Unwind and build lasting professional & personal bonds at KYE Saturday Vibes. High-energy networking, curated party games, live karaoke, BYOB lounge access, and stand-up comedy acts.",
+        "highlights": [
+          { "icon": "users", "label": "NETWORKING", "desc": "Connect with founders & professionals." },
+          { "icon": "sparkles", "label": "HIGH ENERGY", "desc": "Vibrant atmosphere & curated vibes." },
+          { "icon": "smile", "label": "MEMORABLE", "desc": "Leave with real connections." }
+        ],
+        "activities": [
+          { "title": "NETWORKING", "desc": "Curated Founder & Creator Speed Meet" },
+          { "title": "STAND UP", "desc": "Live Stand Up Comedy Acts" },
+          { "title": "GAMES", "desc": "Interactive Group Party Games" },
+          { "title": "KARAOKE", "desc": "Open Mic Karaoke Stage" },
+          { "title": "BYOB", "desc": "Bring Your Own Bottle" }
+        ]
+      }
+    ]
   }
 }
