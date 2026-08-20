@@ -24,15 +24,15 @@
     }
   </script>
 
-  <title>KYE Global Community Meets (Aug 21-23) — Borivali West, Mumbai | Yash Agarwal</title>
-  <meta name="description" content="Join KYE Global Community Meets in Borivali West, Mumbai on August 21st, 22nd & 23rd. High-energy networking, BYOB lounge, fun games, live karaoke, and stand-up comedy. Pass: ₹200/- per day." />
+  <title>KYE Global Community Meets (Aug 21-22) — Borivali West, Mumbai | Yash Agarwal</title>
+  <meta name="description" content="Join KYE Global Community Meets in Borivali West, Mumbai on August 21st & 22nd. High-energy networking, BYOB lounge, fun games, live karaoke, and stand-up comedy. Pass: ₹200/- per day." />
   <meta name="keywords" content="KYE Global, KYE Global Meets, KYE Mumbai, Borivali West events, Mumbai networking meetups, BYOB party Mumbai, KYE Global Yash Agarwal, startup networking Mumbai, ₹200 pass event" />
   <link rel="canonical" href="https://meagarwalyash.com/kye" />
 
   <!-- OpenGraph & Twitter Social Cards -->
   <meta property="og:type" content="event" />
   <meta property="og:site_name" content="KYE Global • Yash Agarwal" />
-  <meta property="og:title" content="KYE Global Community Meets (Aug 21-23) — Borivali West, Mumbai" />
+  <meta property="og:title" content="KYE Global Community Meets (Aug 21-22) — Borivali West, Mumbai" />
   <meta property="og:description" content="Connect. Collaborate. Grow. 8:00 PM - 11:00 PM in Borivali West, Mumbai. Networking, BYOB, Games, Karaoke & Stand-up Comedy. Entry ₹200/- only." />
   <meta property="og:url" content="https://meagarwalyash.com/kye" />
   <meta property="og:image" content="https://meagarwalyash.com/kye-flyer-aug21.jpg" />
@@ -297,8 +297,8 @@
         setSubmitting(true);
 
         const eventName = selectedEventId === 'kye-both' 
-          ? 'KYE Both Days VIP Access Pass (Aug 21-23)' 
-          : (selectedEventId === 'kye-aug22' ? 'KYE Saturday Vibes Meet (Aug 22/23)' : 'KYE Friday Kickstart Meet (Aug 21/22)');
+          ? 'KYE Both Days VIP Access Pass (Aug 21-22)' 
+          : (selectedEventId === 'kye-aug22' ? 'KYE Saturday Vibes Meet (Aug 22)' : 'KYE Friday Kickstart Meet (Aug 21)');
 
         const leadPayload = {
           id: 'kye_' + Date.now(),
@@ -394,7 +394,7 @@
         {
           id: "kye-aug21",
           title: "Friday Kickstart The Weekend",
-          dateLabel: "Friday 21st / 22nd August",
+          dateLabel: "Friday 21st August",
           time: "8:00 PM – 11:00 PM",
           venue: "Borivali West, Mumbai",
           price: 200,
@@ -411,7 +411,7 @@
         {
           id: "kye-aug22",
           title: "Saturday Vibes — Connect. Have Fun. Grow.",
-          dateLabel: "Saturday 22nd / 23rd August",
+          dateLabel: "Saturday 22nd August",
           time: "8:00 PM – 11:00 PM",
           venue: "Borivali West, Mumbai",
           price: 200,
@@ -816,8 +816,8 @@
                         onChange={(e) => setSelectedEventId(e.target.value)}
                         className="w-full p-3 rounded-xl bg-black border border-white/20 text-white focus:border-brand-orange focus:outline-none font-medium"
                       >
-                        <option value="kye-aug21">Friday 21st / 22nd August Pass (₹200)</option>
-                        <option value="kye-aug22">Saturday 22nd / 23rd August Pass (₹200)</option>
+                        <option value="kye-aug21">Friday 21st August Pass (₹200)</option>
+                        <option value="kye-aug22">Saturday 22nd August Pass (₹200)</option>
                         <option value="kye-both">👑 VIP Both Days Access Pass (₹400)</option>
                       </select>
                     </div>
