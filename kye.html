@@ -359,33 +359,30 @@
 
         setSubmitting(false);
 
-        // 3. Seamless Razorpay Standard Checkout Launch
-        const itemDetails = {
-          id: selectedEventId,
-          title: eventName,
-          price: totalAmount,
-          type: 'kye_pass'
-        };
-
-        const userDetails = {
-          name: userName.trim(),
-          email: userEmail.trim().toLowerCase(),
-          phone: userPhone.trim()
-        };
-
-        if (window.MAY_PaymentEngine && typeof window.MAY_PaymentEngine.processCheckout === 'function') {
-          window.MAY_PaymentEngine.processCheckout(
-            itemDetails,
-            userDetails,
-            function(paymentRes) {
-              setSuccessMsg(`✓ Payment Received! Pass Confirmed. Payment ID: ${paymentRes.paymentId || 'RZP_OK'}`);
-              setTimeout(() => { setBookingModalOpen(false); setSuccessMsg(''); }, 2000);
-            },
-            function(err) {
-              triggerWhatsAppFallback(passRecord);
+        // 3. Generate Razorpay Order ID via backend if server is active
+        let rzpOrderId = null;
+        try {
+          const rzpRes = await fetch('/api/create-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              amount: totalAmount * 100,
+              currency: 'INR',
+              receipt: 'kye_rcpt_' + Date.now(),
+              userEmail: userEmail.trim().toLowerCase(),
+              userName: userName.trim()
+            })
+          });
+          if (rzpRes.ok) {
+            const rzpData = await rzpRes.json();
+            if (rzpData && rzpData.order_id) {
+              rzpOrderId = rzpData.order_id;
             }
-          );
-        } else if (window.Razorpay) {
+          }
+        } catch(e) {}
+
+        // 4. Seamless Razorpay Checkout Launch
+        if (window.Razorpay) {
           try {
             const razorpayKey = window.RAZORPAY_KEY_ID || "rzp_live_TIcwck5n2wddpM";
             const options = {
@@ -396,17 +393,48 @@
               description: eventName,
               image: "/maylogo.png",
               prefill: {
-                name: userDetails.name,
-                email: userDetails.email,
-                contact: userDetails.phone
+                name: userName.trim(),
+                email: userEmail.trim().toLowerCase(),
+                contact: userPhone.trim()
+              },
+              notes: {
+                event: eventName,
+                passes: ticketQty,
+                customer: userName.trim()
               },
               theme: { color: "#FF5722" },
+              modal: {
+                ondismiss: function() {
+                  setSubmitting(false);
+                }
+              },
               handler: function(response) {
+                passRecord.paymentId = response.razorpay_payment_id || 'RZP_LIVE_OK';
+                passRecord.status = 'Paid & Confirmed';
+                
+                // Update local storage record status
+                try {
+                  const kyePasses = JSON.parse(localStorage.getItem('may_kye_passes') || '[]');
+                  if (kyePasses.length > 0) kyePasses[0].status = 'Paid & Confirmed';
+                  localStorage.setItem('may_kye_passes', JSON.stringify(kyePasses));
+                } catch(err) {}
+
                 setSuccessMsg(`✓ Payment Received! Pass Confirmed. Payment ID: ${response.razorpay_payment_id || 'RZP_OK'}`);
-                setTimeout(() => { setBookingModalOpen(false); setSuccessMsg(''); }, 2000);
+                setTimeout(() => { setBookingModalOpen(false); setSuccessMsg(''); }, 2500);
               }
             };
+
+            if (rzpOrderId) {
+              options.order_id = rzpOrderId;
+            }
+
             const rzp = new window.Razorpay(options);
+            
+            rzp.on('payment.failed', function (response) {
+              console.warn('Razorpay client payment error:', response.error);
+              triggerWhatsAppFallback(passRecord);
+            });
+
             rzp.open();
           } catch(e) {
             triggerWhatsAppFallback(passRecord);
