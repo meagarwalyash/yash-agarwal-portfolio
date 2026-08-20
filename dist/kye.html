@@ -300,8 +300,8 @@
           ? 'KYE Both Days VIP Access Pass (Aug 21-22)' 
           : (selectedEventId === 'kye-aug22' ? 'KYE Saturday Vibes Meet (Aug 22)' : 'KYE Friday Kickstart Meet (Aug 21)');
 
-        const leadPayload = {
-          id: 'kye_' + Date.now(),
+        const passRecord = {
+          id: 'kye_pass_' + Date.now(),
           customerName: userName.trim(),
           name: userName.trim(),
           phone: userPhone.trim(),
@@ -309,29 +309,42 @@
           email: userEmail.trim().toLowerCase(),
           quantity: ticketQty,
           selectedEvent: selectedEventId,
+          eventTitle: eventName,
           totalAmount: totalAmount,
+          amount: totalAmount,
           notes: userNotes,
-          productId: 'kye_pass',
-          productName: `KYE Global Pass (${ticketQty}x - ₹${totalAmount})`,
+          type: 'KYE Event Pass',
+          productName: `KYE Pass (${ticketQty}x - ₹${totalAmount})`,
           source: 'KYE Meets Landing Page',
           createdAt: new Date().toISOString(),
           date: new Date().toISOString().split('T')[0],
           status: 'Confirmed Pass Registration'
         };
 
-        // 1. Store locally in CRM
+        // 1. Store locally across all CRM keys so it immediately appears in Admin Panel
         try {
-          localStorage.setItem('may_lead_user', JSON.stringify(leadPayload));
+          localStorage.setItem('may_lead_user', JSON.stringify(passRecord));
+          
+          const kyePasses = JSON.parse(localStorage.getItem('may_kye_passes') || '[]');
+          kyePasses.unshift(passRecord);
+          localStorage.setItem('may_kye_passes', JSON.stringify(kyePasses));
+
+          const masterLeads = JSON.parse(localStorage.getItem('may_master_leads') || '[]');
+          masterLeads.unshift(passRecord);
+          localStorage.setItem('may_master_leads', JSON.stringify(masterLeads));
+
           const existingLeads = JSON.parse(localStorage.getItem('may_leads') || '[]');
-          existingLeads.unshift(leadPayload);
+          existingLeads.unshift(passRecord);
           localStorage.setItem('may_leads', JSON.stringify(existingLeads));
 
           let savedData = localStorage.getItem('MAY_WEBSITE_CMS_DATA');
           let cms = savedData ? JSON.parse(savedData) : {};
+          if (!cms.kyePasses) cms.kyePasses = [];
           if (!cms.waitlistData) cms.waitlistData = [];
           if (!cms.subscribers) cms.subscribers = [];
-          cms.waitlistData.unshift(leadPayload);
-          cms.subscribers.unshift(leadPayload);
+          cms.kyePasses.unshift(passRecord);
+          cms.waitlistData.unshift(passRecord);
+          cms.subscribers.unshift(passRecord);
           localStorage.setItem('MAY_WEBSITE_CMS_DATA', JSON.stringify(cms));
         } catch(err) {}
 
@@ -340,26 +353,52 @@
           await fetch('/api/leads/capture', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(leadPayload)
+            body: JSON.stringify(passRecord)
           });
         } catch(err) {}
 
         setSubmitting(false);
 
-        // Trigger Payment via Razorpay Checkout SDK if configured or redirect
-        if (window.Razorpay) {
+        // 3. Seamless Razorpay Standard Checkout Launch
+        const itemDetails = {
+          id: selectedEventId,
+          title: eventName,
+          price: totalAmount,
+          type: 'kye_pass'
+        };
+
+        const userDetails = {
+          name: userName.trim(),
+          email: userEmail.trim().toLowerCase(),
+          phone: userPhone.trim()
+        };
+
+        if (window.MAY_PaymentEngine && typeof window.MAY_PaymentEngine.processCheckout === 'function') {
+          window.MAY_PaymentEngine.processCheckout(
+            itemDetails,
+            userDetails,
+            function(paymentRes) {
+              setSuccessMsg(`✓ Payment Received! Pass Confirmed. Payment ID: ${paymentRes.paymentId || 'RZP_OK'}`);
+              setTimeout(() => { setBookingModalOpen(false); setSuccessMsg(''); }, 2000);
+            },
+            function(err) {
+              triggerWhatsAppFallback(passRecord);
+            }
+          );
+        } else if (window.Razorpay) {
           try {
+            const razorpayKey = window.RAZORPAY_KEY_ID || "rzp_live_TIcwck5n2wddpM";
             const options = {
-              key: "rzp_test_dummy",
+              key: razorpayKey,
               amount: totalAmount * 100,
               currency: "INR",
-              name: "KYE Global",
+              name: "KYE Global Community",
               description: eventName,
               image: "/maylogo.png",
               prefill: {
-                name: userName,
-                email: userEmail,
-                contact: userPhone
+                name: userDetails.name,
+                email: userDetails.email,
+                contact: userDetails.phone
               },
               theme: { color: "#FF5722" },
               handler: function(response) {
@@ -370,10 +409,10 @@
             const rzp = new window.Razorpay(options);
             rzp.open();
           } catch(e) {
-            triggerWhatsAppFallback(leadPayload);
+            triggerWhatsAppFallback(passRecord);
           }
         } else {
-          triggerWhatsAppFallback(leadPayload);
+          triggerWhatsAppFallback(passRecord);
         }
       };
 

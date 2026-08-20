@@ -387,9 +387,12 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
           const masterLeads = (() => { try { return JSON.parse(localStorage.getItem('may_master_leads') || '[]'); } catch(e) { return []; } })();
           const localLeads = (() => { try { return JSON.parse(localStorage.getItem('may_leads') || '[]'); } catch(e) { return []; } })();
           const registeredUsers = (() => { try { return JSON.parse(localStorage.getItem('MAY_PLATFORM_USERS') || '[]'); } catch(e) { return []; } })();
+          const kyePasses = (() => { try { return JSON.parse(localStorage.getItem('may_kye_passes') || '[]'); } catch(e) { return []; } })();
           const cmsRaw = (() => { try { return JSON.parse(localStorage.getItem('MAY_WEBSITE_CMS_DATA') || '{}'); } catch(e) { return {}; } })();
 
           const all = [
+            ...kyePasses.map(k => ({ ...k, type: k.type || 'KYE Event Pass' })),
+            ...(Array.isArray(cmsRaw.kyePasses) ? cmsRaw.kyePasses.map(k => ({ ...k, type: k.type || 'KYE Event Pass' })) : []),
             ...masterLeads,
             ...localLeads,
             ...(Array.isArray(cmsRaw.waitlistData) ? cmsRaw.waitlistData : []),
@@ -418,16 +421,16 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
           const uniqueMap = new Map();
           all.forEach(item => {
             const em = (item.email || item.customerEmail || '').toLowerCase().trim();
-            if (em) {
-              const key = em + '_' + (item.type || 'lead');
+            if (em || item.id) {
+              const key = item.id || (em + '_' + (item.type || 'lead') + '_' + (item.productName || ''));
               if (!uniqueMap.has(key)) {
                 uniqueMap.set(key, {
                   id: item.id || 'ld_' + Date.now() + Math.random(),
                   name: item.name || item.customerName || em.split('@')[0],
                   email: em,
-                  phone: item.phone || item.mobile || '',
+                  phone: item.phone || item.customerPhone || item.mobile || '',
                   type: item.type || item.source || 'Ebook Download',
-                  productName: item.productName || item.source || 'MAY Asset',
+                  productName: item.productName || item.eventTitle || item.source || 'MAY Asset',
                   createdAt: item.createdAt || item.date || new Date().toISOString(),
                   status: item.status || 'Active'
                 });
@@ -2678,6 +2681,7 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                           if (masterLeadFilter !== 'all') {
                             const t = (item.type || '').toLowerCase();
                             if (masterLeadFilter === 'ebook' && !t.includes('ebook') && !t.includes('sop') && !t.includes('download') && !t.includes('resource')) return false;
+                            if (masterLeadFilter === 'kye' && !t.includes('kye') && !t.includes('event pass') && !t.includes('community meet')) return false;
                             if (masterLeadFilter === 'audit' && !t.includes('audit') && !t.includes('booking') && !t.includes('inquiry')) return false;
                             if (masterLeadFilter === 'newsletter' && !t.includes('newsletter') && !t.includes('subscriber') && !t.includes('waitlist')) return false;
                             if (masterLeadFilter === 'orders' && !t.includes('order') && !t.includes('paid') && !t.includes('checkout')) return false;
@@ -2705,12 +2709,12 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                                 <div className="text-[10px] text-zinc-400">All captured contacts</div>
                               </div>
 
-                              <div className="p-4 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
-                                <div className="text-[10px] font-mono text-blue-400 font-bold uppercase">EBOOK DOWNLOADS</div>
-                                <div className="text-3xl font-extrabold text-blue-400">
-                                  {allLeadsList.filter(l => (l.type || '').toLowerCase().includes('ebook') || (l.type || '').toLowerCase().includes('sop') || (l.type || '').toLowerCase().includes('download')).length}
+                              <div className="p-4 rounded-2xl bg-[#14131B] border border-brand-orange/40 space-y-1">
+                                <div className="text-[10px] font-mono text-brand-orange font-bold uppercase">🎟️ KYE MEETS PASSES</div>
+                                <div className="text-3xl font-extrabold text-brand-orange">
+                                  {allLeadsList.filter(l => (l.type || '').toLowerCase().includes('kye') || (l.type || '').toLowerCase().includes('event pass') || (l.productName || '').toLowerCase().includes('kye')).length}
                                 </div>
-                                <div className="text-[10px] text-zinc-400 font-mono">Free PDF lead magnets</div>
+                                <div className="text-[10px] text-zinc-400 font-mono">Booked event passes</div>
                               </div>
 
                               <div className="p-4 rounded-2xl bg-[#14131B] border border-white/10 space-y-1">
@@ -2738,6 +2742,12 @@ Fractional CMO leadership bridges this gap by bringing 10+ years of battle-teste
                                   className={`px-3 py-1.5 rounded-full font-bold transition-all ${masterLeadFilter === 'all' ? 'bg-brand-gold text-black shadow-md' : 'bg-white/5 text-zinc-300 hover:bg-white/10'}`}
                                 >
                                   All Leads ({allLeadsList.length})
+                                </button>
+                                <button
+                                  onClick={() => setMasterLeadFilter('kye')}
+                                  className={`px-3 py-1.5 rounded-full font-bold transition-all ${masterLeadFilter === 'kye' ? 'bg-brand-orange text-white shadow-md' : 'bg-white/5 text-zinc-300 hover:bg-white/10'}`}
+                                >
+                                  🎟️ KYE Event Passes
                                 </button>
                                 <button
                                   onClick={() => setMasterLeadFilter('ebook')}
